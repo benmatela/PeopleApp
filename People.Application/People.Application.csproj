@@ -14,9 +14,4 @@
     <ProjectReference Include="..\People.Infrastructure\People.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\People.Presentation\People.Presentation.Server\People.Presentation.Server.csproj" />
-  </ItemGroup>
-
-
 </Project>
