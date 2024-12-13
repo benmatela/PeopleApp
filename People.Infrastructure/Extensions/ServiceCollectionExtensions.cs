@@ -6,7 +6,7 @@ namespace People.Infrastructure.Extensions;
 public static class ServiceCollectionExtensions
 {
     /// <summary>
-    /// Allows us to use the DB Context in the API layer.
+    /// Allows us to use the DB Context in the Presentation layer.
     /// </summary>
     public static void AddInfrastructure(this IServiceCollection services)
     {
