@@ -1,4 +1,5 @@
 using People.Infrastructure.Extensions;
+using People.Presentation.Server.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddInfrastructureDI();
+builder.Services.AddApplicationDI();
 
 var app = builder.Build();
 
