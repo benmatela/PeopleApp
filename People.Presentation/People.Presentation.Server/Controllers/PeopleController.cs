@@ -39,9 +39,10 @@ namespace People.Presentation.Server.Controllers
         }
 
         [HttpGet]
-        [Route("Get")]
+        [Route("Get/{personId}")]
         public async Task<IActionResult> Get([FromRoute] Guid personId)
         {
+            Console.WriteLine("Input: {0}", personId);
             var responseWrapper = new ResponseWrapperDTO<Person>();
             try
             {
