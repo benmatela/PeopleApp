@@ -3,7 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using People.Application.Commands;
 using People.Domain.Entities;
-using People.Domain.Common;
+using People.Presentation.Server.Models;
 
 namespace People.Presentation.Server.Controllers
 {
@@ -11,21 +11,23 @@ namespace People.Presentation.Server.Controllers
     [Route("[controller]")]
     public class PeopleController(ISender sender) : ControllerBase
     {
-        [HttpGet("")]
+
+
+        [HttpPost]
         public async Task<IActionResult> Create([FromBody] Person person)
         {
             try
             {
                 var result = await sender.Send(new CreatePersonCommand(person));
-                var responseWrapper = new ResponseWrapper<Person>(HttpStatusCode.OK, "", true, result);
+                var responseWrapper = new ResponseWrapperDTO<Person>(HttpStatusCode.OK, "", true, result);
 
                 return Ok(responseWrapper);
             }
             catch (Exception e)
             {
                 // Logging
-                var responseWrapper = new ResponseWrapper<Person>(HttpStatusCode.OK, "", true, null);
-                
+                var responseWrapper = new ResponseWrapperDTO<Person>(HttpStatusCode.OK, "", true, null);
+
                 return Ok(responseWrapper);
             }
         }
