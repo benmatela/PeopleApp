@@ -18,15 +18,17 @@ namespace People.Presentation.Server.Controllers
             try
             {
                 var result = await sender.Send(new CreatePersonCommand(person));
-                var responseWrapper = new ResponseWrapperDTO<Person>(HttpStatusCode.OK, "", true, result);
+                // var responseWrapper = new ResponseWrapperDTO<Person>(HttpStatusCode.OK, "", true, result);
 
-                return Ok(responseWrapper);
+                Console.WriteLine("Response: {0}", result);
+
+                return Ok(result);
             }
             catch (Exception e)
             {
-                var responseWrapper = new ResponseWrapperDTO<Person>(HttpStatusCode.InternalServerError, e.Message, false, null);
+                // var responseWrapper = new ResponseWrapperDTO<Person>(HttpStatusCode.InternalServerError, e.Message, false, null);
 
-                return Ok(responseWrapper);
+                return Ok("Failed");
             }
         }
     }

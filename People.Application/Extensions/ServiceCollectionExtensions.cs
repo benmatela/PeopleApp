@@ -1,3 +1,4 @@
+using MediatR.NotificationPublishers;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace People.Application.Extensions;
@@ -9,6 +10,10 @@ public static class ServiceCollectionExtensions
     /// </summary>
     public static void AddApplicationDI(this IServiceCollection services)
     {
-        services.AddMediatR(cf => cf.RegisterServicesFromAssembly(typeof(ServiceCollectionExtensions).Assembly));
+        services.AddMediatR(cfg =>
+           {
+               cfg.RegisterServicesFromAssembly(typeof(ServiceCollectionExtensions).Assembly);
+               cfg.NotificationPublisher = new TaskWhenAllPublisher();
+           });
     }
 }
