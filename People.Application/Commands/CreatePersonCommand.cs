@@ -7,9 +7,9 @@ namespace People.Application.Commands;
 public record CreatePersonCommand(Person Person) : IRequest<Person>;
 
 /// <summary>
-/// An action or request to change the state of the system.
+/// Handles the command to create a new person.
 /// </summary>
-public class AddEmployeeCommandHandler(IPersonRepository personRepository)
+public class CreatePersonCommandHandler(IPersonRepository personRepository)
     : IRequestHandler<CreatePersonCommand, Person>
 {
     public async Task<Person> Handle(CreatePersonCommand request, CancellationToken cancellationToken)
