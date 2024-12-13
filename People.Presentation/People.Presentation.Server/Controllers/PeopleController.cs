@@ -11,24 +11,63 @@ namespace People.Presentation.Server.Controllers
     [Route("[controller]")]
     public class PeopleController(ISender sender) : ControllerBase
     {
+        public string notFoundMessage = "Item not found.";
+
         [HttpPost]
         [Route("Create")]
         public async Task<IActionResult> Create([FromBody] Person person)
         {
+            var responseWrapper = new ResponseWrapperDTO<Person>();
             try
             {
                 var result = await sender.Send(new CreatePersonCommand(person));
-                // var responseWrapper = new ResponseWrapperDTO<Person>(HttpStatusCode.OK, "", true, result);
 
-                Console.WriteLine("Response: {0}", result);
+                // Build our response
+                responseWrapper.Data = result;
 
-                return Ok(result);
+                return Ok(responseWrapper);
             }
             catch (Exception e)
             {
-                // var responseWrapper = new ResponseWrapperDTO<Person>(HttpStatusCode.InternalServerError, e.Message, false, null);
+                // Build our response
+                responseWrapper.Exception = e;
+                responseWrapper.Message = e.Message;
+                responseWrapper.Success = false;
+                responseWrapper.StatusCode = HttpStatusCode.InternalServerError;
 
-                return Ok("Failed");
+                return Ok(responseWrapper);
+            }
+        }
+
+        [HttpPost]
+        [Route("Remove")]
+        public async Task<IActionResult> Remove([FromBody] Person person)
+        {
+            var responseWrapper = new ResponseWrapperDTO<Person>();
+            try
+            {
+                var result = await sender.Send(new CreatePersonCommand(person));
+                if (result is null)
+                {
+                    responseWrapper.StatusCode = HttpStatusCode.NotFound;
+                    responseWrapper.Message = notFoundMessage;
+                    responseWrapper.Success = false;
+
+                    return NotFound(responseWrapper);
+                }
+
+                responseWrapper.Data = result;
+
+                return Ok(responseWrapper);
+            }
+            catch (Exception e)
+            {
+                responseWrapper.Exception = e;
+                responseWrapper.Message = e.Message;
+                responseWrapper.Success = false;
+                responseWrapper.StatusCode = HttpStatusCode.InternalServerError;
+
+                return Ok(responseWrapper);
             }
         }
     }

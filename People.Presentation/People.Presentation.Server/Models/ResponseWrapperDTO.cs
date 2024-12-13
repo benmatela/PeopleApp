@@ -3,20 +3,20 @@ using System.Net;
 namespace People.Presentation.Server.Models;
 
 /// <summary>
-/// Response Wrapper - Used to standardize all our responses
+/// Response Wrapper DTO - Used to standardize all our responses for all clients
 /// </summary>
 public class ResponseWrapperDTO<T> where T : class
 {
-    private HttpStatusCode _statusCode;
-    private string _message;
-    private bool _success;
-    private T? _data;
+    public HttpStatusCode StatusCode { get; set; }
+    public string Message { get; set; }
+    public bool Success { get; set; }
+    public T? Data { get; set; }
+    public Exception? Exception { get; set; }
 
-    public ResponseWrapperDTO(HttpStatusCode StatusCode, string Message, bool Success, T? Data)
+    public ResponseWrapperDTO()
     {
-        _statusCode = StatusCode;
-        _message = Message;
-        _success = Success;
-        _data = Data;
+        Success = true;
+        Message = "";
+        StatusCode = HttpStatusCode.OK;
     }
 }
