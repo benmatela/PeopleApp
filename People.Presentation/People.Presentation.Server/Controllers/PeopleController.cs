@@ -75,24 +75,95 @@ namespace People.Presentation.Server.Controllers
         [Route("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            var result = await sender.Send(new GetAllPeopleQuery());
-            return Ok(result);
+            var responseWrapper = new ResponseWrapperDTO<IEnumerable<Person>>();
+            try
+            {
+                var result = await sender.Send(new GetAllPeopleQuery());
+                if (result.Count() == 0)
+                {
+                    // Build our response
+                    responseWrapper.Success = false;
+                    responseWrapper.Message = "Items not found.";
+                    responseWrapper.StatusCode = HttpStatusCode.NotFound;
+                }
+
+                // Build our response
+                responseWrapper.Data = result;
+
+                return Ok(responseWrapper);
+            }
+            catch (Exception e)
+            {
+                // Build our response
+                responseWrapper.Exception = e;
+                responseWrapper.Message = e.Message;
+                responseWrapper.Success = false;
+                responseWrapper.StatusCode = HttpStatusCode.InternalServerError;
+
+                return Ok(responseWrapper);
+            }
         }
 
         [HttpPut]
         [Route("Update")]
         public async Task<IActionResult> Update([FromRoute] Guid personId, [FromBody] Person person)
         {
-            var result = await sender.Send(new UpdatePersonCommand(personId, person));
-            return Ok(result);
+            var responseWrapper = new ResponseWrapperDTO<Person>();
+            try
+            {
+                var result = await sender.Send(new UpdatePersonCommand(personId, person));
+                if (result is null)
+                {
+                    // Build our response
+                    responseWrapper.Success = false;
+                    responseWrapper.Message = "Item not found.";
+                    responseWrapper.StatusCode = HttpStatusCode.NotFound;
+                }
+
+                // Build our response
+                responseWrapper.Data = result;
+
+                return Ok(responseWrapper);
+            }
+            catch (Exception e)
+            {
+                // Build our response
+                responseWrapper.Exception = e;
+                responseWrapper.Message = e.Message;
+                responseWrapper.Success = false;
+                responseWrapper.StatusCode = HttpStatusCode.InternalServerError;
+
+                return Ok(responseWrapper);
+            }
         }
 
         [HttpDelete]
         [Route("Remove")]
         public async Task<IActionResult> Remove([FromRoute] Guid personId)
         {
-            var result = await sender.Send(new RemovePersonCommand(personId));
-            return Ok(result);
+            var responseWrapper = new ResponseWrapperDTO<bool>();
+            try
+            {
+                var result = await sender.Send(new RemovePersonCommand(personId));
+               
+                // Build our response
+                responseWrapper.Data = result;
+                responseWrapper.Message = result ? "" : "Item not deleted.";
+                responseWrapper.StatusCode = result ? HttpStatusCode.OK : HttpStatusCode.BadRequest;
+                responseWrapper.Success = result ? true : false;
+
+                return Ok(responseWrapper);
+            }
+            catch (Exception e)
+            {
+                // Build our response
+                responseWrapper.Exception = e;
+                responseWrapper.Message = e.Message;
+                responseWrapper.Success = false;
+                responseWrapper.StatusCode = HttpStatusCode.InternalServerError;
+
+                return Ok(responseWrapper);
+            }
         }
     }
 }
