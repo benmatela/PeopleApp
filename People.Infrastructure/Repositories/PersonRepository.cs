@@ -23,9 +23,9 @@ internal class PersonRepository(ApplicationDbContext dbContext) : IBaseRepositor
         return await dbContext.People.FirstOrDefaultAsync(person => person.Id == personId);
     }
 
-    public Task<IEnumerable<Person>> GetAll()
+    public async Task<IEnumerable<Person>> GetAll()
     {
-        throw new NotImplementedException();
+        return await dbContext.People.ToListAsync();
     }
 
     public async Task<bool> Remove(Guid personId)
