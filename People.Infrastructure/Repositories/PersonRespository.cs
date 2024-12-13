@@ -30,7 +30,7 @@ public class PersonRepository(ApplicationDbContext dbContext) : IPersonRepositor
         return await dbContext.People.ToListAsync();
     }
 
-    public async Task<Person> Update(Guid personId, Person person)
+    public async Task<bool> Update(Guid personId, Person person)
     {
         var existingPerson = await dbContext.People.FirstOrDefaultAsync(person => person.Id == personId);
         if (existingPerson is not null)
@@ -42,10 +42,10 @@ public class PersonRepository(ApplicationDbContext dbContext) : IPersonRepositor
 
             await dbContext.SaveChangesAsync();
 
-            return existingPerson;
+            return true;
         }
 
-        return person;
+        return false;
     }
 
     public async Task<bool> Remove(Guid personId)

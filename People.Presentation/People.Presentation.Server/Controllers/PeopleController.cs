@@ -112,16 +112,13 @@ namespace People.Presentation.Server.Controllers
             try
             {
                 var result = await sender.Send(new UpdatePersonCommand(personId, person));
-                if (result is null)
+                if (!result)
                 {
                     // Build our response
                     responseWrapper.Success = false;
                     responseWrapper.Message = "Item not found.";
                     responseWrapper.StatusCode = HttpStatusCode.NotFound;
                 }
-
-                // Build our response
-                responseWrapper.Data = result;
 
                 return Ok(responseWrapper);
             }
@@ -141,13 +138,12 @@ namespace People.Presentation.Server.Controllers
         [Route("Remove/{personId}")]
         public async Task<IActionResult> Remove([FromRoute] Guid personId)
         {
-            var responseWrapper = new ResponseWrapperDTO<bool>();
+            var responseWrapper = new ResponseWrapperDTO<Person>();
             try
             {
                 var result = await sender.Send(new RemovePersonCommand(personId));
 
                 // Build our response
-                responseWrapper.Data = result;
                 responseWrapper.Message = result ? "" : "Item not deleted.";
                 responseWrapper.StatusCode = result ? HttpStatusCode.OK : HttpStatusCode.BadRequest;
                 responseWrapper.Success = result;
