@@ -12,8 +12,6 @@ namespace People.Presentation.Server.Controllers
     [Route("[controller]")]
     public class PeopleController(ISender sender) : ControllerBase
     {
-        public string notFoundMessage = "Item not found.";
-
         [HttpPost]
         [Route("Create")]
         public async Task<IActionResult> Create([FromBody] Person person)
@@ -40,17 +38,8 @@ namespace People.Presentation.Server.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("GetAllEmployeesAsync")]
-
-        public async Task<IActionResult> GetAllEmployeesAsync()
-        {
-            var result = await sender.Send(new GetAllPeopleQuery());
-            return Ok(result);
-        }
-
         [HttpGet("{personId}")]
-        [Route("GetAllEmployeesAsync")]
+        [Route("Get")]
         public async Task<IActionResult> Get([FromRoute] Guid personId)
         {
             var responseWrapper = new ResponseWrapperDTO<Person>();
@@ -61,7 +50,7 @@ namespace People.Presentation.Server.Controllers
                 {
                     // Build our response
                     responseWrapper.Success = false;
-                    responseWrapper.Message = notFoundMessage;
+                    responseWrapper.Message = "Item not found.";
                     responseWrapper.StatusCode = HttpStatusCode.NotFound;
                 }
 
@@ -82,7 +71,16 @@ namespace People.Presentation.Server.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("GetAll")]
+        public async Task<IActionResult> GetAll()
+        {
+            var result = await sender.Send(new GetAllPeopleQuery());
+            return Ok(result);
+        }
+
         [HttpPut("{personId}")]
+        [Route("Update")]
         public async Task<IActionResult> Update([FromRoute] Guid personId, [FromBody] Person person)
         {
             var result = await sender.Send(new UpdatePersonCommand(personId, person));
@@ -90,6 +88,7 @@ namespace People.Presentation.Server.Controllers
         }
 
         [HttpDelete("{personId}")]
+        [Route("Remove")]
         public async Task<IActionResult> Remove([FromRoute] Guid personId)
         {
             var result = await sender.Send(new RemovePersonCommand(personId));
