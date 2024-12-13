@@ -11,9 +11,8 @@ namespace People.Presentation.Server.Controllers
     [Route("[controller]")]
     public class PeopleController(ISender sender) : ControllerBase
     {
-
-
         [HttpPost]
+        [Route("Create")]
         public async Task<IActionResult> Create([FromBody] Person person)
         {
             try
@@ -25,8 +24,7 @@ namespace People.Presentation.Server.Controllers
             }
             catch (Exception e)
             {
-                // Logging
-                var responseWrapper = new ResponseWrapperDTO<Person>(HttpStatusCode.OK, "", true, null);
+                var responseWrapper = new ResponseWrapperDTO<Person>(HttpStatusCode.InternalServerError, e.Message, false, null);
 
                 return Ok(responseWrapper);
             }
