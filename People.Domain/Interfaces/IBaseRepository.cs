@@ -1,5 +1,8 @@
 namespace People.Domain.Interfaces;
 
+/// <summary>
+/// Generic Base Repository
+/// </summary>
 public interface IBaseRepository<T> where T : class
 {
     Task<T> Create(T person);

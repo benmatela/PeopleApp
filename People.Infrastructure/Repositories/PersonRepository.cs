@@ -6,7 +6,7 @@ using People.Infrastructure.Persistance;
 
 namespace People.Infrastructure.Repositories;
 
-internal class PersonRepository(ApplicationDbContext dbContext) : IBaseRepository<Person>
+public class PersonRepository(ApplicationDbContext dbContext) : IPersonRepository
 {
     public async Task<Person> Create(Person person)
     {
