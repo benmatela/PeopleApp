@@ -38,7 +38,7 @@ namespace People.Presentation.Server.Controllers
             }
         }
 
-        [HttpGet("{personId}")]
+        [HttpGet]
         [Route("Get")]
         public async Task<IActionResult> Get([FromRoute] Guid personId)
         {
@@ -79,7 +79,7 @@ namespace People.Presentation.Server.Controllers
             return Ok(result);
         }
 
-        [HttpPut("{personId}")]
+        [HttpPut]
         [Route("Update")]
         public async Task<IActionResult> Update([FromRoute] Guid personId, [FromBody] Person person)
         {
@@ -87,7 +87,7 @@ namespace People.Presentation.Server.Controllers
             return Ok(result);
         }
 
-        [HttpDelete("{personId}")]
+        [HttpDelete]
         [Route("Remove")]
         public async Task<IActionResult> Remove([FromRoute] Guid personId)
         {
