@@ -1,4 +1,6 @@
-namespace People.Presentation.Server.Extensions;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace People.Application.Extensions;
 
 public static class ServiceCollectionExtensions
 {
@@ -7,6 +9,6 @@ public static class ServiceCollectionExtensions
     /// </summary>
     public static void AddApplicationDI(this IServiceCollection services)
     {
-        services.AddMediatR(cf => cf.RegisterServicesFromAssembly(typeof(Program).Assembly));
+        services.AddMediatR(cf => cf.RegisterServicesFromAssembly(typeof(ServiceCollectionExtensions).Assembly));
     }
 }

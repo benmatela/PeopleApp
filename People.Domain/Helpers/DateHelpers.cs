@@ -1,4 +1,4 @@
-namespace People.Infrastructure.Helpers;
+namespace People.Domain.Helpers;
 
 public static class DateHelpers
 {

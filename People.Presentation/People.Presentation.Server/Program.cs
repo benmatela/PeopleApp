@@ -1,5 +1,5 @@
+using People.Application.Extensions;
 using People.Infrastructure.Extensions;
-using People.Presentation.Server.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
