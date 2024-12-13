@@ -2,6 +2,7 @@ using System.Net;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using People.Application.Commands;
+using People.Application.Queries;
 using People.Domain.Entities;
 using People.Presentation.Server.Models;
 
@@ -39,29 +40,39 @@ namespace People.Presentation.Server.Controllers
             }
         }
 
-        [HttpPost]
-        [Route("Remove")]
-        public async Task<IActionResult> Remove([FromBody] Person person)
+        [HttpGet]
+        [Route("GetAllEmployeesAsync")]
+
+        public async Task<IActionResult> GetAllEmployeesAsync()
+        {
+            var result = await sender.Send(new GetAllPeopleQuery());
+            return Ok(result);
+        }
+
+        [HttpGet("{personId}")]
+        [Route("GetAllEmployeesAsync")]
+        public async Task<IActionResult> Get([FromRoute] Guid personId)
         {
             var responseWrapper = new ResponseWrapperDTO<Person>();
             try
             {
-                var result = await sender.Send(new CreatePersonCommand(person));
+                var result = await sender.Send(new GetPersonByIdQuery(personId));
                 if (result is null)
                 {
-                    responseWrapper.StatusCode = HttpStatusCode.NotFound;
-                    responseWrapper.Message = notFoundMessage;
+                    // Build our response
                     responseWrapper.Success = false;
-
-                    return NotFound(responseWrapper);
+                    responseWrapper.Message = notFoundMessage;
+                    responseWrapper.StatusCode = HttpStatusCode.NotFound;
                 }
 
+                // Build our response
                 responseWrapper.Data = result;
 
                 return Ok(responseWrapper);
             }
             catch (Exception e)
             {
+                // Build our response
                 responseWrapper.Exception = e;
                 responseWrapper.Message = e.Message;
                 responseWrapper.Success = false;
@@ -69,6 +80,20 @@ namespace People.Presentation.Server.Controllers
 
                 return Ok(responseWrapper);
             }
+        }
+
+        [HttpPut("{personId}")]
+        public async Task<IActionResult> Update([FromRoute] Guid personId, [FromBody] Person person)
+        {
+            var result = await sender.Send(new UpdatePersonCommand(personId, person));
+            return Ok(result);
+        }
+
+        [HttpDelete("{personId}")]
+        public async Task<IActionResult> Remove([FromRoute] Guid personId)
+        {
+            var result = await sender.Send(new RemovePersonCommand(personId));
+            return Ok(result);
         }
     }
 }
