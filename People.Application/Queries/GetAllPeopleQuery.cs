@@ -2,7 +2,7 @@ using MediatR;
 using People.Domain.Entities;
 using People.Domain.Interfaces;
 
-namespace People.Application.Commands;
+namespace People.Application.Queries;
 
 public record GetAllPeopleQuery() : IRequest<IEnumerable<Person>>;
 
