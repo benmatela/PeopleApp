@@ -11,6 +11,8 @@ public class PersonRepository(ApplicationDbContext dbContext) : IPersonRepositor
     public async Task<Person> Create(Person person)
     {
         person.Id = Guid.NewGuid();
+        person.Age = DateHelpers.GetAge(person.DateOfBirth);
+
         dbContext.People.Add(person);
 
         await dbContext.SaveChangesAsync();
@@ -26,19 +28,6 @@ public class PersonRepository(ApplicationDbContext dbContext) : IPersonRepositor
     public async Task<IEnumerable<Person>> GetAll()
     {
         return await dbContext.People.ToListAsync();
-    }
-
-    public async Task<bool> Remove(Guid personId)
-    {
-        var existingPerson = await dbContext.People.FirstOrDefaultAsync(person => person.Id == personId);
-        if (existingPerson is not null)
-        {
-            dbContext.Remove(existingPerson);
-
-            return await dbContext.SaveChangesAsync() > 0;
-        }
-
-        return false;
     }
 
     public async Task<Person> Update(Guid personId, Person person)
@@ -58,4 +47,18 @@ public class PersonRepository(ApplicationDbContext dbContext) : IPersonRepositor
 
         return person;
     }
+
+    public async Task<bool> Remove(Guid personId)
+    {
+        var existingPerson = await dbContext.People.FirstOrDefaultAsync(person => person.Id == personId);
+        if (existingPerson is not null)
+        {
+            dbContext.Remove(existingPerson);
+
+            return await dbContext.SaveChangesAsync() > 0;
+        }
+
+        return false;
+    }
+
 }
