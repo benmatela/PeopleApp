@@ -1,0 +1,61 @@
+using Microsoft.EntityFrameworkCore;
+using People.Domain.Entities;
+using People.Domain.Interfaces;
+using People.Infrastructure.Helpers;
+using People.Infrastructure.Persistance;
+
+namespace People.Infrastructure.Repositories;
+
+internal class PersonRepository(ApplicationDbContext dbContext) : IBaseRepository<Person>
+{
+    public async Task<Person> Create(Person person)
+    {
+        person.Id = Guid.NewGuid();
+        dbContext.People.Add(person);
+
+        await dbContext.SaveChangesAsync();
+
+        return person;
+    }
+
+    public async Task<Person> Get(Guid personId)
+    {
+        return await dbContext.People.FirstOrDefaultAsync(person => person.Id == personId);
+    }
+
+    public Task<IEnumerable<Person>> GetAll()
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<bool> Remove(Guid personId)
+    {
+        var existingPerson = await dbContext.People.FirstOrDefaultAsync(person => person.Id == personId);
+        if (existingPerson is not null)
+        {
+            dbContext.Remove(existingPerson);
+
+            return await dbContext.SaveChangesAsync() > 0;
+        }
+
+        return false;
+    }
+
+    public async Task<Person> Update(Guid personId, Person person)
+    {
+        var existingPerson = await dbContext.People.FirstOrDefaultAsync(person => person.Id == personId);
+        if (existingPerson is not null)
+        {
+            existingPerson.FirstName = person.FirstName;
+            existingPerson.LastName = person.LastName;
+            existingPerson.DateOfBirth = person.DateOfBirth;
+            existingPerson.Age = DateHelpers.GetAge(person.DateOfBirth);
+
+            await dbContext.SaveChangesAsync();
+
+            return existingPerson;
+        }
+
+        return person;
+    }
+}
