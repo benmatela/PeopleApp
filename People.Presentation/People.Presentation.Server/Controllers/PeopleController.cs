@@ -42,7 +42,6 @@ namespace People.Presentation.Server.Controllers
         [Route("Get/{personId}")]
         public async Task<IActionResult> Get([FromRoute] Guid personId)
         {
-            Console.WriteLine("Input: {0}", personId);
             var responseWrapper = new ResponseWrapperDTO<Person>();
             try
             {
@@ -106,7 +105,7 @@ namespace People.Presentation.Server.Controllers
         }
 
         [HttpPut]
-        [Route("Update")]
+        [Route("Update/{personId}")]
         public async Task<IActionResult> Update([FromRoute] Guid personId, [FromBody] Person person)
         {
             var responseWrapper = new ResponseWrapperDTO<Person>();
@@ -139,19 +138,19 @@ namespace People.Presentation.Server.Controllers
         }
 
         [HttpDelete]
-        [Route("Remove")]
+        [Route("Remove/{personId}")]
         public async Task<IActionResult> Remove([FromRoute] Guid personId)
         {
             var responseWrapper = new ResponseWrapperDTO<bool>();
             try
             {
                 var result = await sender.Send(new RemovePersonCommand(personId));
-               
+
                 // Build our response
                 responseWrapper.Data = result;
                 responseWrapper.Message = result ? "" : "Item not deleted.";
                 responseWrapper.StatusCode = result ? HttpStatusCode.OK : HttpStatusCode.BadRequest;
-                responseWrapper.Success = result ? true : false;
+                responseWrapper.Success = result;
 
                 return Ok(responseWrapper);
             }
