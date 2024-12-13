@@ -1,4 +1,4 @@
-namespace Person.Domain.Entities;
+namespace People.Domain.Entities;
 
 /// <summary>
 /// Person Entity
