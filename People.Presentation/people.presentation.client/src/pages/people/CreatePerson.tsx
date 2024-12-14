@@ -27,8 +27,6 @@ const CreatePerson = () => {
   const onSubmit: SubmitHandler<FieldValues> = (data: FieldValues) => {
     try {
       const personToCreate: ICreatePersonRequest = data as any;
-      personToCreate.age = 0;
-      personToCreate.dateCreated = "";
 
       setCurrentPerson(personToCreate);
 

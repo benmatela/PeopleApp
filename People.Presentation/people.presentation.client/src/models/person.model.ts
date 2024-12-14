@@ -10,9 +10,7 @@ interface IBasePersonRequest {
  * DTO used to create a new person
  */
 export interface ICreatePersonRequest extends IBasePersonRequest {
-  dateCreated: string;
   dateOfBirth: string;
-  age: number;
 }
 
 /**
@@ -20,6 +18,8 @@ export interface ICreatePersonRequest extends IBasePersonRequest {
  */
 export interface IUpdatePersonRequest extends IBasePersonRequest {
   id: string;
+  age: number;
+  dateCreated: string;
 }
 
 /**
