@@ -1,6 +1,6 @@
 using People.Application.DTOs;
 
-namespace People.Application.Repositories;
+namespace People.Application.Interfaces;
 
 /// <summary>
 /// Person Repository

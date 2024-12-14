@@ -1,6 +1,6 @@
 using MediatR;
 using People.Application.DTOs;
-using People.Application.Repositories;
+using People.Application.Interfaces;
 
 namespace People.Application.Commands;
 
