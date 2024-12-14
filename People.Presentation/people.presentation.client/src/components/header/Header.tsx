@@ -10,7 +10,7 @@ type HeaderProps = {
 
 /**
  * Top header component
- * 
+ *
  * @param {HeaderProps} headerProps
  *
  * @returns {JSX.Element} component
@@ -19,8 +19,8 @@ const Header = ({ title, subTitle }: HeaderProps) => {
   return (
     <div className="jumbotron jumbotron-fluid header">
       <div className="container">
-        <h1>{title}</h1>
-        <p className="lead">{subTitle}</p>
+        <h1 className="title">{title}</h1>
+        <h3 className="sub-title">{subTitle}</h3>
       </div>
     </div>
   );

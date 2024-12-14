@@ -74,10 +74,6 @@ const formFields: IFormField[] = [
     placeholder: "Enter your date of birth",
     validation: {
       required: "Date Of Birth is required",
-      minLength: {
-        value: 3,
-        message: "Date Of Birth must be at least 3 characters",
-      },
     },
   },
 ];
