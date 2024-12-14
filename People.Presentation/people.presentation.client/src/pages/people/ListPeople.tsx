@@ -6,7 +6,7 @@ import { IPerson, IPersonResponse } from "../../models/person.model";
 import { CircleLoader } from "react-spinners";
 import { ColumnDef } from "@tanstack/react-table";
 import { ReusableTable } from "../../components/tables/ReusableTable";
-import { Button } from "@mui/material";
+import { Button, Grid2 } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
 
 interface ListPeopledProps {
@@ -145,11 +145,11 @@ export const ListPeople = ({
   };
 
   return (
-    <>
+    <Grid2>
       {isLoading ? (
-        <div>
+        <Grid2>
           <CircleLoader size={100} color="#2563eb" />
-        </div>
+        </Grid2>
       ) : (
         <>
           <p>{successMessage}</p>
@@ -157,6 +157,6 @@ export const ListPeople = ({
           <ReusableTable columns={tableColumns} data={allPeople} />
         </>
       )}
-    </>
+    </Grid2>
   );
 };

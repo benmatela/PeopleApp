@@ -5,6 +5,7 @@ import { ListPeople } from "./ListPeople";
 import { UpdatePerson } from "./UpdatePerson";
 import { Grid2 } from "@mui/material";
 import { IPerson } from "../../models/person.model";
+import { AlertDialog } from "../../components/modals/ConfirmationModal";
 
 /**
  * @returns {JSX.Element} component
@@ -29,6 +30,7 @@ export const People = () => {
         setCurrentlySelectedUser={setCurrentlySelectedUser}
         setIsCreateMode={setIsCreateMode}
       />
+      <AlertDialog />
     </Grid2>
   );
 };
