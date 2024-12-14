@@ -6,6 +6,7 @@ import { IPerson, IPersonResponse } from "../../models/person.model";
 import { CircleLoader } from "react-spinners";
 import { ColumnDef } from "@tanstack/react-table";
 import { ReusableTable } from "../../components/tables/ReusableTable";
+import { Button } from "@mui/material";
 
 /**
  * @returns {JSX.Element} component
@@ -81,16 +82,19 @@ export const ListPeople = () => {
       header: "Created Date",
     },
     {
-      id: "edit",
-      accessorKey: "[row identifier to be passed to button]",
+      id: "editPerson",
+      header: "Edit",
+      accessorKey: "editPerson",
       cell: (value: any) => (
-        <button
+        <Button
+          variant="contained"
+          disabled={isLoading}
           onClick={() => {
             onEditTableRow(value);
           }}
         >
           Edit
-        </button>
+        </Button>
       ),
     },
   ];
