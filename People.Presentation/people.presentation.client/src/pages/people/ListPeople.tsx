@@ -34,7 +34,8 @@ export const ListPeople = ({
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [allPeople, setAllPeople] = useState<IPerson[]>([]);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isConfirmDialogOpen, setIsConfirmDialogOpen] =
+    useState<boolean>(false);
   const tableColumns: ColumnDef<any, any>[] = [
     {
       accessorKey: "id",
@@ -70,7 +71,7 @@ export const ListPeople = ({
           disabled={isLoading}
           sx={{ backgroundColor: "#be123c", color: "white" }}
           onClick={() => {
-            onDeleteTableRow(value.cell.row.original);
+            onSelectPersonToDelete(value.cell.row.original);
           }}
         >
           <Delete /> Delete
@@ -86,7 +87,7 @@ export const ListPeople = ({
           variant="contained"
           disabled={isLoading}
           onClick={() => {
-            onEditTableRow(value.cell.row.original);
+            onSelectPersonToUpdate(value.cell.row.original);
           }}
         >
           <Edit /> Edit
@@ -133,19 +134,30 @@ export const ListPeople = ({
    *
    * @param {IPerson} person
    */
-  const onEditTableRow = (person: IPerson) => {
+  const onSelectPersonToUpdate = (person: IPerson) => {
     setIsCreateMode(false);
     setCurrentlySelectedUser(person);
   };
 
   /**
-   * When the delete button for a row is clicked
+   * Handles the delete button press for a person row
    *
    * @param {IPerson} person
    */
-  const onDeleteTableRow = (value: any) => {
+  const onSelectPersonToDelete = (value: any) => {
     setIsCreateMode(true);
     setCurrentlySelectedUser(value);
+  };
+
+  /**
+   * Deletes a person after dialog confirmation
+   */
+  const onConfirmDeletePerson = () => {
+    try {
+      console.log("confirmed...");
+    } catch (error: any) {
+      console.log(error.message);
+    }
   };
 
   return (
@@ -165,8 +177,9 @@ export const ListPeople = ({
             description={`Are you sure you want to delete this person: ${currentlySelectedUser?.firstName} ${currentlySelectedUser?.lastName}?`}
             closeButtonLabel={"Cancel"}
             okButtonLabel={"Delete"}
-            setIsModalOpen={setIsModalOpen}
-            isModalOpen={isModalOpen}
+            setIsModalOpen={setIsConfirmDialogOpen}
+            isModalOpen={isConfirmDialogOpen}
+            onConfirm={onConfirmDeletePerson}
           />
         </>
       )}
