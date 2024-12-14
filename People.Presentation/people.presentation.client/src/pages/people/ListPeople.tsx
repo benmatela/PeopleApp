@@ -4,6 +4,7 @@ import * as peopleService from "../../services/people.service";
 import { IResponseWrapper } from "../../models/response-wrapper.model";
 import { IPersonResponse } from "../../models/person.model";
 import { CircleLoader } from "react-spinners";
+import { CustomPaginationActionsTable } from "../../components/tables/TablePaginationActionsProps";
 
 /**
  * @returns {JSX.Element} component
@@ -50,7 +51,9 @@ const ListPeople = () => {
         <div>
           <CircleLoader size={100} color="#2563eb" />
         </div>
-      ) : null}
+      ) : (
+        <CustomPaginationActionsTable />
+      )}
       <p>{successMessage}</p>
       <p>{errorMessage}</p>
     </>
