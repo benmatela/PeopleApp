@@ -10,10 +10,10 @@ import { IPerson, IPersonResponse } from "../../models/person.model";
 /**
  * @returns {JSX.Element} component
  */
-const CreatePerson = () => {
+const UpdatePerson = () => {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState<string>("");
-  const [isSaving, setIsSaving] = useState<boolean>(false);
+  const [isUpdating, setIsUpdating] = useState<boolean>(false);
   const [currentPerson, setCurrentPerson] = useState<IPerson>();
 
   /**
@@ -28,7 +28,7 @@ const CreatePerson = () => {
 
       setCurrentPerson(personToCreate);
 
-      createNewPerson(personToCreate).then((response: IPersonResponse) => {
+      updatePerson(personToCreate).then((response: IPersonResponse) => {
         console.log(response);
       });
     } catch (error: any) {
@@ -38,14 +38,14 @@ const CreatePerson = () => {
   };
 
   /**
-   * Creates a new person
+   * Updates a person
    *
    * @param {IPerson} person
    *
    * @throws {Error} error
    */
-  const createNewPerson = async (person: IPerson): Promise<IPersonResponse> => {
-    setIsSaving(true);
+  const updatePerson = async (person: IPerson): Promise<IPersonResponse> => {
+    setIsUpdating(true);
     try {
       const apiResponse: IResponseWrapper<IPersonResponse> =
         await peopleService.create(person);
@@ -54,11 +54,11 @@ const CreatePerson = () => {
         throw new Error(apiResponse.message);
       }
 
-      setIsSaving(false);
+      setIsUpdating(false);
 
       return apiResponse.data;
     } catch (error: any) {
-      setIsSaving(false);
+      setIsUpdating(false);
       throw new Error(error.message);
     }
   };
@@ -68,7 +68,7 @@ const CreatePerson = () => {
       <ReusableForm
         fields={formFields}
         onSubmit={onSubmit}
-        isLoading={isSaving}
+        isLoading={isUpdating}
       />
       <p>{successMessage}</p>
       <p>{errorMessage}</p>
@@ -115,4 +115,4 @@ const formFields: IFormField[] = [
   },
 ];
 
-export default CreatePerson;
+export default UpdatePerson;

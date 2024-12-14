@@ -11,7 +11,7 @@ export interface IPerson {
 }
 
 /**
- * DTO used to transfer a person(s) data
+ * DTO used to transfer person(s) data
  */
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface IPersonResponse extends IPerson {

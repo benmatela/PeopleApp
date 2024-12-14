@@ -8,12 +8,12 @@ import { IPerson, IPersonResponse } from "../models/person.model";
 /**
  * Creates a new person
  *
- * @param {IPersonRequest} request
+ * @param {IPerson} person
  *
  * @returns {IResponseWrapper<IPersonResponse>} response
  */
 export const create = async (
-  request: IPerson
+  person: IPerson
 ): Promise<IResponseWrapper<IPersonResponse>> => {
   try {
     const headersConfig = {
@@ -22,7 +22,41 @@ export const create = async (
 
     const apiResponse = await axios.post(
       `${peopleApiBaseUrl}/${people}/Create`,
-      request,
+      person,
+      headersConfig
+    );
+
+    // Build our response
+    const responseWrapper = {} as IResponseWrapper<IPersonResponse>;
+    responseWrapper.data = apiResponse.data;
+    responseWrapper.statusCode = HttpStatusCode.Ok;
+    responseWrapper.message = "";
+    responseWrapper.success = true;
+
+    return responseWrapper;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+};
+
+/**
+ * Updates a person
+ *
+ * @param {IPerson} person
+ *
+ * @returns {IResponseWrapper<IPersonResponse>} response
+ */
+export const update = async (
+  person: IPerson
+): Promise<IResponseWrapper<IPersonResponse>> => {
+  try {
+    const headersConfig = {
+      headers: {},
+    };
+
+    const apiResponse = await axios.put(
+      `${peopleApiBaseUrl}/${people}/Update`,
+      person,
       headersConfig
     );
 
