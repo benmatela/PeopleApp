@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace People.Application.Extensions;
 
-public static class ServiceCollectionExtensions
+public static class DependencyInjection
 {
     /// <summary>
     /// Allows us to use the MediatR in the Presentation layer using Dependency Injection.

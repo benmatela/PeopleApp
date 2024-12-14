@@ -5,7 +5,7 @@ using People.Infrastructure.Repositories;
 
 namespace People.Infrastructure.Extensions;
 
-public static class ServiceCollectionExtensions
+public static class DependencyInjection
 {
     /// <summary>
     /// Allows us to use the DB Context in the Presentation layer using Dependency Injection.
