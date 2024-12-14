@@ -4,7 +4,6 @@ import * as peopleService from "../../services/people.service";
 import { IResponseWrapper } from "../../models/response-wrapper.model";
 import { IPerson, IPersonResponse } from "../../models/person.model";
 import { CircleLoader } from "react-spinners";
-import { Chip } from "@mui/material";
 import { ColumnDef } from "@tanstack/react-table";
 import { ReusableTable } from "../../components/tables/ReusableTable";
 
@@ -52,31 +51,47 @@ export const ListPeople = () => {
     }
   };
 
+  const onEditTableRow = (value: any) => {
+    console.log("value: ", value);
+  };
+
   const tableColumns: ColumnDef<any, any>[] = [
     {
-      accessorKey: "name",
-      header: "Name",
+      accessorKey: "id",
+      header: "ID",
     },
     {
-      accessorKey: "email",
-      header: "Email",
+      accessorKey: "firstName",
+      header: "First Name",
     },
     {
-      accessorKey: "gender",
-      header: "Gender",
+      accessorKey: "lastName",
+      header: "Last Name",
     },
     {
-      accessorKey: "status",
-      header: "Status",
-      cell: (row: any) => {
-        return (
-          <Chip
-            label={row.getValue()}
-            size="small"
-            color={row.getValue() === "active" ? "primary" : "default"}
-          />
-        );
-      },
+      accessorKey: "age",
+      header: "Age",
+    },
+    {
+      accessorKey: "dateOfBirth",
+      header: "Date Of Birth",
+    },
+    {
+      accessorKey: "dateCreated",
+      header: "Created Date",
+    },
+    {
+      id: "edit",
+      accessorKey: "[row identifier to be passed to button]",
+      cell: (value: any) => (
+        <button
+          onClick={() => {
+            onEditTableRow(value);
+          }}
+        >
+          Edit
+        </button>
+      ),
     },
   ];
 
