@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using People.Application.Repositories;
 using People.Domain.Entities;
 using People.Domain.Helpers;
-using People.Domain.Interfaces;
 using People.Infrastructure.Persistance;
 
 namespace People.Infrastructure.Repositories;

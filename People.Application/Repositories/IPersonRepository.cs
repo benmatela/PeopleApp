@@ -1,6 +1,6 @@
 using People.Domain.Entities;
 
-namespace People.Domain.Interfaces;
+namespace People.Application.Repositories;
 
 public interface IPersonRepository: IBaseRepository<Person>
 {

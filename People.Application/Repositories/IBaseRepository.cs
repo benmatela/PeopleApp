@@ -1,4 +1,4 @@
-namespace People.Domain.Interfaces;
+namespace People.Application.Repositories;
 
 /// <summary>
 /// Generic Base Repository
