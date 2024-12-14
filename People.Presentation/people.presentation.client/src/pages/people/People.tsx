@@ -28,6 +28,7 @@ export const People = () => {
       <ListPeople
         setCurrentlySelectedUser={setCurrentlySelectedUser}
         setIsCreateMode={setIsCreateMode}
+        currentlySelectedUser={currentlySelectedUser}
       />
     </Grid2>
   );

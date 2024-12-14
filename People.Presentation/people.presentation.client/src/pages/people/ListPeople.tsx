@@ -11,6 +11,7 @@ import { Delete, Edit } from "@mui/icons-material";
 import { ConfirmationDialog } from "../../components/dialogs/ConfirmationDialog";
 
 interface ListPeopledProps {
+  currentlySelectedUser: IPerson | undefined;
   setIsCreateMode: Dispatch<React.SetStateAction<boolean>>;
   setCurrentlySelectedUser: React.Dispatch<
     React.SetStateAction<IPerson | undefined>
@@ -25,6 +26,7 @@ interface ListPeopledProps {
  * @returns {JSX.Element} component
  */
 export const ListPeople = ({
+  currentlySelectedUser,
   setCurrentlySelectedUser,
   setIsCreateMode,
 }: ListPeopledProps) => {
@@ -160,7 +162,7 @@ export const ListPeople = ({
 
           <ConfirmationDialog
             title={"Delete Person"}
-            description={`Are you sure you want to delete this person?`}
+            description={`Are you sure you want to delete this person: ${currentlySelectedUser?.firstName} ${currentlySelectedUser?.lastName}?`}
             closeButtonLabel={"Cancel"}
             okButtonLabel={"Delete"}
             setIsModalOpen={setIsModalOpen}
