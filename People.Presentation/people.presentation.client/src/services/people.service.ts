@@ -16,9 +16,6 @@ export const Create = async (
   request: ICreatePersonRequest
 ): Promise<IResponseWrapper<IPersonResponse>> => {
   try {
-    // Initialize default service 📜 response
-    const responseWrapper = {} as IResponseWrapper<IPersonResponse>;
-
     const headersConfig = {
       headers: {},
     };
@@ -32,6 +29,7 @@ export const Create = async (
     );
 
     // Build our response
+    const responseWrapper = {} as IResponseWrapper<IPersonResponse>;
     responseWrapper.data = apiResponse.data;
     responseWrapper.statusCode = HttpStatusCode.Ok;
     responseWrapper.message = "";
