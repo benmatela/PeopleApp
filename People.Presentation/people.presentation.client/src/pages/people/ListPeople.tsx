@@ -6,7 +6,7 @@ import { IPerson, IPersonResponse } from "../../models/person.model";
 import { CircleLoader } from "react-spinners";
 import { ColumnDef } from "@tanstack/react-table";
 import { ReusableTable } from "../../components/tables/ReusableTable";
-import { Button, Grid2, TextField } from "@mui/material";
+import { Button } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
 
 /**
@@ -126,45 +126,6 @@ export const ListPeople = () => {
         </div>
       ) : (
         <>
-          <Grid2 container spacing={24}>
-            <Grid2>
-              <TextField
-                id="re_ps"
-                label="PS"
-                value={""}
-                onChange={() => {}}
-                margin="normal"
-                type="number"
-                variant="filled"
-                style={{ paddingRight: "20px", width: "170px" }}
-              />
-            </Grid2>
-            <Grid2>
-              <TextField
-                id="re_mooe"
-                label="MOOE"
-                value={"value"}
-                onChange={() => {}}
-                margin="normal"
-                type="number"
-                variant="filled"
-                style={{ paddingRight: "20px", width: "170px" }}
-              />
-            </Grid2>
-            <Grid2>
-              <TextField
-                id="re_co"
-                label="CO"
-                value={"test"}
-                onChange={() => {}}
-                margin="normal"
-                type="number"
-                variant="filled"
-                style={{ paddingRight: "20px", width: "170px" }}
-              />
-            </Grid2>
-          </Grid2>
-
           <p>{successMessage}</p>
           <p>{errorMessage}</p>
           <ReusableTable columns={tableColumns} data={allPeople} />

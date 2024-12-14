@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { IFormField } from "../../models/form.model";
 import { CircleLoader } from "react-spinners";
@@ -61,6 +60,45 @@ export const ReusableForm: React.FC<ReusableFormProps> = ({
           </Button>
         )}
       </form>
+
+      <Grid2 container spacing={24}>
+        <Grid2>
+          <TextField
+            id="re_ps"
+            label="PS"
+            value={""}
+            onChange={() => {}}
+            margin="normal"
+            type="number"
+            variant="filled"
+            style={{ paddingRight: "20px", width: "170px" }}
+          />
+        </Grid2>
+        <Grid2>
+          <TextField
+            id="re_mooe"
+            label="MOOE"
+            value={"value"}
+            onChange={() => {}}
+            margin="normal"
+            type="number"
+            variant="filled"
+            style={{ paddingRight: "20px", width: "170px" }}
+          />
+        </Grid2>
+        <Grid2>
+          <TextField
+            id="re_co"
+            label="CO"
+            value={"test"}
+            onChange={() => {}}
+            margin="normal"
+            type="number"
+            variant="filled"
+            style={{ paddingRight: "20px", width: "170px" }}
+          />
+        </Grid2>
+      </Grid2>
     </Grid2>
   );
 };

@@ -19,9 +19,9 @@ export const CreatePerson = () => {
   const formFields: IFormField[] = [
     {
       name: "firstName",
-      label: "First Name",
+      label: "First Name:",
       type: "text",
-      placeholder: "Enter your first name",
+      placeholder: "First Name",
       validation: {
         required: "First Name is required",
         minLength: {
@@ -32,9 +32,9 @@ export const CreatePerson = () => {
     },
     {
       name: "lastName",
-      label: "Last Name",
+      label: "Last Name:",
       type: "text",
-      placeholder: "Enter your last name",
+      placeholder: "Last Name",
       validation: {
         required: "Last Name is required",
         minLength: {
@@ -45,9 +45,9 @@ export const CreatePerson = () => {
     },
     {
       name: "dateOfBirth",
-      label: "Date Of Birth",
+      label: "Date Of Birth:",
       type: "date",
-      placeholder: "Enter your date of birth",
+      placeholder: "Date Of Birth",
       validation: {
         required: "Date Of Birth is required",
       },
