@@ -15,6 +15,43 @@ export const UpdatePerson = () => {
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
   const [currentPerson, setCurrentPerson] = useState<IPerson>();
+  const formFields: IFormField[] = [
+    {
+      name: "firstName",
+      label: "First Name:",
+      type: "text",
+      placeholder: "First Name",
+      validation: {
+        required: "First Name is required",
+        minLength: {
+          value: 3,
+          message: "First Name must be at least 3 characters",
+        },
+      },
+    },
+    {
+      name: "lastName",
+      label: "Last Name:",
+      type: "text",
+      placeholder: "Last Name",
+      validation: {
+        required: "Last Name is required",
+        minLength: {
+          value: 3,
+          message: "Last Name must be at least 3 characters",
+        },
+      },
+    },
+    {
+      name: "dateOfBirth",
+      label: "Date Of Birth:",
+      type: "date",
+      placeholder: "Date Of Birth",
+      validation: {
+        required: "Date Of Birth is required",
+      },
+    },
+  ];
 
   /**
    * Submits the form
@@ -75,41 +112,3 @@ export const UpdatePerson = () => {
     </>
   );
 };
-
-const formFields: IFormField[] = [
-  {
-    name: "firstName",
-    label: "First Name",
-    type: "text",
-    placeholder: "Enter your first name",
-    validation: {
-      required: "First Name is required",
-      minLength: {
-        value: 3,
-        message: "First Name must be at least 3 characters",
-      },
-    },
-  },
-  {
-    name: "lastName",
-    label: "Last Name",
-    type: "text",
-    placeholder: "Enter your last name",
-    validation: {
-      required: "Last Name is required",
-      minLength: {
-        value: 3,
-        message: "Last Name must be at least 3 characters",
-      },
-    },
-  },
-  {
-    name: "dateOfBirth",
-    label: "Date Of Birth",
-    type: "date",
-    placeholder: "Enter your date of birth",
-    validation: {
-      required: "Date Of Birth is required",
-    },
-  },
-];
