@@ -1,0 +1,26 @@
+services:
+  # backend:
+  #   build:
+  #     context: ./backend
+  #   ports:
+  #     - "5000:80"  # Exposing backend API on port 5000 (IIS Express runs on port 80 inside the container)
+  #   networks:
+  #     - webapp-network
+  #   depends_on:
+  #     - frontend
+  #   environment:
+  #     - ASPNETCORE_URLS=http://+:80 # This allows IIS Express to listen on port 80
+
+  client:
+    build:
+      context: ./People.Presentation/people.presentation.client
+    ports:
+      - "3000:80"  # Exposing React app on port 3000
+    networks:
+      - webapp-network
+    environment:
+      - REACT_APP_API_URL=http://backend:5000  # Set API URL for React to interact with the backend
+
+networks:
+  webapp-network:
+    driver: bridge
