@@ -33,6 +33,7 @@ export const ListPeople = ({
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isDeleting, setIsDeleting] = useState<boolean>(false);
   const [allPeople, setAllPeople] = useState<IPerson[]>([]);
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] =
     useState<boolean>(false);
@@ -105,7 +106,7 @@ export const ListPeople = ({
    *
    * @throws {Error} error
    */
-  const getAllPeople = async (): Promise<void> => {
+  const getAllPeople = async () => {
     setIsLoading(true);
     setErrorMessage("");
     setSuccessMessage("");
@@ -144,7 +145,7 @@ export const ListPeople = ({
    *
    * @param {IPerson} person
    */
-  const onSelectPersonToDelete = (value: any) => {
+  const onSelectPersonToDelete = (value: IPerson) => {
     setIsCreateMode(true);
     setCurrentlySelectedUser(value);
   };
@@ -153,16 +154,19 @@ export const ListPeople = ({
    * Deletes a person after dialog confirmation
    */
   const onConfirmDeletePerson = () => {
+    setIsDeleting(true);
     try {
       console.log("confirmed...");
+      setIsDeleting(false);
     } catch (error: any) {
       console.log(error.message);
+      setIsDeleting(false);
     }
   };
 
   return (
     <Grid2>
-      {isLoading ? (
+      {isLoading || isDeleting ? (
         <Grid2>
           <CircleLoader size={100} color="#2563eb" />
         </Grid2>
