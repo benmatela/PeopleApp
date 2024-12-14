@@ -31,7 +31,7 @@ export const ReusableForm: React.FC<ReusableFormProps> = ({
     <Grid2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid2
-        container
+          container
           direction="row"
           justifyContent={"space-evenly"}
           style={{ width: "100%" }}

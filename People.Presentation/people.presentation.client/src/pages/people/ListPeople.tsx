@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useState } from "react";
+import { Dispatch, useEffect, useState } from "react";
 import * as peopleService from "../../services/people.service";
 import { IResponseWrapper } from "../../models/response-wrapper.model";
 import { IPerson, IPersonResponse } from "../../models/person.model";
@@ -9,10 +9,24 @@ import { ReusableTable } from "../../components/tables/ReusableTable";
 import { Button } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
 
+interface ListPeopledProps {
+  setIsCreateMode: Dispatch<React.SetStateAction<boolean>>;
+  setCurrentlySelectedUser: React.Dispatch<
+    React.SetStateAction<IPerson | undefined>
+  >;
+}
+
 /**
+ * List all people
+ *
+ * @param {ListPeopledProps} listPeopledProps
+ *
  * @returns {JSX.Element} component
  */
-export const ListPeople = () => {
+export const ListPeople = ({
+  setCurrentlySelectedUser,
+  setIsCreateMode,
+}: ListPeopledProps) => {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -110,12 +124,24 @@ export const ListPeople = () => {
     }
   };
 
-  const onEditTableRow = (value: any) => {
-    console.log("value: ", value);
+  /**
+   * When the edit button for a row is clicked
+   *
+   * @param {IPerson} person
+   */
+  const onEditTableRow = (person: IPerson) => {
+    setIsCreateMode(true);
+    setCurrentlySelectedUser(person);
   };
 
+  /**
+   * When the delete button for a row is clicked
+   *
+   * @param {IPerson} person
+   */
   const onDeleteTableRow = (value: any) => {
-    console.log("value: ", value);
+    setIsCreateMode(true);
+    setCurrentlySelectedUser(value);
   };
 
   return (
