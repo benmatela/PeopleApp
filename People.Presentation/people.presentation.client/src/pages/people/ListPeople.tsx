@@ -4,12 +4,14 @@ import * as peopleService from "../../services/people.service";
 import { IResponseWrapper } from "../../models/response-wrapper.model";
 import { IPerson, IPersonResponse } from "../../models/person.model";
 import { CircleLoader } from "react-spinners";
-import { CustomPaginationActionsTable } from "../../components/tables/TablePaginationActionsProps";
+import { Chip } from "@mui/material";
+import { ColumnDef } from "@tanstack/react-table";
+import { ReusableTable } from "../../components/tables/ReusableTable";
 
 /**
  * @returns {JSX.Element} component
  */
-const ListPeople = () => {
+export const ListPeople = () => {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -50,6 +52,34 @@ const ListPeople = () => {
     }
   };
 
+  const tableColumns: ColumnDef<any, any>[] = [
+    {
+      accessorKey: "name",
+      header: "Name",
+    },
+    {
+      accessorKey: "email",
+      header: "Email",
+    },
+    {
+      accessorKey: "gender",
+      header: "Gender",
+    },
+    {
+      accessorKey: "status",
+      header: "Status",
+      cell: (row: any) => {
+        return (
+          <Chip
+            label={row.getValue()}
+            size="small"
+            color={row.getValue() === "active" ? "primary" : "default"}
+          />
+        );
+      },
+    },
+  ];
+
   return (
     <>
       {isLoading ? (
@@ -57,23 +87,10 @@ const ListPeople = () => {
           <CircleLoader size={100} color="#2563eb" />
         </div>
       ) : (
-        <CustomPaginationActionsTable
-          rows={allPeople}
-          tableColumns={tableColumns}
-        />
+        <ReusableTable columns={tableColumns} data={allPeople} />
       )}
       <p>{successMessage}</p>
       <p>{errorMessage}</p>
     </>
   );
 };
-
-const tableColumns: string[] = [
-  "Id",
-  "First Name",
-  "Last Name",
-  "Date Of Birth",
-  "Age",
-];
-
-export default ListPeople;

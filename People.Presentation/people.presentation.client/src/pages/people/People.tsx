@@ -1,13 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import Header from "../../components/header/Header";
-import CreatePerson from "./CreatePerson";
-import ListPeople from "./ListPeople";
-import UpdatePerson from "./UpdatePerson";
+import { Header } from "../../components/header/Header";
+import { CreatePerson } from "./CreatePerson";
+import { ListPeople } from "./ListPeople";
+import { UpdatePerson } from "./UpdatePerson";
 
 /**
  * @returns {JSX.Element} component
  */
-const People = () => {
+export const People = () => {
   return (
     <div>
       <Header
@@ -20,5 +19,3 @@ const People = () => {
     </div>
   );
 };
-
-export default People;

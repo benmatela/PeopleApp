@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FieldValues, SubmitHandler } from "react-hook-form";
-import ReusableForm from "../../components/forms/ReusableForm";
 import { IFormField } from "../../models/form.model";
 import { useState } from "react";
 import * as peopleService from "../../services/people.service";
 import { IResponseWrapper } from "../../models/response-wrapper.model";
 import { IPerson, IPersonResponse } from "../../models/person.model";
+import { ReusableForm } from "../../components/forms/ReusableForm";
 
 /**
  * @returns {JSX.Element} component
  */
-const UpdatePerson = () => {
+export const UpdatePerson = () => {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
@@ -113,5 +113,3 @@ const formFields: IFormField[] = [
     },
   },
 ];
-
-export default UpdatePerson;

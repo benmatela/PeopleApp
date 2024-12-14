@@ -17,7 +17,7 @@ interface ReusableFormProps {
  *
  * @returns {React.FC<ReusableFormProps>} component
  */
-const ReusableForm: React.FC<ReusableFormProps> = ({
+export const ReusableForm: React.FC<ReusableFormProps> = ({
   isLoading,
   fields,
   onSubmit,
@@ -64,5 +64,3 @@ const ReusableForm: React.FC<ReusableFormProps> = ({
     </Grid2>
   );
 };
-
-export default ReusableForm;

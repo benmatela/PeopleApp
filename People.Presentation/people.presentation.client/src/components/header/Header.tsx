@@ -15,7 +15,7 @@ type HeaderProps = {
  *
  * @returns {JSX.Element} component
  */
-const Header = ({ title, subTitle }: HeaderProps) => {
+export const Header = ({ title, subTitle }: HeaderProps) => {
   return (
     <div className="jumbotron jumbotron-fluid header">
       <div className="container">
@@ -25,5 +25,3 @@ const Header = ({ title, subTitle }: HeaderProps) => {
     </div>
   );
 };
-
-export default Header;

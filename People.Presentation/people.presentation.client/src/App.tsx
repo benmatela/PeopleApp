@@ -1,14 +1,17 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Home } from "./pages/home/Home";
-import People from "./pages/people/People";
 import { PageNotFound } from "./pages/page-not-found/PageNotFound";
 import "./App.css";
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+import { People } from "./pages/people/People";
 
-const App = () => {
+/**
+ * @returns {JSX.Element} component
+ */
+export const App = () => {
   const router = createBrowserRouter([
     {
       path: "*",
@@ -29,6 +32,4 @@ const App = () => {
   ]);
 
   return <RouterProvider router={router}></RouterProvider>;
-}
-
-export default App;
+};
