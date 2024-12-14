@@ -6,10 +6,11 @@ import * as peopleService from "../../services/people.service";
 import { IResponseWrapper } from "../../models/response-wrapper.model";
 import { IPerson, IPersonResponse } from "../../models/person.model";
 import { ReusableForm } from "../../components/forms/ReusableForm";
+import { MessageDialog } from "../../components/dialogs/MessageDialog";
 
 /**
  * Creates a new person
- * 
+ *
  * @returns {JSX.Element} component
  */
 export const CreatePerson = () => {
@@ -17,6 +18,8 @@ export const CreatePerson = () => {
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [isSaving, setIsSaving] = useState<boolean>(false);
   const [currentPerson, setCurrentPerson] = useState<IPerson>();
+  const [isMessageDialogOpen, setIsMessageDialogOpen] =
+    useState<boolean>(false);
 
   const formFields: IFormField[] = [
     {
@@ -95,6 +98,7 @@ export const CreatePerson = () => {
       }
 
       setSuccessMessage("Person created successfully.");
+      setIsMessageDialogOpen(true);
       setIsSaving(false);
     } catch (error: any) {
       setIsSaving(false);
@@ -110,6 +114,15 @@ export const CreatePerson = () => {
         onSubmit={onSubmit}
         isLoading={isSaving}
       />
+
+      <MessageDialog
+        title={"Success"}
+        description={"Person created successfully."}
+        okButtonLabel={"Ok"}
+        setIsModalOpen={setIsMessageDialogOpen}
+        isModalOpen={isMessageDialogOpen}
+      />
+
       <p>{successMessage}</p>
       <p>{errorMessage}</p>
       <p>{currentPerson?.firstName}</p>

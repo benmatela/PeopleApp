@@ -155,26 +155,27 @@ export const ListPeople = ({
    */
   const onConfirmDeletePerson = async () => {
     setIsDeleting(true);
-        setErrorMessage("");
-        setSuccessMessage("");
-        try {
-          const apiResponse: IResponseWrapper<null> =
-            await peopleService.remove(String(currentlySelectedUser?.id));
+    setErrorMessage("");
+    setSuccessMessage("");
+    try {
+      const apiResponse: IResponseWrapper<null> = await peopleService.remove(
+        String(currentlySelectedUser?.id)
+      );
 
-          console.log("apiResponse: ", apiResponse);
-    
-          if (!apiResponse.success) {
-            setErrorMessage(apiResponse.message);
-            setSuccessMessage("");
-            throw new Error(apiResponse.message);
-          }
-    
-          setSuccessMessage("Person deleted successfully.");
-          setIsDeleting(false);
-        } catch (error: any) {
-          setIsDeleting(false);
-          throw new Error(error.message);
-        }
+      console.log("apiResponse: ", apiResponse);
+
+      if (!apiResponse.success) {
+        setErrorMessage(apiResponse.message);
+        setSuccessMessage("");
+        throw new Error(apiResponse.message);
+      }
+
+      setSuccessMessage("Person deleted successfully.");
+      setIsDeleting(false);
+    } catch (error: any) {
+      setIsDeleting(false);
+      throw new Error(error.message);
+    }
   };
 
   return (
