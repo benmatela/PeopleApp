@@ -52,7 +52,7 @@ const ReusableForm: React.FC<ReusableFormProps> = ({
           </Grid2>
         ))}
         {isLoading ? (
-          <div className="d-flex justify-content-center">
+          <div className="">
             <CircleLoader size={100} color="#2563eb" />
           </div>
         ) : (

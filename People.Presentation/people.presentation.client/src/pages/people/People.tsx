@@ -1,13 +1,13 @@
-import { useEffect } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Header from "../../components/header/Header";
 import CreatePerson from "./CreatePerson";
+import ListPeople from "./ListPeople";
 import UpdatePerson from "./UpdatePerson";
 
+/**
+ * @returns {JSX.Element} component
+ */
 const People = () => {
-  useEffect(() => {
-    // populateWeatherData();
-  }, []);
-
   return (
     <div>
       <Header
@@ -16,6 +16,7 @@ const People = () => {
       />
       <CreatePerson />
       <UpdatePerson />
+      <ListPeople />
     </div>
   );
 };

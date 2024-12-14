@@ -72,3 +72,34 @@ export const update = async (
     throw new Error(error.message);
   }
 };
+
+/**
+ * Gets all people
+ *
+ * @returns {IResponseWrapper<IPersonResponse[]>} response
+ */
+export const getAll = async (): Promise<
+  IResponseWrapper<IPersonResponse[]>
+> => {
+  try {
+    const headersConfig = {
+      headers: {},
+    };
+
+    const apiResponse = await axios.get(
+      `${peopleApiBaseUrl}/${people}/GetAll`,
+      headersConfig
+    );
+
+    // Build our response
+    const responseWrapper = {} as IResponseWrapper<IPersonResponse[]>;
+    responseWrapper.data = apiResponse.data;
+    responseWrapper.statusCode = HttpStatusCode.Ok;
+    responseWrapper.message = "";
+    responseWrapper.success = true;
+
+    return responseWrapper;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+};
