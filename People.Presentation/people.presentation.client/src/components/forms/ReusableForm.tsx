@@ -2,7 +2,7 @@
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { IFormField } from "../../models/form.model";
 import { CircleLoader } from "react-spinners";
-import { Button, TextField, FormLabel } from "@mui/material";
+import { Button, TextField, FormLabel, Grid2 } from "@mui/material";
 
 interface ReusableFormProps {
   isLoading: boolean;
@@ -29,32 +29,39 @@ const ReusableForm: React.FC<ReusableFormProps> = ({
   } = useForm<FieldValues>();
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      {fields.map((field) => (
-        <div key={field.name}>
-          <FormLabel htmlFor={field.name}>{field.label}</FormLabel>
-          <TextField
-            id={field.name}
-            type={field.type}
-            placeholder={field.placeholder}
-            {...register(field.name, field.validation)}
-            className=""
-          />
-          {errors[field.name] && (
-            <span>{String(errors[field.name]?.message)}</span>
-          )}
-        </div>
-      ))}
-      {isLoading ? (
-        <div className="d-flex justify-content-center">
-          <CircleLoader size={100} color="#2563eb" />
-        </div>
-      ) : (
-        <Button variant="contained" type="submit" disabled={isLoading}>
-          Submit
-        </Button>
-      )}
-    </form>
+    <Grid2>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Grid2 container spacing={1}></Grid2>
+        {fields.map((field) => (
+          <Grid2 key={field.name}>
+            <Grid2>
+              <FormLabel htmlFor={field.name}>{field.label}</FormLabel>
+            </Grid2>
+            <Grid2>
+              <TextField
+                id={field.name}
+                type={field.type}
+                placeholder={field.placeholder}
+                {...register(field.name, field.validation)}
+                className=""
+              />
+              {errors[field.name] && (
+                <span>{String(errors[field.name]?.message)}</span>
+              )}
+            </Grid2>
+          </Grid2>
+        ))}
+        {isLoading ? (
+          <div className="d-flex justify-content-center">
+            <CircleLoader size={100} color="#2563eb" />
+          </div>
+        ) : (
+          <Button variant="contained" type="submit" disabled={isLoading}>
+            Submit
+          </Button>
+        )}
+      </form>
+    </Grid2>
   );
 };
 
