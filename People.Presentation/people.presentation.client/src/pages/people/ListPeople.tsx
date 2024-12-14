@@ -6,7 +6,7 @@ import { IPerson, IPersonResponse } from "../../models/person.model";
 import { CircleLoader } from "react-spinners";
 import { ColumnDef } from "@tanstack/react-table";
 import { ReusableTable } from "../../components/tables/ReusableTable";
-import { Button } from "@mui/material";
+import { Button, Grid2, TextField } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
 
 /**
@@ -17,50 +17,6 @@ export const ListPeople = () => {
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [allPeople, setAllPeople] = useState<IPerson[]>([]);
-
-  useEffect(() => {
-    getAllPeople();
-  }, []);
-
-  /**
-   * Gets all people
-   *
-   * @throws {Error} error
-   */
-  const getAllPeople = async (): Promise<void> => {
-    setIsLoading(true);
-    setErrorMessage("");
-    setSuccessMessage("");
-    try {
-      const apiResponse: IResponseWrapper<IPersonResponse[]> =
-        await peopleService.getAll();
-
-      if (!apiResponse.success) {
-        setErrorMessage(apiResponse.message);
-        setSuccessMessage("");
-        throw new Error(apiResponse.message);
-      }
-
-      console.log("response: ", apiResponse);
-
-      setAllPeople(apiResponse.data);
-
-      setSuccessMessage("People loaded successfully.");
-      setIsLoading(false);
-    } catch (error: any) {
-      setIsLoading(false);
-      throw new Error(error.message);
-    }
-  };
-
-  const onEditTableRow = (value: any) => {
-    console.log("value: ", value);
-  };
-
-  const onDeleteTableRow = (value: any) => {
-    console.log("value: ", value);
-  };
-
   const tableColumns: ColumnDef<any, any>[] = [
     {
       accessorKey: "id",
@@ -121,6 +77,47 @@ export const ListPeople = () => {
     },
   ];
 
+  useEffect(() => {
+    getAllPeople();
+  }, []);
+
+  /**
+   * Gets all people
+   *
+   * @throws {Error} error
+   */
+  const getAllPeople = async (): Promise<void> => {
+    setIsLoading(true);
+    setErrorMessage("");
+    setSuccessMessage("");
+    try {
+      const apiResponse: IResponseWrapper<IPersonResponse[]> =
+        await peopleService.getAll();
+
+      if (!apiResponse.success) {
+        setErrorMessage(apiResponse.message);
+        setSuccessMessage("");
+        throw new Error(apiResponse.message);
+      }
+
+      setAllPeople(apiResponse.data);
+
+      setSuccessMessage("People loaded successfully.");
+      setIsLoading(false);
+    } catch (error: any) {
+      setIsLoading(false);
+      throw new Error(error.message);
+    }
+  };
+
+  const onEditTableRow = (value: any) => {
+    console.log("value: ", value);
+  };
+
+  const onDeleteTableRow = (value: any) => {
+    console.log("value: ", value);
+  };
+
   return (
     <>
       {isLoading ? (
@@ -128,10 +125,51 @@ export const ListPeople = () => {
           <CircleLoader size={100} color="#2563eb" />
         </div>
       ) : (
-        <ReusableTable columns={tableColumns} data={allPeople} />
+        <>
+          <Grid2 container spacing={24}>
+            <Grid2>
+              <TextField
+                id="re_ps"
+                label="PS"
+                value={""}
+                onChange={() => {}}
+                margin="normal"
+                type="number"
+                variant="filled"
+                style={{ paddingRight: "20px", width: "170px" }}
+              />
+            </Grid2>
+            <Grid2>
+              <TextField
+                id="re_mooe"
+                label="MOOE"
+                value={"value"}
+                onChange={() => {}}
+                margin="normal"
+                type="number"
+                variant="filled"
+                style={{ paddingRight: "20px", width: "170px" }}
+              />
+            </Grid2>
+            <Grid2>
+              <TextField
+                id="re_co"
+                label="CO"
+                value={"test"}
+                onChange={() => {}}
+                margin="normal"
+                type="number"
+                variant="filled"
+                style={{ paddingRight: "20px", width: "170px" }}
+              />
+            </Grid2>
+          </Grid2>
+
+          <p>{successMessage}</p>
+          <p>{errorMessage}</p>
+          <ReusableTable columns={tableColumns} data={allPeople} />
+        </>
       )}
-      <p>{successMessage}</p>
-      <p>{errorMessage}</p>
     </>
   );
 };
