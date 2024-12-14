@@ -151,17 +151,30 @@ export const ListPeople = ({
   };
 
   /**
-   * Deletes a person after dialog confirmation
+   * Deletes a person after the dialog confirmation
    */
-  const onConfirmDeletePerson = () => {
+  const onConfirmDeletePerson = async () => {
     setIsDeleting(true);
-    try {
-      console.log("confirmed...");
-      setIsDeleting(false);
-    } catch (error: any) {
-      console.log(error.message);
-      setIsDeleting(false);
-    }
+        setErrorMessage("");
+        setSuccessMessage("");
+        try {
+          const apiResponse: IResponseWrapper<null> =
+            await peopleService.remove(String(currentlySelectedUser?.id));
+
+          console.log("apiResponse: ", apiResponse);
+    
+          if (!apiResponse.success) {
+            setErrorMessage(apiResponse.message);
+            setSuccessMessage("");
+            throw new Error(apiResponse.message);
+          }
+    
+          setSuccessMessage("Person deleted successfully.");
+          setIsDeleting(false);
+        } catch (error: any) {
+          setIsDeleting(false);
+          throw new Error(error.message);
+        }
   };
 
   return (
