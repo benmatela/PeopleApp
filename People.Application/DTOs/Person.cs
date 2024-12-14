@@ -20,9 +20,11 @@ public class CreatePersonRequest
     [Required]
     public DateTime DateOfBirth { get; set; }
 
-
     [Required]
     public int Age { get; set; }
+
+    [Required]
+    public Guid Id { get; set; }
 }
 
 /// <summary>
@@ -31,8 +33,6 @@ public class CreatePersonRequest
 /// </summary>
 public class UpdatePersonRequest : CreatePersonRequest
 {
-    [Required]
-    public Guid Id { get; set; }
 }
 
 /// <summary>

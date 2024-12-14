@@ -1,5 +1,6 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using People.Application.DTOs;
 using People.Application.Repositories;
 using People.Domain.Entities;
 using People.Domain.Helpers;
@@ -12,37 +13,43 @@ public class PersonRepository(ApplicationDbContext DbContext, IMapper Mapper) : 
     private readonly ApplicationDbContext _dbContext = DbContext;
     private readonly IMapper _mapper = Mapper;
 
-    public async Task<Person> Create(Person person)
+    public async Task<PersonResponse> Create(CreatePersonRequest request)
     {
-        person.Id = Guid.NewGuid();
-        person.Age = DateHelpers.GetAge(person.DateOfBirth);
+        request.Id = Guid.NewGuid();
+        request.Age = DateHelpers.GetAge(request.DateOfBirth);
 
-        _dbContext.People.Add(person);
+        var mappedPerson = _mapper.Map<Person>(request);
+
+        _dbContext.People.Add(mappedPerson);
 
         await _dbContext.SaveChangesAsync();
 
-        return person;
+        return _mapper.Map<PersonResponse>(mappedPerson);
     }
 
-    public async Task<Person> Get(Guid personId)
+    public async Task<PersonResponse> Get(Guid personId)
     {
-        return await _dbContext.People.FirstOrDefaultAsync(person => person.Id == personId);
+        var existingPerson = await _dbContext.People.FirstOrDefaultAsync(person => person.Id == personId);
+
+        return _mapper.Map<PersonResponse>(existingPerson);
     }
 
-    public async Task<IEnumerable<Person>> GetAll()
+    public async Task<IEnumerable<PersonResponse>> GetAll()
     {
-        return await _dbContext.People.ToListAsync();
+        var allExistingPeople = await _dbContext.People.ToListAsync();
+
+        return _mapper.Map<IEnumerable<PersonResponse>>(allExistingPeople);
     }
 
-    public async Task<bool> Update(Guid personId, Person person)
+    public async Task<bool> Update(Guid personId, UpdatePersonRequest request)
     {
         var existingPerson = await _dbContext.People.FirstOrDefaultAsync(person => person.Id == personId);
         if (existingPerson is not null)
         {
-            existingPerson.FirstName = person.FirstName;
-            existingPerson.LastName = person.LastName;
-            existingPerson.DateOfBirth = person.DateOfBirth;
-            existingPerson.Age = DateHelpers.GetAge(person.DateOfBirth);
+            existingPerson.FirstName = request.FirstName;
+            existingPerson.LastName = request.LastName;
+            existingPerson.DateOfBirth = request.DateOfBirth;
+            existingPerson.Age = DateHelpers.GetAge(request.DateOfBirth);
 
             await _dbContext.SaveChangesAsync();
 

@@ -2,12 +2,11 @@ namespace People.Application.Repositories;
 
 /// <summary>
 /// Generic Base Repository
+/// <para>Groups common logic for all repositories</para> 
 /// </summary>
-public interface IBaseRepository<T> where T : class
+public interface IBaseRepository<T> where T: class
 {
-    Task<T> Create(T person);
-    Task<bool> Remove(Guid personId);
-    Task<bool> Update(Guid personId, T person);
+    Task<bool> Remove(Guid id);
     Task<IEnumerable<T>> GetAll();
-    Task<T> Get(Guid personId);
+    Task<T> Get(Guid id);
 }
