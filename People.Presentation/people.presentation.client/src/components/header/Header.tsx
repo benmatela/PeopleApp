@@ -17,8 +17,8 @@ type HeaderProps = {
  */
 export const Header = ({ title, subTitle }: HeaderProps) => {
   return (
-    <div className="jumbotron jumbotron-fluid header">
-      <div className="container">
+    <div className="header">
+      <div className="">
         <h1>{title}</h1>
         <h3>{subTitle}</h3>
       </div>
