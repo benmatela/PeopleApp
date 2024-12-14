@@ -148,6 +148,7 @@ export const ListPeople = ({
   const onSelectPersonToDelete = (value: IPerson) => {
     setIsCreateMode(true);
     setCurrentlySelectedUser(value);
+    setIsConfirmDialogOpen(true);
   };
 
   /**
@@ -174,7 +175,7 @@ export const ListPeople = ({
       setIsDeleting(false);
     } catch (error: any) {
       setIsDeleting(false);
-      throw new Error(error.message);
+      setErrorMessage(error.message);
     }
   };
 

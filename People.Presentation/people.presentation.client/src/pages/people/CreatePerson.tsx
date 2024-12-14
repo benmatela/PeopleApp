@@ -98,8 +98,8 @@ export const CreatePerson = () => {
       }
 
       setSuccessMessage("Person created successfully.");
-      setIsMessageDialogOpen(true);
       setIsSaving(false);
+      setIsMessageDialogOpen(true);
     } catch (error: any) {
       setIsSaving(false);
       throw new Error(error.message);
