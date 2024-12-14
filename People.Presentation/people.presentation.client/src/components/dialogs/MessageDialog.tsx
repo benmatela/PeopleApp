@@ -10,28 +10,24 @@ import { Dispatch } from "react";
 interface ConfirmationDialogProps {
   title: string;
   description: string;
-  closeButtonLabel: string;
   okButtonLabel: string;
   setIsModalOpen: Dispatch<React.SetStateAction<boolean>>;
   isModalOpen: boolean;
-  onConfirm: Dispatch<React.SetStateAction<void>>;
 }
 
 /**
- * Confirmation Pop Up Modal
+ * Message Pop Up Modal
  *
  * @param {ConfirmationDialogProps} confirmationDialogProps
  *
  * @returns {JSX.Element} component
  */
-export const ConfirmationDialog = ({
-  closeButtonLabel,
+export const MessageDialog = ({
   okButtonLabel,
   title,
   description,
   isModalOpen,
   setIsModalOpen,
-  onConfirm
 }: ConfirmationDialogProps) => {
   const handleClickOpen = () => {
     setIsModalOpen(true);
@@ -39,10 +35,6 @@ export const ConfirmationDialog = ({
 
   const handleClose = () => {
     setIsModalOpen(false);
-  };
-
-  const handleConfirm = () => {
-    onConfirm();
   };
 
   return (
@@ -63,10 +55,7 @@ export const ConfirmationDialog = ({
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>{closeButtonLabel}</Button>
-          <Button onClick={handleConfirm} autoFocus>
-            {okButtonLabel}
-          </Button>
+          <Button onClick={handleClose}>{okButtonLabel}</Button>
         </DialogActions>
       </Dialog>
     </React.Fragment>
