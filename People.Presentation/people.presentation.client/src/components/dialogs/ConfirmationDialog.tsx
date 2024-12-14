@@ -31,25 +31,24 @@ export const ConfirmationDialog = ({
   description,
   isModalOpen,
   setIsModalOpen,
-  onConfirm
+  onConfirm,
 }: ConfirmationDialogProps) => {
-  const handleClickOpen = () => {
-    setIsModalOpen(true);
-  };
-
+  /**
+   * Handle dialog close
+   */
   const handleClose = () => {
     setIsModalOpen(false);
   };
 
+  /**
+   * Handle confirm button click
+   */
   const handleConfirm = () => {
     onConfirm();
   };
 
   return (
     <React.Fragment>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open alert dialog
-      </Button>
       <Dialog
         open={isModalOpen}
         onClose={handleClose}
