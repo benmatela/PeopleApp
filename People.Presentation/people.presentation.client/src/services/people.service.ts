@@ -22,9 +22,7 @@ export const create = async (
 
     const apiResponse = await axios.post(
       `${peopleApiBaseUrl}/${people}/Create`,
-      {
-        request,
-      },
+      request,
       headersConfig
     );
 
