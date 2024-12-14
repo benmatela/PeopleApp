@@ -3,7 +3,7 @@ namespace People.Domain.Helpers;
 public static class DateHelpers
 {
     /// <summary>
-    /// Calculates age using a date of birth
+    /// Calculates age using date of birth
     /// </summary>
     public static int GetAge(DateTime dateOfBirth)
     {

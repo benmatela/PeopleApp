@@ -1,8 +1,7 @@
 namespace People.Application.Interfaces;
 
 /// <summary>
-/// Generic Base Repository
-/// <para>Groups common logic for all repositories</para> 
+/// Groups common logic for all repositories
 /// </summary>
 public interface IBaseRepository<T> where T: class
 {

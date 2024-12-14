@@ -4,8 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace People.Application.DTOs;
 
 /// <summary>
-/// Base Person Request
-/// <para>Groups common properties for all person requests</para> 
+/// Groups common properties for all person requests 
 /// </summary>
 public class BasePersonRequest
 {
@@ -22,8 +21,7 @@ public class BasePersonRequest
 }
 
 /// <summary>
-/// Create Person Request
-/// <para>Used to create a new person</para> 
+/// Used to create a new person
 /// </summary>
 public class CreatePersonRequest : BasePersonRequest
 {
@@ -38,16 +36,14 @@ public class CreatePersonRequest : BasePersonRequest
 }
 
 /// <summary>
-/// Update Person Request
-/// <para>Used to update an existing person</para> 
+/// Used to update an existing person
 /// </summary>
 public class UpdatePersonRequest : BasePersonRequest
 {
 }
 
 /// <summary>
-/// Person Response
-/// <para>Used to hold existing person(s)</para> 
+/// Used to hold existing person(s)
 /// </summary>
 public class PersonResponse
 {

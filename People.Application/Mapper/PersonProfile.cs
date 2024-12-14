@@ -5,8 +5,7 @@ using People.Domain.Entities;
 namespace People.Application.Mapper;
 
 /// <summary>
-/// Person Profile
-/// <para>Used to map person data from one object to another</para> 
+/// Used to map person data from one object to another
 /// </summary>
 public class PersonProfile : Profile
 {

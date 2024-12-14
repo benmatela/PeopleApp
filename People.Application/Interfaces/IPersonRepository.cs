@@ -3,8 +3,7 @@ using People.Application.DTOs;
 namespace People.Application.Interfaces;
 
 /// <summary>
-/// Person Repository
-/// <para>Person specific repositories</para> 
+/// Person specific repositories
 /// </summary>
 public interface IPersonRepository : IBaseRepository<PersonResponse>
 {
