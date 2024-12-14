@@ -20,7 +20,11 @@ export const People = () => {
         subTitle="A directory of important people"
       />
       {currentlySelectedUser?.firstName}
-      {isCreateMode ? <CreatePerson /> : <UpdatePerson />}
+      {isCreateMode ? (
+        <CreatePerson />
+      ) : (
+        <UpdatePerson isCreateMode={isCreateMode} />
+      )}
       <ListPeople
         setCurrentlySelectedUser={setCurrentlySelectedUser}
         setIsCreateMode={setIsCreateMode}

@@ -8,10 +8,18 @@ import { IPerson, IPersonResponse } from "../../models/person.model";
 import { ReusableForm } from "../../components/forms/ReusableForm";
 import { Grid2 } from "@mui/material";
 
+interface UpdatePersonProps {
+  isCreateMode: boolean;
+}
+
 /**
+ * Update a person
+ *
+ * @param {UpdatePersonProps} updatePersonProps
+ *
  * @returns {JSX.Element} component
  */
-export const UpdatePerson = () => {
+export const UpdatePerson = ({ isCreateMode }: UpdatePersonProps) => {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
@@ -103,6 +111,7 @@ export const UpdatePerson = () => {
   return (
     <Grid2>
       <h2>Update Person</h2>
+      Create Mode: {String(isCreateMode)}
       <ReusableForm
         fields={formFields}
         onSubmit={onSubmit}

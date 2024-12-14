@@ -130,7 +130,7 @@ export const ListPeople = ({
    * @param {IPerson} person
    */
   const onEditTableRow = (person: IPerson) => {
-    setIsCreateMode(true);
+    setIsCreateMode(false);
     setCurrentlySelectedUser(person);
   };
 
