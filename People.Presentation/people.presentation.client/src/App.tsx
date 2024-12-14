@@ -11,6 +11,10 @@ const App = () => {
       element: <PageNotFound />,
     },
     {
+      path: "/",
+      element: <Home />,
+    },
+    {
       path: "/home",
       element: <Home />,
     },
