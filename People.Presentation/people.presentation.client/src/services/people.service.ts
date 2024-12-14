@@ -76,25 +76,25 @@ export const update = async (
 /**
  * Deletes a person
  *
- * @param {IPerson} person
+ * @param {string} personId
  *
  * @returns {IResponseWrapper<IPersonResponse>} response
  */
 export const remove = async (
-  person: IPerson
-): Promise<IResponseWrapper<IPersonResponse>> => {
+  personId: string
+): Promise<IResponseWrapper<boolean>> => {
   try {
     const headersConfig = {
       headers: {},
     };
 
     const apiResponse = await axios.delete(
-      `${peopleApiBaseUrl}/${people}/Remove/${person.id}`,
+      `${peopleApiBaseUrl}/${people}/Remove/${personId}`,
       headersConfig
     );
 
     // Build our response
-    const responseWrapper = {} as IResponseWrapper<IPersonResponse>;
+    const responseWrapper = {} as IResponseWrapper<boolean>;
     responseWrapper.data = apiResponse.data;
     responseWrapper.statusCode = HttpStatusCode.Ok;
     responseWrapper.message = "";
