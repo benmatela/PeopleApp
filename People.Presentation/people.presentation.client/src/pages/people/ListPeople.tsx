@@ -57,12 +57,23 @@ const ListPeople = () => {
           <CircleLoader size={100} color="#2563eb" />
         </div>
       ) : (
-        <CustomPaginationActionsTable rows={allPeople} />
+        <CustomPaginationActionsTable
+          rows={allPeople}
+          tableColumns={tableColumns}
+        />
       )}
       <p>{successMessage}</p>
       <p>{errorMessage}</p>
     </>
   );
 };
+
+const tableColumns: string[] = [
+  "Id",
+  "First Name",
+  "Last Name",
+  "Date Of Birth",
+  "Age",
+];
 
 export default ListPeople;

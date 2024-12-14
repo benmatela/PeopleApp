@@ -18,6 +18,7 @@ import LastPageIcon from "@mui/icons-material/LastPage";
 
 interface CustomPaginationActionsTableProps {
   rows: any[];
+  tableColumns: any[];
 }
 
 interface TablePaginationActionsProps {
@@ -30,6 +31,13 @@ interface TablePaginationActionsProps {
   ) => void;
 }
 
+/**
+ * Handles bottom pagination actions
+ *
+ * @param {TablePaginationActionsProps} tablePaginationActionsProps
+ *
+ * @returns {JSX.Element} component
+ */
 export const TablePaginationActions = (props: TablePaginationActionsProps) => {
   const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;
@@ -102,11 +110,13 @@ export const TablePaginationActions = (props: TablePaginationActionsProps) => {
 
 export const CustomPaginationActionsTable = ({
   rows,
+  tableColumns,
 }: CustomPaginationActionsTableProps) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   console.log("people: ", rows);
+  console.log("tableColumns: ", tableColumns);
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -135,15 +145,13 @@ export const CustomPaginationActionsTable = ({
             : rows
           ).map((row) => (
             <TableRow key={row.id}>
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell style={{ width: 160 }} align="right">
-                {row.calories}
-              </TableCell>
-              <TableCell style={{ width: 160 }} align="right">
-                {row.fat}
-              </TableCell>
+              {Object.keys(tableColumns).map((columnKey: any) => {
+                return (
+                  <TableCell key={columnKey} align="left">
+                    {tableColumns[columnKey]}
+                  </TableCell>
+                );
+              })}
             </TableRow>
           ))}
           {emptyRows > 0 && (
