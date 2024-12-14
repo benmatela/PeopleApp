@@ -8,6 +8,8 @@ import { IPerson, IPersonResponse } from "../../models/person.model";
 import { ReusableForm } from "../../components/forms/ReusableForm";
 
 /**
+ * Creates a new person
+ * 
  * @returns {JSX.Element} component
  */
 export const CreatePerson = () => {

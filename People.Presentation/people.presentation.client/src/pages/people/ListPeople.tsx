@@ -8,6 +8,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ReusableTable } from "../../components/tables/ReusableTable";
 import { Button, Grid2 } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
+import { ConfirmationDialog } from "../../components/dialogs/ConfirmationDialog";
 
 interface ListPeopledProps {
   setIsCreateMode: Dispatch<React.SetStateAction<boolean>>;
@@ -31,6 +32,7 @@ export const ListPeople = ({
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [allPeople, setAllPeople] = useState<IPerson[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const tableColumns: ColumnDef<any, any>[] = [
     {
       accessorKey: "id",
@@ -155,6 +157,15 @@ export const ListPeople = ({
           <p>{successMessage}</p>
           <p>{errorMessage}</p>
           <ReusableTable columns={tableColumns} data={allPeople} />
+
+          <ConfirmationDialog
+            title={"Delete Person"}
+            description={`Are you sure you want to delete this person?`}
+            closeButtonLabel={"Cancel"}
+            okButtonLabel={"Delete"}
+            setIsModalOpen={setIsModalOpen}
+            isModalOpen={isModalOpen}
+          />
         </>
       )}
     </Grid2>
