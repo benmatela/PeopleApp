@@ -5,17 +5,41 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { Dispatch } from "react";
 
-export const AlertDialog = () => {
-  const [open, setOpen] = React.useState(false);
+interface ConfirmationDialogProps {
+  title: string;
+  description: string;
+  closeButtonLabel: string;
+  okButtonLabel: string;
+  setIsModalOpen: Dispatch<React.SetStateAction<boolean>>;
+  isModalOpen: boolean;
+}
 
+/**
+ * Confirmation Pop Up Modal
+ *
+ * @param {ConfirmationDialogProps} confirmationDialogProps
+ *
+ * @returns {JSX.Element} component
+ */
+export const ConfirmationDialog = ({
+  closeButtonLabel,
+  okButtonLabel,
+  title,
+  description,
+  isModalOpen,
+  setIsModalOpen,
+}: ConfirmationDialogProps) => {
   const handleClickOpen = () => {
-    setOpen(true);
+    setIsModalOpen(true);
   };
 
   const handleClose = () => {
-    setOpen(false);
+    setIsModalOpen(false);
   };
+
+  const handleConfirm = () => {};
 
   return (
     <React.Fragment>
@@ -23,27 +47,24 @@ export const AlertDialog = () => {
         Open alert dialog
       </Button>
       <Dialog
-        open={open}
+        open={isModalOpen}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
-          {"Use Google's location service?"}
-        </DialogTitle>
+        <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Let Google help apps determine location. This means sending
-            anonymous location data to Google, even when no apps are running.
+            {description}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Disagree</Button>
-          <Button onClick={handleClose} autoFocus>
-            Agree
+          <Button onClick={handleClose}>{closeButtonLabel}</Button>
+          <Button onClick={handleConfirm} autoFocus>
+            {okButtonLabel}
           </Button>
         </DialogActions>
       </Dialog>
     </React.Fragment>
   );
-}
+};
