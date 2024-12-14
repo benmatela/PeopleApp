@@ -3,12 +3,9 @@ import { FieldValues, SubmitHandler } from "react-hook-form";
 import ReusableForm from "../../components/forms/ReusableForm";
 import { IFormField } from "../../models/form.model";
 import { useState } from "react";
-import {
-  ICreatePersonRequest,
-  IPersonResponse,
-} from "../../models/person.model";
 import * as peopleService from "../../services/people.service";
 import { IResponseWrapper } from "../../models/response-wrapper.model";
+import { IPerson, IPersonResponse } from "../../models/person.model";
 
 /**
  * @returns {JSX.Element} component
@@ -17,7 +14,7 @@ const CreatePerson = () => {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [isSaving, setIsSaving] = useState<boolean>(false);
-  const [currentPerson, setCurrentPerson] = useState<ICreatePersonRequest>();
+  const [currentPerson, setCurrentPerson] = useState<IPerson>();
 
   /**
    * Submits the form
@@ -26,9 +23,10 @@ const CreatePerson = () => {
    */
   const onSubmit: SubmitHandler<FieldValues> = (data: FieldValues) => {
     try {
-      const personToCreate: ICreatePersonRequest = data as any;
+      const personToCreate: IPerson = data as any;
       personToCreate.age = 0;
-      personToCreate.dateCreated = "";
+      personToCreate.dateCreated = new Date();
+      personToCreate.id = "";
 
       setCurrentPerson(personToCreate);
 
@@ -46,9 +44,7 @@ const CreatePerson = () => {
    *
    * @throws {Error} error
    */
-  const createNewPerson = async (
-    person: ICreatePersonRequest
-  ): Promise<IPersonResponse> => {
+  const createNewPerson = async (person: IPerson): Promise<IPersonResponse> => {
     setIsSaving(true);
     try {
       const apiResponse: IResponseWrapper<IPersonResponse> =

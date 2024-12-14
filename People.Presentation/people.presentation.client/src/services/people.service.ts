@@ -1,19 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { HttpStatusCode } from "axios";
-import { ICreatePersonRequest, IPersonResponse } from "../models/person.model";
 import { IResponseWrapper } from "../models/response-wrapper.model";
 import { peopleApiBaseUrl } from "../utils/config.utils";
 import { people } from "../constants";
+import { IPerson, IPersonResponse } from "../models/person.model";
 
 /**
  * Creates a new person
  *
- * @param {ICreatePersonRequest} request
+ * @param {IPersonRequest} request
  *
  * @returns {IResponseWrapper<IPersonResponse>} response
  */
 export const create = async (
-  request: ICreatePersonRequest
+  request: IPerson
 ): Promise<IResponseWrapper<IPersonResponse>> => {
   try {
     const headersConfig = {
