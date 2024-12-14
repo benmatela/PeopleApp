@@ -93,7 +93,7 @@ export const getAll = async (): Promise<
 
     // Build our response
     const responseWrapper = {} as IResponseWrapper<IPersonResponse[]>;
-    responseWrapper.data = apiResponse.data;
+    responseWrapper.data = apiResponse.data.data;
     responseWrapper.statusCode = HttpStatusCode.Ok;
     responseWrapper.message = "";
     responseWrapper.success = true;

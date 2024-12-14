@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import * as peopleService from "../../services/people.service";
 import { IResponseWrapper } from "../../models/response-wrapper.model";
-import { IPersonResponse } from "../../models/person.model";
+import { IPerson, IPersonResponse } from "../../models/person.model";
 import { CircleLoader } from "react-spinners";
 import { CustomPaginationActionsTable } from "../../components/tables/TablePaginationActionsProps";
 
@@ -13,6 +13,7 @@ const ListPeople = () => {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [allPeople, setAllPeople] = useState<IPerson[]>([]);
 
   useEffect(() => {
     getAllPeople();
@@ -37,6 +38,10 @@ const ListPeople = () => {
         throw new Error(apiResponse.message);
       }
 
+      console.log("response: ", apiResponse);
+
+      setAllPeople(apiResponse.data);
+
       setSuccessMessage("People loaded successfully.");
       setIsLoading(false);
     } catch (error: any) {
@@ -52,7 +57,7 @@ const ListPeople = () => {
           <CircleLoader size={100} color="#2563eb" />
         </div>
       ) : (
-        <CustomPaginationActionsTable />
+        <CustomPaginationActionsTable rows={allPeople} />
       )}
       <p>{successMessage}</p>
       <p>{errorMessage}</p>
