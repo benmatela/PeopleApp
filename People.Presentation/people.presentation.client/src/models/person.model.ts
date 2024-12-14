@@ -1,10 +1,8 @@
-import { UUIDTypes } from 'uuid';
-
 /**
  * Person
  */
 export interface IPerson {
-  id: UUIDTypes;
+  id: string;
   dateCreated: Date;
   dateOfBirth: Date;
   age: number;
