@@ -7,6 +7,7 @@ import { CircleLoader } from "react-spinners";
 import { ColumnDef } from "@tanstack/react-table";
 import { ReusableTable } from "../../components/tables/ReusableTable";
 import { Button } from "@mui/material";
+import { Delete, Edit } from "@mui/icons-material";
 
 /**
  * @returns {JSX.Element} component
@@ -56,6 +57,10 @@ export const ListPeople = () => {
     console.log("value: ", value);
   };
 
+  const onDeleteTableRow = (value: any) => {
+    console.log("value: ", value);
+  };
+
   const tableColumns: ColumnDef<any, any>[] = [
     {
       accessorKey: "id",
@@ -82,18 +87,35 @@ export const ListPeople = () => {
       header: "Created Date",
     },
     {
-      id: "editPerson",
-      header: "Edit",
-      accessorKey: "editPerson",
+      id: "deletePerson",
+      header: "Delete",
+      accessorKey: "deletePerson",
       cell: (value: any) => (
         <Button
           variant="contained"
           disabled={isLoading}
+          sx={{ backgroundColor: "#be123c", color: "white" }}
           onClick={() => {
-            onEditTableRow(value);
+            onDeleteTableRow(value);
           }}
         >
-          Edit
+          <Delete /> Delete
+        </Button>
+      ),
+    },
+    {
+      id: "editPerson",
+      header: "Edit",
+      accessorKey: "editPerson",
+      cell: (cell: any) => (
+        <Button
+          variant="contained"
+          disabled={isLoading}
+          onClick={() => {
+            onEditTableRow(cell.value);
+          }}
+        >
+          <Edit /> Edit
         </Button>
       ),
     },
