@@ -48,8 +48,6 @@ public class PersonRepository(ApplicationDbContext DbContext, IMapper Mapper) : 
         {
             existingPerson.FirstName = request.FirstName;
             existingPerson.LastName = request.LastName;
-            existingPerson.DateOfBirth = request.DateOfBirth;
-            existingPerson.Age = DateHelpers.GetAge(request.DateOfBirth);
 
             await _dbContext.SaveChangesAsync();
 

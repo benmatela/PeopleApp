@@ -4,11 +4,14 @@ using System.ComponentModel.DataAnnotations;
 namespace People.Application.DTOs;
 
 /// <summary>
-/// Create Person Request
-/// <para>Used to create a new person</para> 
+/// Base Person Request
+/// <para>Groups common properties for all person requests</para> 
 /// </summary>
-public class CreatePersonRequest
+public class BasePersonRequest
 {
+    [Required]
+    public Guid Id { get; set; }
+
     [Required]
     [StringLength(30, MinimumLength = 3)]
     public string FirstName { get; set; } = string.Empty;
@@ -16,22 +19,29 @@ public class CreatePersonRequest
     [Required]
     [StringLength(30, MinimumLength = 3)]
     public string LastName { get; set; } = string.Empty;
+}
+
+/// <summary>
+/// Create Person Request
+/// <para>Used to create a new person</para> 
+/// </summary>
+public class CreatePersonRequest : BasePersonRequest
+{
+    [Required]
+    public DateTime DateCreated { get; set; }
 
     [Required]
     public DateTime DateOfBirth { get; set; }
 
     [Required]
     public int Age { get; set; }
-
-    [Required]
-    public Guid Id { get; set; }
 }
 
 /// <summary>
 /// Update Person Request
 /// <para>Used to update an existing person</para> 
 /// </summary>
-public class UpdatePersonRequest : CreatePersonRequest
+public class UpdatePersonRequest : BasePersonRequest
 {
 }
 
