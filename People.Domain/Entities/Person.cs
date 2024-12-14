@@ -4,9 +4,10 @@ using People.Domain.Common;
 namespace People.Domain.Entities;
 
 /// <summary>
-/// Person Entity - Person specific entity
+/// Person Entity
+/// <para>Person specific entity</para> 
 /// </summary>
-public class Person: BaseEntity
+public class Person : BaseEntity
 {
     [MaxLength(200)]
     public string FirstName { get; set; } = string.Empty;

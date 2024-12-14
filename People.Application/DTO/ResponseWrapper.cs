@@ -3,7 +3,8 @@ using System.Net;
 namespace People.Presentation.Server.Models;
 
 /// <summary>
-/// Response Wrapper - Used to standardize all our API responses for all clients
+/// Response Wrapper
+/// <para>Used to standardize all our API responses for all clients</para> 
 /// </summary>
 public class ResponseWrapper<T>
 {

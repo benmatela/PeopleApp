@@ -3,7 +3,8 @@ using System.ComponentModel.DataAnnotations;
 namespace People.Domain.Common;
 
 /// <summary>
-/// Base Entity - Groups common logic for all domain entities
+/// Base Entity
+/// <para>Groups common logic for all domain entities</para> 
 /// </summary>
 public class BaseEntity
 {
