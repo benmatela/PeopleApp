@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import ReusableForm from "../../components/forms/ReusableForm";
-import { IFormField } from "../../models/form.model";
+import { ICreatePersonFormData, IFormField } from "../../models/form.model";
 import { useState } from "react";
 
 const CreatePerson = () => {
@@ -13,6 +13,8 @@ const CreatePerson = () => {
     setIsSaving(true);
     try {
       console.log(data);
+      const formFieldValues: ICreatePersonFormData = data as any;
+      console.log(formFieldValues);
       console.log(errorMessage);
       console.log(successMessage);
       console.log(isSaving);

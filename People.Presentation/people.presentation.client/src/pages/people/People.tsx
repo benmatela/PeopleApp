@@ -1,15 +1,19 @@
 import { useEffect } from "react";
-import StripedRowTable from "../../components/table/StripedRowTable";
+import Header from "../../components/header/Header";
+import CreatePerson from "./CreatePerson";
 
 const People = () => {
-
-      useEffect(() => {
-          // populateWeatherData();
-      }, []);
+  useEffect(() => {
+    // populateWeatherData();
+  }, []);
 
   return (
     <div>
-      <StripedRowTable />
+      <Header
+        title="Co-Flo People"
+        subTitle="A directory of important people"
+      />
+      <CreatePerson />
     </div>
   );
 };
