@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { SubmitHandler } from "react-hook-form";
+import { FieldValues, SubmitHandler } from "react-hook-form";
 import ReusableForm from "../../components/forms/ReusableForm";
 import { IFormField } from "../../models/form.model";
-import { ICreatePersonRequest } from "../../models/person.model";
 import { useState } from "react";
 
 const CreatePerson = () => {
@@ -10,9 +9,10 @@ const CreatePerson = () => {
   const [successMessage, setSuccessMessage] = useState<string>();
   const [isSaving, setIsSaving] = useState<boolean>(false);
 
-  const onSubmit: SubmitHandler<ICreatePersonRequest> = () => {
+  const onSubmit: SubmitHandler<FieldValues> = (data: FieldValues) => {
     setIsSaving(true);
     try {
+      console.log(data);
       console.log(errorMessage);
       console.log(successMessage);
       console.log(isSaving);
