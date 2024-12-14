@@ -2,7 +2,6 @@
 import axios, { HttpStatusCode } from "axios";
 import { ICreatePersonRequest, IPersonResponse } from "../models/person.model";
 import { IResponseWrapper } from "../models/response-wrapper.model";
-import { peopleApiBaseUrl } from "../utils/config.utils";
 import { people } from "../constants";
 
 /**
@@ -12,7 +11,7 @@ import { people } from "../constants";
  *
  * @returns {IResponseWrapper<IPersonResponse>} response
  */
-export const Create = async (
+export const create = async (
   request: ICreatePersonRequest
 ): Promise<IResponseWrapper<IPersonResponse>> => {
   try {
@@ -20,8 +19,12 @@ export const Create = async (
       headers: {},
     };
 
+    const response = await fetch('People/Create');
+    const data = await response.json();
+    console.log("data: ", data);
+
     const apiResponse = await axios.post(
-      `${peopleApiBaseUrl}/${people}/Create`,
+      `http://localhost:5165/${people}/Create`,
       {
         request,
       },

@@ -52,7 +52,7 @@ const CreatePerson = () => {
     setIsSaving(true);
     try {
       const apiResponse: IResponseWrapper<IPersonResponse> =
-        await peopleService.Create(person);
+        await peopleService.create(person);
 
       if (!apiResponse.success) {
         throw new Error(apiResponse.message);
