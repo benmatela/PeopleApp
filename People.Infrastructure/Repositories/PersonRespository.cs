@@ -16,9 +16,11 @@ public class PersonRepository(ApplicationDbContext DbContext, IMapper Mapper) : 
     public async Task<PersonResponse> Create(CreatePersonRequest request)
     {
         request.Id = Guid.NewGuid();
-        request.Age = DateHelpers.GetAge(request.DateOfBirth);
 
         var mappedPerson = _mapper.Map<Person>(request);
+        mappedPerson.DateCreated = DateTime.Now;
+        mappedPerson.Age = DateHelpers.GetAge(DateHelpers.CreateDate(request.DateOfBirth));
+        mappedPerson.DateCreated = DateHelpers.CreateDate(request.DateCreated);
 
         _dbContext.People.Add(mappedPerson);
 

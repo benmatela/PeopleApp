@@ -26,10 +26,10 @@ public class BasePersonRequest
 public class CreatePersonRequest : BasePersonRequest
 {
     [Required]
-    public DateTime DateCreated { get; set; }
+    public string DateCreated { get; set; } = string.Empty;
 
     [Required]
-    public DateTime DateOfBirth { get; set; }
+    public string DateOfBirth { get; set; } = string.Empty;
 
     [Required]
     public int Age { get; set; }
@@ -48,9 +48,9 @@ public class UpdatePersonRequest : BasePersonRequest
 public class PersonResponse
 {
     public Guid Id { get; set; }
-    public DateTime DateCreated { get; set; }
+    public string DateCreated { get; set; } = string.Empty;
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
-    public DateTime DateOfBirth { get; set; }
+    public string DateOfBirth { get; set; } = string.Empty;
     public int Age { get; set; }
 }
