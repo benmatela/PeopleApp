@@ -4,7 +4,7 @@ import People from "./pages/people/People";
 import { PageNotFound } from "./pages/page-not-found/PageNotFound";
 import "./App.css";
 
-function App() {
+const App = () => {
   const router = createBrowserRouter([
     {
       path: "*",
