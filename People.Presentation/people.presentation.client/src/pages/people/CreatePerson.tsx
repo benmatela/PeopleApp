@@ -3,39 +3,80 @@ import { FieldValues, SubmitHandler } from "react-hook-form";
 import ReusableForm from "../../components/forms/ReusableForm";
 import { IFormField } from "../../models/form.model";
 import { useState } from "react";
+import {
+  ICreatePersonRequest,
+  IPersonResponse,
+} from "../../models/person.model";
+import * as peopleService from "../../services/people.service";
+import { IResponseWrapper } from "../../models/response-wrapper.model";
 
 /**
- * The structure of the reusable form data
+ * @returns {JSX.Element} component
  */
-interface ICreatePersonFormData {
-  firstName: string;
-  lastName: string;
-  dateOfBirth: Date;
-}
-
 const CreatePerson = () => {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [isSaving, setIsSaving] = useState<boolean>(false);
+  const [currentPerson, setCurrentPerson] = useState<ICreatePersonRequest>();
 
+  /**
+   * Submits the form
+   *
+   * @param {FieldValues} data
+   */
   const onSubmit: SubmitHandler<FieldValues> = (data: FieldValues) => {
-    setIsSaving(true);
     try {
-      const formFieldValues: ICreatePersonFormData = data as any;
-      console.log(formFieldValues);
-      console.log(errorMessage);
-      console.log(successMessage);
-      console.log(isSaving);
+      const personToCreate: ICreatePersonRequest = data as any;
+      personToCreate.age = 0;
+      personToCreate.dateCreated = "";
+
+      setCurrentPerson(personToCreate);
+
+      createNewPerson(personToCreate);
     } catch (error: any) {
       setErrorMessage(error.message);
       setSuccessMessage("");
+    }
+  };
+
+  /**
+   * Creates a new person
+   *
+   * @param {ICreatePersonRequest} person
+   *
+   * @throws {Error} error
+   */
+  const createNewPerson = async (
+    person: ICreatePersonRequest
+  ): Promise<IPersonResponse> => {
+    setIsSaving(true);
+    try {
+      const apiResponse: IResponseWrapper<IPersonResponse> =
+        await peopleService.Create(person);
+
+      if (!apiResponse.success) {
+        throw new Error(apiResponse.message);
+      }
+
       setIsSaving(false);
+
+      return apiResponse.data;
+    } catch (error: any) {
+      setIsSaving(false);
+      throw new Error(error.message);
     }
   };
 
   return (
     <>
-      <ReusableForm fields={formFields} onSubmit={onSubmit} isLoading={isSaving} />
+      <ReusableForm
+        fields={formFields}
+        onSubmit={onSubmit}
+        isLoading={isSaving}
+      />
+      <p>{successMessage}</p>
+      <p>{errorMessage}</p>
+      <p>{currentPerson?.firstName}</p>
     </>
   );
 };

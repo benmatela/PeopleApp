@@ -12,8 +12,8 @@ interface IBasePersonRequest
  */
 export interface ICreatePersonRequest extends IBasePersonRequest
 {
-    dateCreated: Date;
-    dateOfBirth: Date;
+    dateCreated: string;
+    dateOfBirth: string;
     age: number;
 }
 
@@ -26,12 +26,12 @@ export interface IUpdatePersonRequest extends IBasePersonRequest
 }
 
 /**
- * Used to hold existing person(s)
+ * Used to transfer existing person(s) data
  */
 export interface IPersonResponse extends IBasePersonRequest
 {
     id: string;
-    dateCreated: Date;
-    dateOfBirth: Date;
+    dateCreated: string;
+    dateOfBirth: string;
     age: number;
 }

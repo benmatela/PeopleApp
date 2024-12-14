@@ -19,8 +19,8 @@ const Header = ({ title, subTitle }: HeaderProps) => {
   return (
     <div className="jumbotron jumbotron-fluid header">
       <div className="container">
-        <h1 className="title">{title}</h1>
-        <h3 className="sub-title">{subTitle}</h3>
+        <h1>{title}</h1>
+        <h3>{subTitle}</h3>
       </div>
     </div>
   );
