@@ -1,18 +1,18 @@
 using MediatR;
-using People.Domain.Entities;
-using People.Domain.Interfaces;
+using People.Application.DTOs;
+using People.Application.Repositories;
 
 namespace People.Application.Queries;
 
-public record GetAllPeopleQuery() : IRequest<IEnumerable<Person>>;
+public record GetAllPeopleQuery() : IRequest<IEnumerable<PersonResponse>>;
 
 /// <summary>
 /// Handles the query to get all existing people.
 /// </summary>
 public class GetAllPeopleQueryHandler(IPersonRepository personRepository)
-    : IRequestHandler<GetAllPeopleQuery, IEnumerable<Person>>
+    : IRequestHandler<GetAllPeopleQuery, IEnumerable<PersonResponse>>
 {
-    public async Task<IEnumerable<Person>> Handle(GetAllPeopleQuery request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<PersonResponse>> Handle(GetAllPeopleQuery request, CancellationToken cancellationToken)
     {
         return await personRepository.GetAll();
     }

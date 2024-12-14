@@ -1,10 +1,10 @@
 using MediatR;
-using People.Domain.Entities;
-using People.Domain.Interfaces;
+using People.Application.DTOs;
+using People.Application.Repositories;
 
 namespace People.Application.Commands;
 
-public record UpdatePersonCommand(Guid PersonId, Person Person) : IRequest<bool>;
+public record UpdatePersonCommand(Guid PersonId, UpdatePersonRequest Person) : IRequest<bool>;
 
 /// <summary>
 /// Handles the command to update an existing person.

@@ -1,5 +1,5 @@
 using MediatR;
-using People.Domain.Interfaces;
+using People.Application.Repositories;
 
 namespace People.Application.Commands;
 
