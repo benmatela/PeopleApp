@@ -24,13 +24,9 @@ const CreatePerson = () => {
   const onSubmit: SubmitHandler<FieldValues> = (data: FieldValues) => {
     try {
       const personToCreate: IPerson = data as any;
-      personToCreate.age = 0;
-
       setCurrentPerson(personToCreate);
 
-      createNewPerson(personToCreate).then((response: IPersonResponse) => {
-        console.log(response);
-      });
+      createNewPerson(personToCreate);
     } catch (error: any) {
       setErrorMessage(error.message);
       setSuccessMessage("");
@@ -44,19 +40,22 @@ const CreatePerson = () => {
    *
    * @throws {Error} error
    */
-  const createNewPerson = async (person: IPerson): Promise<IPersonResponse> => {
+  const createNewPerson = async (person: IPerson): Promise<void> => {
     setIsSaving(true);
+    setErrorMessage("");
+    setSuccessMessage("");
     try {
       const apiResponse: IResponseWrapper<IPersonResponse> =
         await peopleService.create(person);
 
       if (!apiResponse.success) {
+        setErrorMessage(apiResponse.message);
+        setSuccessMessage("");
         throw new Error(apiResponse.message);
       }
 
+      setSuccessMessage("Person created successfully.");
       setIsSaving(false);
-
-      return apiResponse.data;
     } catch (error: any) {
       setIsSaving(false);
       throw new Error(error.message);
