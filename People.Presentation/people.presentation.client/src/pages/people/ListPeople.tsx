@@ -96,7 +96,7 @@ export const ListPeople = () => {
           disabled={isLoading}
           sx={{ backgroundColor: "#be123c", color: "white" }}
           onClick={() => {
-            onDeleteTableRow(value);
+            onDeleteTableRow(value.cell.row.original);
           }}
         >
           <Delete /> Delete
@@ -107,12 +107,12 @@ export const ListPeople = () => {
       id: "editPerson",
       header: "Edit",
       accessorKey: "editPerson",
-      cell: (cell: any) => (
+      cell: (value: any) => (
         <Button
           variant="contained"
           disabled={isLoading}
           onClick={() => {
-            onEditTableRow(cell.value);
+            onEditTableRow(value.cell.row.original);
           }}
         >
           <Edit /> Edit
