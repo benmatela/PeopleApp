@@ -6,6 +6,7 @@ import * as peopleService from "../../services/people.service";
 import { IResponseWrapper } from "../../models/response-wrapper.model";
 import { IPerson, IPersonResponse } from "../../models/person.model";
 import { ReusableForm } from "../../components/forms/ReusableForm";
+import { Grid2 } from "@mui/material";
 
 /**
  * @returns {JSX.Element} component
@@ -100,7 +101,8 @@ export const UpdatePerson = () => {
   };
 
   return (
-    <>
+    <Grid2>
+      <h2>Update Person</h2>
       <ReusableForm
         fields={formFields}
         onSubmit={onSubmit}
@@ -109,6 +111,6 @@ export const UpdatePerson = () => {
       <p>{successMessage}</p>
       <p>{errorMessage}</p>
       <p>{currentPerson?.firstName}</p>
-    </>
+    </Grid2>
   );
 };
