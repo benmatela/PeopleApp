@@ -26,7 +26,7 @@ const UpdatePerson = () => {
       const personToCreate: IPerson = data as any;
       setCurrentPerson(personToCreate);
 
-      updateNewPerson(personToCreate);
+      updatePerson(personToCreate);
     } catch (error: any) {
       setErrorMessage(error.message);
       setSuccessMessage("");
@@ -40,7 +40,7 @@ const UpdatePerson = () => {
    *
    * @throws {Error} error
    */
-  const updateNewPerson = async (person: IPerson): Promise<void> => {
+  const updatePerson = async (person: IPerson): Promise<void> => {
     setIsUpdating(true);
     setErrorMessage("");
     setSuccessMessage("");
