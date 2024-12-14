@@ -16,7 +16,7 @@ namespace People.Presentation.Server.Controllers
         [Route("Create")]
         public async Task<IActionResult> Create([FromBody] Person person)
         {
-            var responseWrapper = new ResponseWrapperDTO<Person>();
+            var responseWrapper = new ResponseWrapper<Person>();
             try
             {
                 var result = await sender.Send(new CreatePersonCommand(person));
@@ -42,7 +42,7 @@ namespace People.Presentation.Server.Controllers
         [Route("Get/{personId}")]
         public async Task<IActionResult> Get([FromRoute] Guid personId)
         {
-            var responseWrapper = new ResponseWrapperDTO<Person>();
+            var responseWrapper = new ResponseWrapper<Person>();
             try
             {
                 var result = await sender.Send(new GetPersonByIdQuery(personId));
@@ -75,7 +75,7 @@ namespace People.Presentation.Server.Controllers
         [Route("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            var responseWrapper = new ResponseWrapperDTO<IEnumerable<Person>>();
+            var responseWrapper = new ResponseWrapper<IEnumerable<Person>>();
             try
             {
                 var result = await sender.Send(new GetAllPeopleQuery());
@@ -108,7 +108,7 @@ namespace People.Presentation.Server.Controllers
         [Route("Update/{personId}")]
         public async Task<IActionResult> Update([FromRoute] Guid personId, [FromBody] Person person)
         {
-            var responseWrapper = new ResponseWrapperDTO<Person>();
+            var responseWrapper = new ResponseWrapper<Person>();
             try
             {
                 var result = await sender.Send(new UpdatePersonCommand(personId, person));
@@ -138,7 +138,7 @@ namespace People.Presentation.Server.Controllers
         [Route("Remove/{personId}")]
         public async Task<IActionResult> Remove([FromRoute] Guid personId)
         {
-            var responseWrapper = new ResponseWrapperDTO<Person>();
+            var responseWrapper = new ResponseWrapper<Person>();
             try
             {
                 var result = await sender.Send(new RemovePersonCommand(personId));

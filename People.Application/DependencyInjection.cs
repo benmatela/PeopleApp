@@ -1,3 +1,4 @@
+using System.Reflection;
 using MediatR.NotificationPublishers;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,8 +13,9 @@ public static class DependencyInjection
     {
         services.AddMediatR(cfg =>
            {
-               cfg.RegisterServicesFromAssembly(typeof(ServiceCollectionExtensions).Assembly);
+               cfg.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly);
                cfg.NotificationPublisher = new TaskWhenAllPublisher();
            });
+        services.AddAutoMapper(Assembly.GetExecutingAssembly());
     }
 }
