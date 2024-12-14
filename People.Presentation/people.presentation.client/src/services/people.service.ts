@@ -11,6 +11,8 @@ import { IPerson, IPersonResponse } from "../models/person.model";
  * @param {IPerson} person
  *
  * @returns {IResponseWrapper<IPersonResponse>} response
+ * 
+ * @throws {Error} error
  */
 export const create = async (
   person: IPerson
@@ -43,6 +45,8 @@ export const create = async (
  * Gets all people
  *
  * @returns {IResponseWrapper<IPersonResponse[]>} response
+ * 
+ * @throws {Error} error
  */
 export const getAll = async (): Promise<
   IResponseWrapper<IPersonResponse[]>
@@ -76,6 +80,8 @@ export const getAll = async (): Promise<
  * @param {IPerson} person
  *
  * @returns {IResponseWrapper<IPersonResponse>} response
+ * 
+ * @throws {Error} error
  */
 export const update = async (
   person: IPerson
@@ -110,6 +116,8 @@ export const update = async (
  * @param {string} personId
  *
  * @returns {IResponseWrapper<IPersonResponse>} response
+ * 
+ * @throws {Error} error
  */
 export const remove = async (
   personId: string
