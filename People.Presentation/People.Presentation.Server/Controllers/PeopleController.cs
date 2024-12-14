@@ -2,8 +2,8 @@ using System.Net;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using People.Application.Commands;
+using People.Application.DTOs;
 using People.Application.Queries;
-using People.Domain.Entities;
 using People.Presentation.Server.Models;
 
 namespace People.Presentation.Server.Controllers
@@ -14,12 +14,12 @@ namespace People.Presentation.Server.Controllers
     {
         [HttpPost]
         [Route("Create")]
-        public async Task<IActionResult> Create([FromBody] Person person)
+        public async Task<IActionResult> Create([FromBody] CreatePersonRequest request)
         {
-            var responseWrapper = new ResponseWrapper<Person>();
+            var responseWrapper = new ResponseWrapper<PersonResponse>();
             try
             {
-                var result = await sender.Send(new CreatePersonCommand(person));
+                var result = await sender.Send(new CreatePersonCommand(request));
 
                 // Build our response
                 responseWrapper.Data = result;
@@ -42,7 +42,7 @@ namespace People.Presentation.Server.Controllers
         [Route("Get/{personId}")]
         public async Task<IActionResult> Get([FromRoute] Guid personId)
         {
-            var responseWrapper = new ResponseWrapper<Person>();
+            var responseWrapper = new ResponseWrapper<PersonResponse>();
             try
             {
                 var result = await sender.Send(new GetPersonByIdQuery(personId));
@@ -75,7 +75,7 @@ namespace People.Presentation.Server.Controllers
         [Route("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            var responseWrapper = new ResponseWrapper<IEnumerable<Person>>();
+            var responseWrapper = new ResponseWrapper<IEnumerable<PersonResponse>>();
             try
             {
                 var result = await sender.Send(new GetAllPeopleQuery());
@@ -106,9 +106,9 @@ namespace People.Presentation.Server.Controllers
 
         [HttpPut]
         [Route("Update/{personId}")]
-        public async Task<IActionResult> Update([FromRoute] Guid personId, [FromBody] Person person)
+        public async Task<IActionResult> Update([FromRoute] Guid personId, [FromBody] UpdatePersonRequest person)
         {
-            var responseWrapper = new ResponseWrapper<Person>();
+            var responseWrapper = new ResponseWrapper<PersonResponse>();
             try
             {
                 var result = await sender.Send(new UpdatePersonCommand(personId, person));
@@ -138,7 +138,7 @@ namespace People.Presentation.Server.Controllers
         [Route("Remove/{personId}")]
         public async Task<IActionResult> Remove([FromRoute] Guid personId)
         {
-            var responseWrapper = new ResponseWrapper<Person>();
+            var responseWrapper = new ResponseWrapper<PersonResponse>();
             try
             {
                 var result = await sender.Send(new RemovePersonCommand(personId));
