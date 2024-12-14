@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { IFormField } from "../../models/form.model";
+import { CircleLoader } from "react-spinners";
+import { Button } from "react-bootstrap";
 
 interface ReusableFormProps {
+  isLoading: boolean;
   fields: IFormField[];
   onSubmit: SubmitHandler<FieldValues>;
 }
@@ -15,7 +17,11 @@ interface ReusableFormProps {
  *
  * @returns {React.FC<ReusableFormProps>} component
  */
-const ReusableForm: React.FC<ReusableFormProps> = ({ fields, onSubmit }) => {
+const ReusableForm: React.FC<ReusableFormProps> = ({
+  isLoading,
+  fields,
+  onSubmit,
+}) => {
   const {
     register,
     handleSubmit,
@@ -38,7 +44,15 @@ const ReusableForm: React.FC<ReusableFormProps> = ({ fields, onSubmit }) => {
           )}
         </div>
       ))}
-      <button type="submit">Submit</button>
+      {isLoading ? (
+        <div className="d-flex justify-content-center">
+          <CircleLoader size={100} color="#2563eb" />
+        </div>
+      ) : (
+        <Button type="submit" size="lg" disabled={isLoading} variant="primary">
+          Submit
+        </Button>
+      )}
     </form>
   );
 };

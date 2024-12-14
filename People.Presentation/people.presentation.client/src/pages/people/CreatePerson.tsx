@@ -32,9 +32,10 @@ const CreatePerson = () => {
       setIsSaving(false);
     }
   };
+
   return (
     <>
-      <ReusableForm fields={formFields} onSubmit={onSubmit} />
+      <ReusableForm fields={formFields} onSubmit={onSubmit} isLoading={isSaving} />
     </>
   );
 };
