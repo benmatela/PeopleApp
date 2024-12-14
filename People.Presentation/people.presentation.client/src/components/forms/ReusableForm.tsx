@@ -2,7 +2,6 @@
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { IFormField } from "../../models/form.model";
 import { CircleLoader } from "react-spinners";
-import { Button } from "react-bootstrap";
 
 interface ReusableFormProps {
   isLoading: boolean;
@@ -38,6 +37,7 @@ const ReusableForm: React.FC<ReusableFormProps> = ({
             type={field.type}
             placeholder={field.placeholder}
             {...register(field.name, field.validation)}
+            className=""
           />
           {errors[field.name] && (
             <span>{String(errors[field.name]?.message)}</span>
@@ -49,9 +49,9 @@ const ReusableForm: React.FC<ReusableFormProps> = ({
           <CircleLoader size={100} color="#2563eb" />
         </div>
       ) : (
-        <Button type="submit" size="lg" disabled={isLoading} variant="primary">
+        <button type="submit" disabled={isLoading}>
           Submit
-        </Button>
+        </button>
       )}
     </form>
   );
