@@ -1,10 +1,9 @@
-import DefaultTable from "../../components/table/DefaultTable";
+import StripedRowTable from "../../components/table/StripedRowTable";
 
 const People = () => {
   return (
     <div>
-      <DefaultTable
-      />
+      <StripedRowTable />
     </div>
   );
 };
