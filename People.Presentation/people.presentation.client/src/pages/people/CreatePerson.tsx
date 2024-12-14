@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FieldValues, SubmitHandler } from "react-hook-form";
-import { v4 as uuidv4 } from 'uuid';
 import ReusableForm from "../../components/forms/ReusableForm";
 import { IFormField } from "../../models/form.model";
 import { useState } from "react";
@@ -26,8 +25,6 @@ const CreatePerson = () => {
     try {
       const personToCreate: IPerson = data as any;
       personToCreate.age = 0;
-      personToCreate.dateCreated = new Date();
-      personToCreate.id = uuidv4();
 
       setCurrentPerson(personToCreate);
 
