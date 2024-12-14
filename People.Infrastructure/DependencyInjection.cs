@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using People.Infrastructure.Persistance;
-using People.Domain.Interfaces;
 using People.Infrastructure.Repositories;
+using People.Application.Repositories;
 
 namespace People.Infrastructure.Extensions;
 
