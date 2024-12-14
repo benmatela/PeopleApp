@@ -28,7 +28,9 @@ const CreatePerson = () => {
 
       setCurrentPerson(personToCreate);
 
-      createNewPerson(personToCreate);
+      createNewPerson(personToCreate).then((response: IPersonResponse) => {
+        console.log(response);
+      });
     } catch (error: any) {
       setErrorMessage(error.message);
       setSuccessMessage("");
