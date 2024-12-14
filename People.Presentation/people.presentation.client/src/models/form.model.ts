@@ -10,8 +10,3 @@ export interface IFormField {
   placeholder?: string;
   validation?: Record<string, any>;
 }
-
-export interface ICreatePersonFormData {
-  firstName: string;
-  lastName: string;
-}

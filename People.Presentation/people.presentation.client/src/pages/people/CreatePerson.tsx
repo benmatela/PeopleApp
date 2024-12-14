@@ -1,18 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import ReusableForm from "../../components/forms/ReusableForm";
-import { ICreatePersonFormData, IFormField } from "../../models/form.model";
+import { IFormField } from "../../models/form.model";
 import { useState } from "react";
 
+/**
+ * The structure of the reusable form data
+ */
+interface ICreatePersonFormData {
+  firstName: string;
+  lastName: string;
+  dateOfBirth: Date;
+}
+
 const CreatePerson = () => {
-  const [errorMessage, setErrorMessage] = useState<string>();
-  const [successMessage, setSuccessMessage] = useState<string>();
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [successMessage, setSuccessMessage] = useState<string>("");
   const [isSaving, setIsSaving] = useState<boolean>(false);
 
   const onSubmit: SubmitHandler<FieldValues> = (data: FieldValues) => {
     setIsSaving(true);
     try {
-      console.log(data);
       const formFieldValues: ICreatePersonFormData = data as any;
       console.log(formFieldValues);
       console.log(errorMessage);
@@ -55,6 +63,19 @@ const formFields: IFormField[] = [
       minLength: {
         value: 3,
         message: "Last Name must be at least 3 characters",
+      },
+    },
+  },
+  {
+    name: "dateOfBirth",
+    label: "Date Of Birth",
+    type: "date",
+    placeholder: "Enter your date of birth",
+    validation: {
+      required: "Date Of Birth is required",
+      minLength: {
+        value: 3,
+        message: "Date Of Birth must be at least 3 characters",
       },
     },
   },
