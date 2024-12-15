@@ -116,6 +116,7 @@ export const CreatePerson = ({
    * @throws {Error} error
    */
   const createNewPerson = async (person: IPerson): Promise<void> => {
+    setIsSaving(true);
     try {
       const apiResponse: IResponseWrapper<IPersonResponse> =
         await peopleService.create(person);
@@ -138,6 +139,7 @@ export const CreatePerson = ({
       setSuccessMessage("Person created successfully.");
       setErrorMessage("");
       setIsSaving(false);
+      setInfoDialogOpen(true);
     } catch (error: any) {
       setIsSaving(false);
 
@@ -157,7 +159,7 @@ export const CreatePerson = ({
       <InfoDialog
         okButtonLabel="Ok"
         title="Success"
-        description={`${currentPerson?.firstName} ${currentPerson?.lastName} deleted successfully`}
+        description={`${currentPerson?.firstName} ${currentPerson?.lastName} created successfully`}
         isModalOpen={isInfoDialogOpen}
         setIsModalOpen={setInfoDialogOpen}
       />
