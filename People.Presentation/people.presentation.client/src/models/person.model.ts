@@ -2,8 +2,8 @@
  * Person
  */
 export interface IPerson {
-  id: string;
-  dateCreated: Date;
+  id?: string;
+  dateCreated?: Date;
   dateOfBirth: Date;
   age: number;
   firstName: string;
