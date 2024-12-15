@@ -25,8 +25,7 @@ public class BasePersonRequest
 /// </summary>
 public class CreatePersonRequest : BasePersonRequest
 {
-    [Required]
-    public DateTime DateCreated { get; set; }
+
 }
 
 /// <summary>
