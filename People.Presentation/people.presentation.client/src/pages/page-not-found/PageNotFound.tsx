@@ -12,9 +12,11 @@ export const PageNotFound = () => {
       <BannerWithHeaderText
         text="Page Not found. Are you lost?"
         imageAlt="Page not found"
-        minHeight="100vh"
+        minContainerHeight="70vh"
         mdScreenMaxWidth={450}
         mdScreenMaxHeight={367}
+        bannerImageHeight={300}
+        bannerImageWidth={400}
       />
     </Grid2>
   );

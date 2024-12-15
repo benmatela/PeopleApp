@@ -5,7 +5,9 @@ import EmptyPersonImg from "../../assets/empty_people.svg";
 interface NotFoundBannerProps {
   text: string;
   imageAlt: string;
-  minHeight: string;
+  bannerImageHeight: number;
+  bannerImageWidth: number;
+  minContainerHeight: string;
   mdScreenMaxHeight: number;
   mdScreenMaxWidth: number;
 }
@@ -18,7 +20,9 @@ interface NotFoundBannerProps {
 export const BannerWithHeaderText = ({
   text,
   imageAlt,
-  minHeight,
+  bannerImageHeight,
+  minContainerHeight,
+  bannerImageWidth,
   mdScreenMaxHeight,
   mdScreenMaxWidth,
 }: NotFoundBannerProps) => {
@@ -29,15 +33,15 @@ export const BannerWithHeaderText = ({
       direction="column"
       alignItems="center"
       justifyContent="center"
-      sx={{ minHeight: minHeight }}
+      sx={{ minHeight: minContainerHeight }}
     >
       <h2>{text}</h2>
       <Grid2>
         <Box
           component="img"
           sx={{
-            height: 233,
-            width: 350,
+            height: bannerImageHeight,
+            width: bannerImageWidth,
             maxHeight: { xs: 233, md: mdScreenMaxHeight },
             maxWidth: { xs: 350, md: mdScreenMaxWidth },
           }}
