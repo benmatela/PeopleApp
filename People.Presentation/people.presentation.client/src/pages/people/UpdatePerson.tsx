@@ -9,8 +9,9 @@ import { Grid2 } from "@mui/material";
 
 interface UpdatePersonProps {
   allPeople: IPerson[];
-  isCreateMode: boolean;
+  currentPerson: IPerson | undefined;
   setAllPeople: Dispatch<React.SetStateAction<IPerson[]>>;
+  setCurrentPerson: Dispatch<React.SetStateAction<IPerson | undefined>>;
 }
 
 /**
@@ -21,8 +22,9 @@ interface UpdatePersonProps {
  * @returns {JSX.Element} component
  */
 export const UpdatePerson = ({
-  isCreateMode,
   allPeople,
+  currentPerson,
+  setCurrentPerson,
   setAllPeople,
 }: UpdatePersonProps) => {
   /**
@@ -38,9 +40,6 @@ export const UpdatePerson = ({
    */
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
   /**
-   * Current person being actioned on
-   */
-  const [currentPerson, setCurrentPerson] = useState<IPerson>();
   /**
    * Form fields to build the update person form
    */
@@ -88,12 +87,19 @@ export const UpdatePerson = ({
    * @param {FieldValues} data
    */
   const onSubmit: SubmitHandler<FieldValues> = (data: FieldValues) => {
+    setErrorMessage("");
+    setSuccessMessage("");
     try {
       const personToCreate: IPerson = data as any;
-      setCurrentPerson(personToCreate);
+      // Make sure we don't update and unknown person
+      if (currentPerson) {
+        personToCreate.dateCreated = currentPerson?.dateCreated;
+        personToCreate.id = currentPerson.id;
 
-      updatePerson(personToCreate);
+        updatePerson(personToCreate);
+      }
     } catch (error: any) {
+      // Update state with thrown error if any
       setErrorMessage(error.message);
       setSuccessMessage("");
     }
@@ -113,10 +119,11 @@ export const UpdatePerson = ({
 
       // Throw an error which will bubble up if request not successful
       if (!apiResponse.success) {
-        setErrorMessage(apiResponse.message);
-        setSuccessMessage("");
         throw new Error(apiResponse.message);
       }
+
+      // Update global current person with the newly added person
+      setCurrentPerson(apiResponse.data);
 
       // Adds the newly created person to the currently displayed list
       // This avoids too many unnecessary API calls
@@ -124,28 +131,28 @@ export const UpdatePerson = ({
       allExistingPeople.push(apiResponse.data);
       setAllPeople(allExistingPeople);
 
+      // Update states when API call is successful
       setSuccessMessage("Person created successfully.");
       setErrorMessage("");
       setIsUpdating(false);
     } catch (error: any) {
       setIsUpdating(false);
-      setSuccessMessage("");
-      setErrorMessage(error.message);
+
+      // Throw error back to the calling function
+      throw new Error(error.message);
     }
   };
 
   return (
     <Grid2>
-      Create Mode: {String(isCreateMode)}
       <ReusableForm
-        formLabel="Create New Person"
+        formLabel="Update Person"
         fields={formFields}
         onSubmit={onSubmit}
         isLoading={isUpdating}
       />
       <p>{successMessage}</p>
       <p>{errorMessage}</p>
-      <p>{currentPerson?.firstName}</p>
     </Grid2>
   );
 };

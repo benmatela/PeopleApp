@@ -8,7 +8,6 @@ import { IFormField } from "../../models/form.model";
 
 interface CreatePersonProps {
   allPeople: IPerson[];
-  currentPerson: IPerson | undefined;
   setCurrentPerson: Dispatch<React.SetStateAction<IPerson | undefined>>;
   setAllPeople: Dispatch<React.SetStateAction<IPerson[]>>;
 }
@@ -21,7 +20,6 @@ interface CreatePersonProps {
  * @returns {JSX.Element} component
  */
 export const CreatePerson = ({
-  currentPerson,
   allPeople,
   setCurrentPerson,
   setAllPeople,
@@ -89,10 +87,10 @@ export const CreatePerson = ({
     setSuccessMessage("");
     try {
       const personToCreate: IPerson = data as any;
-      setCurrentPerson(personToCreate);
 
       createNewPerson(personToCreate);
     } catch (error: any) {
+      // Update state with thrown error if any
       setErrorMessage(error.message);
       setSuccessMessage("");
     }
@@ -115,17 +113,25 @@ export const CreatePerson = ({
         throw new Error(apiResponse.message);
       }
 
+      // Create global current person with the newly added person
+      setCurrentPerson(apiResponse.data);
+
       // Adds the newly create person to the currently displayed list
       // This avoids too many unnecessary API calls
       const allExistingPeople: IPerson[] = allPeople;
       allExistingPeople.push(apiResponse.data);
       setAllPeople(allExistingPeople);
 
+      console.log("all people: ", allPeople);
+
+      // Update states when API call is successful
       setSuccessMessage("Person created successfully.");
       setErrorMessage("");
       setIsSaving(false);
     } catch (error: any) {
       setIsSaving(false);
+
+      // Throw error back to the calling function
       throw new Error(error.message);
     }
   };
@@ -140,7 +146,6 @@ export const CreatePerson = ({
       />
       <p>{successMessage}</p>
       <p>{errorMessage}</p>
-      <p>{currentPerson?.firstName}</p>
     </div>
   );
 };

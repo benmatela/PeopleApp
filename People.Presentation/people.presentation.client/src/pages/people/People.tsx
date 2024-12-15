@@ -101,15 +101,15 @@ export const People = () => {
       {isCreateMode ? (
         <CreatePerson
           allPeople={allPeople}
-          currentPerson={currentPerson}
           setCurrentPerson={setCurrentPerson}
           setAllPeople={setAllPeople}
         />
       ) : (
         <UpdatePerson
-          isCreateMode={isCreateMode}
           allPeople={allPeople}
           setAllPeople={setAllPeople}
+          currentPerson={currentPerson}
+          setCurrentPerson={setCurrentPerson}
         />
       )}
       <ListPeople
