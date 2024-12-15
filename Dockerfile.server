@@ -1,5 +1,5 @@
 # Use the official image with .NET SDK (with IIS Express support)
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:latest AS build
 
 WORKDIR /app
 
@@ -25,7 +25,7 @@ RUN dotnet build "People.Presentation.Server.csproj" -c Release
 RUN dotnet publish "People.Presentation.Server.csproj" -c Release -o /app/publish
 
 # Use the base image with IIS Express
-FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /inetpub/wwwroot
 
 # Install IIS Express on the container
