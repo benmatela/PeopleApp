@@ -58,6 +58,11 @@ export const People = () => {
     }
   }, [isInitialPageLoad]);
 
+  /**
+   * Gets all users on first page load then ignores other state changes
+   *
+   * The empty array(no dependencies) helps archieve this.
+   */
   useEffect(() => {
     getAllPeople();
   }, []);
