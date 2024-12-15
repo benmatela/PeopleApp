@@ -11,6 +11,6 @@ public class BaseEntity
 {
     [Key]
     public Guid Id { get; set; } = Guid.NewGuid();
-    [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-    public DateTime DateCreated { get; set; }
+    [Required]
+    public DateTime DateCreated { get; set; } = DateTime.UtcNow.Date;
 }
