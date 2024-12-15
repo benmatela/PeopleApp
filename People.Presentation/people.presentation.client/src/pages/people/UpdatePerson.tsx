@@ -39,10 +39,10 @@ export const UpdatePerson = ({
    * Is there any updating action going on?
    */
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
-   /**
+  /**
    * Is there any loading action going on?
    */
-   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   /**
    * Form fields to build the update person form
    *
@@ -91,9 +91,9 @@ export const UpdatePerson = ({
   ]);
 
   /**
-   * Populate default values for the Update person form
+   * Auto populates the "defaultValue" for the Update user form
    */
-  useEffect(() => {
+  const onPopulateUpdateForm = () => {
     if (currentPerson) {
       const updatedFormFields = formFields;
       // First Name
@@ -108,7 +108,11 @@ export const UpdatePerson = ({
 
       setIsLoading(false);
     }
-  }, [currentPerson, formFields, isLoading]);
+  };
+
+  useEffect(() => {
+    onPopulateUpdateForm();
+  });
 
   /**
    * Submits the form
@@ -174,7 +178,7 @@ export const UpdatePerson = ({
   return (
     <Grid2>
       {/* Because "defaultValue" can only be set once when the form is is
-      initialized, we wait for the update person data to be available */}
+      initialized, we wait for "formFields" to be auto populated */}
       {!isLoading ? (
         <ReusableForm
           formLabel="Update Person"

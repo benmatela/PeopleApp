@@ -2,7 +2,6 @@ import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { IFormField } from "../../../models/form.model";
 import { Button, TextField, FormLabel, Grid2, Box } from "@mui/material";
 import { ReusableSpinner } from "../../loaders/ReusableSpinner";
-import { useEffect } from "react";
 
 interface ReusableFormProps {
   /**
@@ -53,10 +52,6 @@ export const ReusableForm: React.FC<ReusableFormProps> = ({
     formState: { errors },
   } = useForm<FieldValues>();
   const classes: any = useStyles;
-
-  useEffect(() => {
-    console.log("fields: ", fields)
-  }, [fields])
 
   return (
     <Box
