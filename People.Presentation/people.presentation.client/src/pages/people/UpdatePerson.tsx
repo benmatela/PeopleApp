@@ -14,6 +14,7 @@ interface UpdatePersonProps {
   isUpdating: boolean;
   setCurrentPerson: Dispatch<React.SetStateAction<IPerson | undefined>>;
   setIsUpdating: Dispatch<React.SetStateAction<boolean>>;
+  setPersonUpdated: Dispatch<React.SetStateAction<boolean>>;
 }
 
 /**
@@ -28,6 +29,7 @@ export const UpdatePerson = ({
   isUpdating,
   setCurrentPerson,
   setIsUpdating,
+  setPersonUpdated,
 }: UpdatePersonProps) => {
   /**
    * Holds error messages from performing certain actions such as API calls
@@ -164,6 +166,7 @@ export const UpdatePerson = ({
       setSuccessMessage("Person updated successfully.");
       setErrorMessage("");
       setIsUpdating(false);
+      setPersonUpdated(true);
     } catch (error: any) {
       setIsUpdating(false);
 

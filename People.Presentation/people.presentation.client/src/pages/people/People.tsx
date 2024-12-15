@@ -61,6 +61,10 @@ export const People = () => {
    * Watches for user created event
    */
   const [personCreated, setPersonCreated] = useState<boolean>(false);
+  /**
+   * Watches for user updated event
+   */
+  const [personUpdated, setPersonUpdated] = useState<boolean>(false);
 
   useEffect(() => {
     if (personCreated && currentPerson) {
@@ -69,8 +73,16 @@ export const People = () => {
       const allExistingPeople: IPerson[] = allPeople;
       allExistingPeople.push(currentPerson);
       setAllPeople(allExistingPeople);
+      setPersonCreated(false);
+    } else if (personUpdated && currentPerson) {
+      // Adds the newly create person to the currently displayed list
+      // This avoids too many unnecessary API calls
+      const allExistingPeople: IPerson[] = allPeople;
+      allExistingPeople.push(currentPerson);
+      setAllPeople(allExistingPeople);
+      setPersonUpdated(false);
     }
-  }, [personCreated, allPeople, currentPerson]);
+  }, [personCreated, allPeople, currentPerson, personUpdated]);
 
   /**
    * Gets all users on first page load then ignores other state changes
@@ -127,6 +139,7 @@ export const People = () => {
           setCurrentPerson={setCurrentPerson}
           setIsUpdating={setIsUpdating}
           isUpdating={isUpdating}
+          setPersonUpdated={setPersonUpdated}
         />
       )}
       <ListPeople
