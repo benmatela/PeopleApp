@@ -161,7 +161,7 @@ export const ListPeople = ({
   };
 
   /**
-   * Handles the delete button press for a person row
+   * Handles the delete button press
    *
    * @param {IPerson} person
    */
@@ -228,7 +228,7 @@ export const ListPeople = ({
                 sx={{ minHeight: "50vh" }}
               >
                 <BannerWithHeaderText
-                  text="Psst! There's nobody here. Add a new person ☝️"
+                  text="Psst! There's nobody here.."
                   imageAlt="No people found"
                   minContainerHeight="50vh"
                   mdScreenMaxWidth={450}
