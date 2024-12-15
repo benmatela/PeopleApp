@@ -5,7 +5,6 @@ import * as peopleService from "../../services/people.service";
 import { IResponseWrapper } from "../../models/response.model";
 import { IPerson, IPersonResponse } from "../../models/person.model";
 import { ReusableForm } from "../../components/forms/reusable-form/ReusableForm";
-import { InfoDialog } from "../../components/dialogs/info-dialog/InfoDialog";
 
 /**
  * Creates a new person
@@ -29,11 +28,6 @@ export const CreatePerson = () => {
    * Current person being actioned on
    */
   const [currentPerson, setCurrentPerson] = useState<IPerson>();
-  /**
-   * Shows/hides Message Dialog
-   */
-  const [isMessageDialogOpen, setIsMessageDialogOpen] =
-    useState<boolean>(false);
   /**
    * Form fields to build the update person form
    */
@@ -115,7 +109,8 @@ export const CreatePerson = () => {
 
       setSuccessMessage("Person created successfully.");
       setIsSaving(false);
-      setIsMessageDialogOpen(true);
+      
+      window.location.reload();
     } catch (error: any) {
       setIsSaving(false);
       throw new Error(error.message);
@@ -129,13 +124,6 @@ export const CreatePerson = () => {
         fields={formFields}
         onSubmit={onSubmit}
         isLoading={isSaving}
-      />
-      <InfoDialog
-        title={"Success"}
-        description={"Person created successfully."}
-        okButtonLabel={"Ok"}
-        setIsModalOpen={setIsMessageDialogOpen}
-        isModalOpen={isMessageDialogOpen}
       />
       <p>{successMessage}</p>
       <p>{errorMessage}</p>

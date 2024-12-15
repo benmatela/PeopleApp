@@ -78,13 +78,13 @@ export const ReusableForm: React.FC<ReusableFormProps> = ({
         >
           {formLabel}
         </Box>
-        <Grid2 container spacing={3}>
+        <Grid2 container spacing={3} minWidth={"100vw"}>
           {fields.map((field) => (
             <Box
               key={field.name}
               sx={{
-                sm: { minWidth: "auto" },
-                md: { minWidth: "30%", padding: "5px" },
+                sm: { minWidth: "100vw" },
+                md: { minWidth: "100%", padding: "5px" },
               }}
             >
               <Grid2>
@@ -95,7 +95,10 @@ export const ReusableForm: React.FC<ReusableFormProps> = ({
                 type={field.type}
                 placeholder={field.placeholder}
                 {...register(field.name, field.validation)}
-                style={{ minWidth: "100%" }}
+                sx={{
+                  sm: { minWidth: "100vw" },
+                  md: { minWidth: "30%", padding: "5px" },
+                }}
               />
               <Grid2>
                 {errors[field.name] && (

@@ -187,7 +187,11 @@ export const ListPeople = ({
         throw new Error(apiResponse.message);
       }
 
+      // Remove person from currently displayed list
+      setAllPeople(allPeople.filter((person: IPerson) => person.id !== currentlySelectedPerson?.id));
+
       setIsDeleting(false);
+      setIsConfirmDialogOpen(false);
     } catch (error: any) {
       setIsDeleting(false);
       setErrorMessage(error.message);
@@ -206,7 +210,6 @@ export const ListPeople = ({
             <>
               <p>{errorMessage}</p>
               <ReusableTable columns={tableColumns} data={allPeople} />
-
               <ConfirmationDialog
                 title={"Delete Person"}
                 description={`Are you sure you want to delete this person: ${currentlySelectedPerson?.firstName} ${currentlySelectedPerson?.lastName}?`}
