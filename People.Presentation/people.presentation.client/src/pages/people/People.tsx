@@ -100,6 +100,7 @@ export const People = () => {
       />
       {isCreateMode ? (
         <CreatePerson
+          currentPerson={currentPerson}
           allPeople={allPeople}
           setCurrentPerson={setCurrentPerson}
           setAllPeople={setAllPeople}

@@ -5,8 +5,10 @@ import { IResponseWrapper } from "../../models/response.model";
 import { IPerson, IPersonResponse } from "../../models/person.model";
 import { ReusableForm } from "../../components/forms/reusable-form/ReusableForm";
 import { IFormField } from "../../models/form.model";
+import { InfoDialog } from "../../components/dialogs/info-dialog/InfoDialog";
 
 interface CreatePersonProps {
+  currentPerson: IPerson | undefined;
   allPeople: IPerson[];
   setCurrentPerson: Dispatch<React.SetStateAction<IPerson | undefined>>;
   setAllPeople: Dispatch<React.SetStateAction<IPerson[]>>;
@@ -21,6 +23,7 @@ interface CreatePersonProps {
  */
 export const CreatePerson = ({
   allPeople,
+  currentPerson,
   setCurrentPerson,
   setAllPeople,
 }: CreatePersonProps) => {
@@ -36,6 +39,10 @@ export const CreatePerson = ({
    * Is there any saving action going on?
    */
   const [isSaving, setIsSaving] = useState<boolean>(false);
+  /**
+   * Shows/Hides the Confirmation Dialog
+   */
+  const [isInfoDialogOpen, setInfoDialogOpen] = useState<boolean>(false);
   /**
    * Form fields to build the create a person form
    */
@@ -143,6 +150,13 @@ export const CreatePerson = ({
         fields={formFields}
         onSubmit={onSubmit}
         isLoading={isSaving}
+      />
+      <InfoDialog
+        okButtonLabel="Ok"
+        title="Success"
+        description={`${currentPerson?.firstName} ${currentPerson?.lastName} deleted successfully`}
+        isModalOpen={isInfoDialogOpen}
+        setIsModalOpen={setInfoDialogOpen}
       />
       <p>{successMessage}</p>
       <p>{errorMessage}</p>

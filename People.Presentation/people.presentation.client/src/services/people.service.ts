@@ -29,7 +29,7 @@ export const create = async (
 
     // Build our response
     const responseWrapper = {} as IResponseWrapper<IPersonResponse>;
-    responseWrapper.data = apiResponse.data;
+    responseWrapper.data = apiResponse.data.data;
     responseWrapper.statusCode = HttpStatusCode.Ok;
     responseWrapper.message = "";
     responseWrapper.success = true;
@@ -98,7 +98,7 @@ export const update = async (
 
     // Build our response
     const responseWrapper = {} as IResponseWrapper<IPersonResponse>;
-    responseWrapper.data = apiResponse.data;
+    responseWrapper.data = apiResponse.data.data;
     responseWrapper.statusCode = HttpStatusCode.Ok;
     responseWrapper.message = "";
     responseWrapper.success = true;
@@ -133,7 +133,7 @@ export const remove = async (
 
     // Build our response
     const responseWrapper = {} as IResponseWrapper<null>;
-    responseWrapper.data = apiResponse.data;
+    responseWrapper.data = apiResponse.data.data;
     responseWrapper.statusCode = HttpStatusCode.Ok;
     responseWrapper.message = "";
     responseWrapper.success = true;
