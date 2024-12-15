@@ -4,8 +4,17 @@ import { CircleLoader } from "react-spinners";
 import { Button, TextField, FormLabel, Grid2 } from "@mui/material";
 
 interface ReusableFormProps {
+  /**
+   * Is there any loading/saving/deleting going on?
+   */
   isLoading: boolean;
+  /**
+   * Custom form fields to build a new form
+   */
   fields: IFormField[];
+  /**
+   * Handles the submit button
+   */
   onSubmit: SubmitHandler<FieldValues>;
 }
 
@@ -47,7 +56,7 @@ export const ReusableForm: React.FC<ReusableFormProps> = ({
                   type={field.type}
                   placeholder={field.placeholder}
                   {...register(field.name, field.validation)}
-                  style={{minWidth: ""}}
+                  style={{ minWidth: "" }}
                 />
                 <Grid2>
                   {errors[field.name] && (
