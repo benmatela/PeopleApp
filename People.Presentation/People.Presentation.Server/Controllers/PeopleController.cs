@@ -179,8 +179,10 @@ namespace People.Presentation.Server.Controllers
             var responseWrapper = new ResponseWrapper<IEnumerable<PersonResponse>>();
             try
             {
-                // CancellationTokenSource provides the token and have authority to cancel the token
+                // This is the object responsible for creating a cancellation token and sending a 
+                // cancellation request to all copies of that token.
                 CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+                // This is the structure used by listeners to monitor the token’s current state.
                 CancellationToken token = cancellationTokenSource.Token;
 
                 // Create a DTO for our queries
