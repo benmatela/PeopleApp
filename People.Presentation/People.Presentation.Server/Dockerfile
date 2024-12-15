@@ -1,41 +1,23 @@
-# Use the official image with .NET SDK (with IIS Express support)
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
-
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
-
-# Copy the csproj files and restore dependencies
-# COPY ["/People.Presentation/People.Presentation.Server/People.Presentation.Server.csproj", "People.Presentation/People.Presentation.Server/"]
-# COPY ["/People.Application/People.Application.csproj", "People.Application/"]
-# COPY ["/People.Domain/People.Domain.csproj", "People.Domain/"]
-# COPY ["/People.Infrastructure/People.Infrastructure.csproj", "People.Infrastructure/"]
-
-# Copy the rest of the code
-COPY . .
-
-RUN dotnet restore "People.Presentation.Server.csproj"
-
-# Build the solution
-WORKDIR /app/backend/WebAPI
-RUN dotnet build "People.Presentation.Server.csproj" -c Release
-
-# Publish the app (using the output directory)
-RUN dotnet publish "People.Presentation.Server.csproj" -c Release -o /app/publish
-
-# Use the base image with IIS Express
-FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
-WORKDIR /inetpub/wwwroot
-
-# Install IIS Express on the container
-RUN apt-get update && \
-    apt-get install -y \
-    libunwind8 \
-    && rm -rf /var/lib/apt/lists/*
-
-# Copy the published app from the build image to the IIS directory
-COPY --from=build /app/publish .
-
-# Expose the port that IIS Express will listen on
 EXPOSE 80
+EXPOSE 443
 
-# Start IIS Express to host the application
-ENTRYPOINT ["dotnet", "WebAPI.dll"]
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /app
+COPY . .
+#COPY ["src/People.Presentation/People.Presentation.Server.csproj", "./People.Presentation/"]
+#RUN dotnet restore "./People.Presentation/People.Presentation.Server.csproj"
+#COPY . .
+WORKDIR "/app/src/People.Presentation"
+RUN dotnet restore
+
+RUN dotnet build "./People.Presentation.Server.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "./People.Presentation.Server.csproj" -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "People.Presentation.dll"]
