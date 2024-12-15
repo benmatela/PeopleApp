@@ -8,7 +8,7 @@ import { IPerson } from "../../models/person.model";
 
 /**
  * People base component
- * 
+ *
  * @returns {JSX.Element} component
  */
 export const People = () => {
