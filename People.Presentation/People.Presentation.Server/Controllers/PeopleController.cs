@@ -169,5 +169,19 @@ namespace People.Presentation.Server.Controllers
                 return Ok(responseWrapper);
             }
         }
+
+         [HttpGet]
+        [Route("Search")]
+        public async Task<ActionResult<IEnumerable<PersonResponse>>> SearchPeople(
+            [FromQuery] string firstName,
+            [FromQuery] string lastName)
+        {
+            var result = await _peopleService.SearchPeopleAsync(firstName, lastName);
+            if (result == null || result.Count == 0)
+            {
+                return NotFound("No people found with the given criteria.");
+            }
+            return Ok(result);
+        }
     }
 }

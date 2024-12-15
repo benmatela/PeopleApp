@@ -49,3 +49,14 @@ public class PersonResponse
     public DateTime DateOfBirth { get; set; }
     public int Age { get; set; }
 }
+
+/// <summary>
+/// Used to hold all keys to search by
+/// 
+/// <para>This can easily be extended compared to hard coded keys</para>
+/// </summary>
+public class SearchPersonRequest
+{
+    public string FirstName { get; set; } = string.Empty;
+    public string LastName { get; set; } = string.Empty;
+}

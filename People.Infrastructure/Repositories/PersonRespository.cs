@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Threading;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using People.Application.DTOs;
@@ -50,7 +52,7 @@ public class PersonRepository(ApplicationDbContext DbContext, IMapper Mapper) : 
             return _mapper.Map<PersonResponse>(existingPerson);
         }
 
-        return _mapper.Map<PersonResponse>(request);;
+        return _mapper.Map<PersonResponse>(request); ;
     }
 
     public async Task<bool> Remove(Guid personId)
@@ -66,4 +68,25 @@ public class PersonRepository(ApplicationDbContext DbContext, IMapper Mapper) : 
         return false;
     }
 
+    public async Task<IEnumerable<PersonResponse>> Search(SearchPersonRequest request, CancellationToken cancellationToken)
+    {
+        // We declare the empty query for our person entity
+        IQueryable<Person>? searchQuery = null;
+
+        // Apply filters based on the input parameters
+        if (!string.IsNullOrEmpty(request.FirstName))
+        {
+            searchQuery = _dbContext.People.Where(p => p.FirstName.Contains(request.FirstName));
+        }
+
+        if (!string.IsNullOrEmpty(request.LastName))
+        {
+            searchQuery = _dbContext.People.Where(p => p.FirstName.Contains(request.FirstName));
+        }
+
+        // Execute the query asynchronously
+        var people = await searchQuery.ToListAsync(cancellationToken);
+
+        return _mapper.Map<IEnumerable<PersonResponse>>(people);
+    }
 }
