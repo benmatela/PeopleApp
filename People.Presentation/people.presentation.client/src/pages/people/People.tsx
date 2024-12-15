@@ -65,24 +65,46 @@ export const People = () => {
    * Watches for user updated event
    */
   const [personUpdated, setPersonUpdated] = useState<boolean>(false);
+  /**
+   * Watches for user deleted event
+   */
+  const [personDeleted, setPersonDeleted] = useState<boolean>(false);
 
+  /**
+   * This is used solely to keep track of a Person's's state
+   *
+   * This brings the question of too many state variables vs
+   * using state management frameworks such as Redux
+   */
   useEffect(() => {
     if (personCreated && currentPerson) {
-      // Adds the newly create person to the currently displayed list
+      // Adds the newly created person to the currently displayed list
       // This avoids too many unnecessary API calls
       const allExistingPeople: IPerson[] = allPeople;
       allExistingPeople.push(currentPerson);
       setAllPeople(allExistingPeople);
       setPersonCreated(false);
     } else if (personUpdated && currentPerson) {
-      // Adds the newly create person to the currently displayed list
+      // Updates the currently displayed list with the updated person
       // This avoids too many unnecessary API calls
       const allExistingPeople: IPerson[] = allPeople;
+      const updatedPerson = allPeople.find((p) => p.id === currentPerson.id);
+      if (updatedPerson) {
+        allExistingPeople.push(currentPerson);
+        setAllPeople(allExistingPeople);
+      }
+      setPersonUpdated(false);
+    } else if (personDeleted && currentPerson) {
+      // Removes the deleted person person from the currently displayed list
+      // This avoids too many unnecessary API calls
+      const allExistingPeople: IPerson[] = allPeople.filter(
+        (p) => p.id !== currentPerson.id
+      );
       allExistingPeople.push(currentPerson);
       setAllPeople(allExistingPeople);
-      setPersonUpdated(false);
+      setPersonDeleted(false);
     }
-  }, [personCreated, allPeople, currentPerson, personUpdated]);
+  }, [personCreated, allPeople, currentPerson, personUpdated, personDeleted]);
 
   /**
    * Gets all users on first page load then ignores other state changes
