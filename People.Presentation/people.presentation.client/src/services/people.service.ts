@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { HttpStatusCode } from "axios";
 import { IResponseWrapper } from "../models/response-wrapper.model";
-import { peopleApiBaseUrl } from "../utils/config.utils";
 import { people } from "../constants";
 import { IPerson, IPersonResponse } from "../models/person.model";
+import configUtils from "../utils/config.utils";
 
 /**
  * Creates a new person
@@ -11,7 +11,7 @@ import { IPerson, IPersonResponse } from "../models/person.model";
  * @param {IPerson} person
  *
  * @returns {IResponseWrapper<IPersonResponse>} response
- * 
+ *
  * @throws {Error} error
  */
 export const create = async (
@@ -23,7 +23,7 @@ export const create = async (
     };
 
     const apiResponse = await axios.post(
-      `${peopleApiBaseUrl}/${people}/Create`,
+      `${configUtils.server.peopleApiBaseUrl}/${people}/Create`,
       person,
       headersConfig
     );
@@ -45,7 +45,7 @@ export const create = async (
  * Gets all people
  *
  * @returns {IResponseWrapper<IPersonResponse[]>} response
- * 
+ *
  * @throws {Error} error
  */
 export const getAll = async (): Promise<
@@ -57,7 +57,7 @@ export const getAll = async (): Promise<
     };
 
     const apiResponse = await axios.get(
-      `${peopleApiBaseUrl}/${people}/GetAll`,
+      `${configUtils.server.peopleApiBaseUrl}/${people}/GetAll`,
       headersConfig
     );
 
@@ -80,7 +80,7 @@ export const getAll = async (): Promise<
  * @param {IPerson} person
  *
  * @returns {IResponseWrapper<IPersonResponse>} response
- * 
+ *
  * @throws {Error} error
  */
 export const update = async (
@@ -92,7 +92,7 @@ export const update = async (
     };
 
     const apiResponse = await axios.put(
-      `${peopleApiBaseUrl}/${people}/Update`,
+      `${configUtils.server.peopleApiBaseUrl}/${people}/Update`,
       person,
       headersConfig
     );
@@ -116,7 +116,7 @@ export const update = async (
  * @param {string} personId
  *
  * @returns {IResponseWrapper<IPersonResponse>} response
- * 
+ *
  * @throws {Error} error
  */
 export const remove = async (
@@ -128,7 +128,7 @@ export const remove = async (
     };
 
     const apiResponse = await axios.delete(
-      `${peopleApiBaseUrl}/${people}/Remove/${personId}`,
+      `${configUtils.server.peopleApiBaseUrl}/${people}/Remove/${personId}`,
       headersConfig
     );
 

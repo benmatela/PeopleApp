@@ -1,29 +1,29 @@
 services:
-  people-api:
+  backend:
     build:
       context: .
       dockerfile: Dockerfile.server
-    restart: always
     ports:
       - 5000:80  # Exposing and mapping container port 80 to host port 5000 (IIS Express runs on port 80 inside the container)
       - 5001:443 # Exposes container port 443 (for HTTPS)
-    # networks:
-    #   - webapp-network
-    # depends_on:
-    #   - people-client
+    networks:
+      - webapp-network
+    depends_on:
+      - client
     environment:
       - ASPNETCORE_URLS=http://0.0.0.0:80 
 
-  # people-client:
-  #   build:
-  #     context: ./People.Presentation/Dockerfile.client
-  #   ports:
-  #     - "3000:80"  # Exposing React app on port 3000
-  #   networks:
-  #     - webapp-network
-  #   environment:
-  #     - REACT_APP_API_URL=http://backend:5000  # Set API URL for React to interact with the backend
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    ports:
+      - "3000:80"  # Exposing React app on port 3000
+    networks:
+      - webapp-network
+    environment:
+      - VITE_PEOPLE_API_ENDPOINT=http://backend:5000  # Set API URL for React to interact with the backend
 
-# networks:
-#   webapp-network:
-#     driver: bridge
+networks:
+  webapp-network:
+    driver: bridge

@@ -1,3 +1,8 @@
+## Dockerfile
+################################
+## BUILD ENVIRONMENT ###########
+################################
+
 # Use the official image with .NET SDK (with IIS Express support)
 FROM mcr.microsoft.com/dotnet/sdk:latest AS build
 
@@ -23,6 +28,10 @@ RUN dotnet build "People.Presentation.Server.csproj" -c Release
 
 # Publish the app (using the output directory)
 RUN dotnet publish "People.Presentation.Server.csproj" -c Release -o /app/publish
+
+################################
+#### PRODUCTION ENVIRONMENT ####
+################################
 
 # Use the base image with IIS Express
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
