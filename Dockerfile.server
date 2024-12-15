@@ -14,6 +14,9 @@ RUN dotnet restore "People.Presentation/People.Presentation.Server/People.Presen
 # Copy the rest of the code
 COPY . .
 
+# Remove client assets we don't need
+RUN rm -Rf app/People.Presentation/people.presentation.client
+
 # Build the solution
 WORKDIR /app/People.Presentation/People.Presentation.Server
 RUN dotnet build "People.Presentation.Server.csproj" -c Release
