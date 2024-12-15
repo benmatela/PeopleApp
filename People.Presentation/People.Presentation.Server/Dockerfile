@@ -4,15 +4,15 @@ FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /app
 
 # Copy the csproj files and restore dependencies
-COPY ["People.Presentation/People.Presentation.Server/People.Presentation.Server.csproj", "People.Presentation/People.Presentation.Server/"]
-COPY ["People.Application/People.Application.csproj", "People.Application/"]
-COPY ["People.Domain/People.Domain.csproj", "People.Domain/"]
-COPY ["People.Infrastructure/People.Infrastructure.csproj", "People.Infrastructure/"]
-
-RUN dotnet restore "People.Presentation/People.Presentation.Server/People.Presentation.Server.csproj"
+# COPY ["/People.Presentation/People.Presentation.Server/People.Presentation.Server.csproj", "People.Presentation/People.Presentation.Server/"]
+# COPY ["/People.Application/People.Application.csproj", "People.Application/"]
+# COPY ["/People.Domain/People.Domain.csproj", "People.Domain/"]
+# COPY ["/People.Infrastructure/People.Infrastructure.csproj", "People.Infrastructure/"]
 
 # Copy the rest of the code
 COPY . .
+
+RUN dotnet restore "People.Presentation.Server.csproj"
 
 # Build the solution
 WORKDIR /app/backend/WebAPI
