@@ -5,6 +5,7 @@ import { ListPeople } from "./ListPeople";
 import { UpdatePerson } from "./UpdatePerson";
 import { Grid2 } from "@mui/material";
 import { IPerson } from "../../models/person.model";
+import "./People.css";
 
 /**
  * People base component
@@ -12,7 +13,15 @@ import { IPerson } from "../../models/person.model";
  * @returns {JSX.Element} component
  */
 export const People = () => {
+  /**
+   * Controls the view for Create and Update components
+   */
   const [isCreateMode, setIsCreateMode] = useState<boolean>(true);
+  /**
+   * Acts as a DTO for the actioned user from the List component.
+   *
+   * Used across People related components
+   */
   const [currentlySelectedPerson, setCurrentlySelectedPerson] =
     useState<IPerson>();
 

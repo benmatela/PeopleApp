@@ -12,8 +12,9 @@ import Box from "@mui/material/Box";
 import { Delete, Edit } from "@mui/icons-material";
 import { ConfirmationDialog } from "../../components/dialogs/ConfirmationDialog";
 import EmptyPersonImg from "../../assets/empty_people.svg";
+import "./People.css";
 
-interface ListPeopledProps {
+interface ListPeopleProps {
   currentlySelectedPerson: IPerson | undefined;
   setIsCreateMode: Dispatch<React.SetStateAction<boolean>>;
   setCurrentlySelectedUser: React.Dispatch<
@@ -22,9 +23,9 @@ interface ListPeopledProps {
 }
 
 /**
- * List all people
+ * Lists all people
  *
- * @param {ListPeopledProps} listPeopledProps
+ * @param {ListPeopleProps} listPeopleProps
  *
  * @returns {JSX.Element} component
  */
@@ -32,13 +33,31 @@ export const ListPeople = ({
   currentlySelectedPerson,
   setCurrentlySelectedUser,
   setIsCreateMode,
-}: ListPeopledProps) => {
+}: ListPeopleProps) => {
+  /**
+   * Holds error messages from performing certain actions
+   */
   const [errorMessage, setErrorMessage] = useState<string>("");
+  /**
+   * Is there any data loading currently in progress?
+   */
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  /**
+   * Is there any delete action going on?
+   */
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
+  /**
+   * All people from the API
+   */
   const [allPeople, setAllPeople] = useState<IPerson[]>([]);
+  /**
+   * Shows/Hides the Confirmation Dialog
+   */
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] =
     useState<boolean>(false);
+  /**
+   * Table columns using custom headers
+   */
   const tableColumns: ColumnDef<any, any>[] = [
     {
       accessorKey: "id",
@@ -99,6 +118,9 @@ export const ListPeople = ({
     },
   ];
 
+  /**
+   * Loads data once when the page loads
+   */
   useEffect(() => {
     getAllPeople();
   }, []);
@@ -161,8 +183,6 @@ export const ListPeople = ({
         String(currentlySelectedPerson?.id)
       );
 
-      console.log("apiResponse: ", apiResponse);
-
       if (!apiResponse.success) {
         setErrorMessage(apiResponse.message);
         throw new Error(apiResponse.message);
@@ -200,7 +220,6 @@ export const ListPeople = ({
             </>
           ) : (
             <>
-              <p>{errorMessage}</p>
               <Grid2
                 container
                 spacing={0}
@@ -209,8 +228,7 @@ export const ListPeople = ({
                 justifyContent="center"
                 sx={{ minHeight: "50vh" }}
               >
-                <p>Psst! There's nobody here. Add a new person ☝️</p>
-
+                <h2>Psst! There's nobody here. Add a new person ☝️</h2>
                 <Grid2>
                   <Box
                     component="img"
