@@ -96,11 +96,8 @@ export const UpdatePerson = ({
   const onPopulateUpdateForm = () => {
     if (currentPerson) {
       const updatedFormFields = formFields;
-      // First Name
       updatedFormFields[0].defaultValue = currentPerson.firstName;
-      // Last Name
       updatedFormFields[1].defaultValue = currentPerson.lastName;
-      // Date Of Birth
       updatedFormFields[2].defaultValue = currentPerson.dateOfBirth.toString();
 
       // Update state with default values
@@ -177,8 +174,8 @@ export const UpdatePerson = ({
 
   return (
     <Grid2>
-      {/* Because "defaultValue" can only be set once when the form is is
-      initialized, we wait for "formFields" to be auto populated */}
+      {/* Because "defaultValue" can only be set once when the form is being
+      initialized, we wait for "formFields" to be auto populated then render the update form */}
       {!isLoading ? (
         <ReusableForm
           formLabel="Update Person"

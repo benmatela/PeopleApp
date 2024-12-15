@@ -189,7 +189,6 @@ export const ListPeople = ({
               />
             </>
           ) : (
-            <>
               <BannerWithHeaderText
                 text="Psst! There's nobody here.."
                 imageAlt="No people found"
@@ -199,7 +198,6 @@ export const ListPeople = ({
                 bannerImageHeight={300}
                 bannerImageWidth={400}
               />
-            </>
           )}
           <h3>{errorMessage}</h3>
         </>
