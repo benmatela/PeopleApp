@@ -15,7 +15,7 @@ RUN dotnet restore "People.Presentation/People.Presentation.Server/People.Presen
 COPY . .
 
 # Remove client assets we don't need
-RUN rm -Rf app/People.Presentation/people.presentation.client
+RUN rm -Rf /app/People.Presentation/people.presentation.client
 
 # Build the solution
 WORKDIR /app/People.Presentation/People.Presentation.Server
