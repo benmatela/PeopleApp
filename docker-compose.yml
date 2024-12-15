@@ -1,7 +1,7 @@
 services:
   people-api:
     build:
-      context: ./People.Presentation
+      context: .
       dockerfile: Dockerfile.server
     ports:
       - "5165:80"  # Exposing backend API on port 5165 (IIS Express runs on port 80 inside the container)
