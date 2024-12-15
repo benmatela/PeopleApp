@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Dispatch, useEffect, useState } from "react";
 import * as peopleService from "../../services/people.service";
 import { IResponseWrapper } from "../../models/response-wrapper.model";
@@ -34,7 +33,7 @@ export const ListPeople = ({
   setIsCreateMode,
 }: ListPeopleProps) => {
   /**
-   * Holds error messages from performing certain actions
+   * Holds error messages from performing certain actions such as API calls
    */
   const [errorMessage, setErrorMessage] = useState<string>("");
   /**

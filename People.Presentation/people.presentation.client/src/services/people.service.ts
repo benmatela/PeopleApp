@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { HttpStatusCode } from "axios";
 import { IResponseWrapper } from "../models/response-wrapper.model";
 import { people } from "../constants";

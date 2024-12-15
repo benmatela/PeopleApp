@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { IFormField } from "../../models/form.model";
 import { useState } from "react";
@@ -20,10 +19,25 @@ interface UpdatePersonProps {
  * @returns {JSX.Element} component
  */
 export const UpdatePerson = ({ isCreateMode }: UpdatePersonProps) => {
+  /**
+   * Holds error messages from performing certain actions such as API calls
+   */
   const [errorMessage, setErrorMessage] = useState<string>("");
+  /**
+   * Holds success messages from performing certain actions such as API calls
+   */
   const [successMessage, setSuccessMessage] = useState<string>("");
+  /**
+   * Is there any updating action going on?
+   */
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
+  /**
+   * Current person being actioned on
+   */
   const [currentPerson, setCurrentPerson] = useState<IPerson>();
+  /**
+   * Form fields to build the update person form
+   */
   const formFields: IFormField[] = [
     {
       name: "firstName",
