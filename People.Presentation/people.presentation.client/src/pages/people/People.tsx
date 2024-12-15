@@ -63,8 +63,6 @@ export const People = () => {
   const [personCreated, setPersonCreated] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log("personCreated: ", personCreated);
-    console.log("setCurrentPerson: ", setCurrentPerson);
     if (personCreated && currentPerson) {
       // Adds the newly create person to the currently displayed list
       // This avoids too many unnecessary API calls
