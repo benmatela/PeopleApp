@@ -9,7 +9,7 @@ import { ReusableTable } from "../../components/tables/ReusableTable";
 import Grid2 from "@mui/material/Grid2";
 import Button from "@mui/material/Button";
 import { Delete, Edit } from "@mui/icons-material";
-import { ConfirmationDialog } from "../../components/dialogs/ConfirmationDialog";
+import { ConfirmationDialog } from "../../components/dialogs/confirmation-dialog/ConfirmationDialog";
 import "./People.css";
 import { BannerWithHeaderText } from "../../components/messaging/BannerWithHeaderText";
 

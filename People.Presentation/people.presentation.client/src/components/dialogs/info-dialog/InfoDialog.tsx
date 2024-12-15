@@ -7,7 +7,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Dispatch } from "react";
 
-interface ConfirmationDialogProps {
+interface InfoDialogProps {
   title: string;
   description: string;
   okButtonLabel: string;
@@ -16,19 +16,19 @@ interface ConfirmationDialogProps {
 }
 
 /**
- * Message Pop Up Modal
+ * Used to just show a message(no actionable buttons).
  *
- * @param {ConfirmationDialogProps} confirmationDialogProps
+ * @param {InfoDialog} infoDialog
  *
  * @returns {JSX.Element} component
  */
-export const MessageDialog = ({
+export const InfoDialog = ({
   okButtonLabel,
   title,
   description,
   isModalOpen,
   setIsModalOpen,
-}: ConfirmationDialogProps) => {
+}: InfoDialogProps) => {
   const handleClickOpen = () => {
     setIsModalOpen(true);
   };

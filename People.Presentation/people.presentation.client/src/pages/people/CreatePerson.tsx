@@ -6,7 +6,7 @@ import * as peopleService from "../../services/people.service";
 import { IResponseWrapper } from "../../models/response-wrapper.model";
 import { IPerson, IPersonResponse } from "../../models/person.model";
 import { ReusableForm } from "../../components/forms/ReusableForm";
-import { MessageDialog } from "../../components/dialogs/MessageDialog";
+import { InfoDialog } from "../../components/dialogs/info-dialog/InfoDialog";
 
 /**
  * Creates a new person
@@ -115,7 +115,7 @@ export const CreatePerson = () => {
         isLoading={isSaving}
       />
 
-      <MessageDialog
+      <InfoDialog
         title={"Success"}
         description={"Person created successfully."}
         okButtonLabel={"Ok"}
