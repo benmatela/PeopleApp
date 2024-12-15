@@ -23,6 +23,13 @@ builder.Services.AddCors(options =>
     });
 });
 
+Host.CreateDefaultBuilder(args)
+    .ConfigureWebHost(web => {
+        web.UseUrls("http://127.0.0.1:80", "http://0.0.0.0:80", "http://localhost:80");
+    }, options => {
+        options.SuppressEnvironmentConfiguration = true;
+    });
+
 var app = builder.Build();
 app.UseCors("CorsPolicy");
 app.UseDefaultFiles();
@@ -35,7 +42,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

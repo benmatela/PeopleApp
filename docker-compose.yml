@@ -3,15 +3,16 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.server
+    restart: always
     ports:
-      - "8000:8080"  # Exposing backend API on port 5000 (IIS Express runs on port 8080 inside the container)
-    networks:
-      - webapp-network
+      - 5000:80  # Exposing and mapping container port 80 to host port 5000 (IIS Express runs on port 80 inside the container)
+      - 5001:443 # Exposes container port 443 (for HTTPS)
+    # networks:
+    #   - webapp-network
     # depends_on:
     #   - people-client
     environment:
-      - ASPNETCORE_URLS=http://0.0.0.0:8080 # This allows IIS Express to listen on port 8080
-      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_URLS=http://0.0.0.0:80 
 
   # people-client:
   #   build:
@@ -23,6 +24,6 @@ services:
   #   environment:
   #     - REACT_APP_API_URL=http://backend:5000  # Set API URL for React to interact with the backend
 
-networks:
-  webapp-network:
-    driver: bridge
+# networks:
+#   webapp-network:
+#     driver: bridge
