@@ -2,7 +2,7 @@ import { FieldValues, SubmitHandler } from "react-hook-form";
 import { IFormField } from "../../models/form.model";
 import { useState } from "react";
 import * as peopleService from "../../services/people.service";
-import { IResponseWrapper } from "../../models/response-wrapper.model";
+import { IResponseWrapper } from "../../models/response.model";
 import { IPerson, IPersonResponse } from "../../models/person.model";
 import { ReusableForm } from "../../components/forms/reusable-form/ReusableForm";
 import { InfoDialog } from "../../components/dialogs/info-dialog/InfoDialog";
@@ -13,13 +13,30 @@ import { InfoDialog } from "../../components/dialogs/info-dialog/InfoDialog";
  * @returns {JSX.Element} component
  */
 export const CreatePerson = () => {
+  /**
+   * Holds error messages from performing certain actions such as API calls
+   */
   const [errorMessage, setErrorMessage] = useState<string>("");
+  /**
+   * Holds success messages from performing certain actions such as API calls
+   */
   const [successMessage, setSuccessMessage] = useState<string>("");
+  /**
+   * Is there any saving action going on?
+   */
   const [isSaving, setIsSaving] = useState<boolean>(false);
+  /**
+   * Current person being actioned on
+   */
   const [currentPerson, setCurrentPerson] = useState<IPerson>();
+  /**
+   * Shows/hides Message Dialog
+   */
   const [isMessageDialogOpen, setIsMessageDialogOpen] =
     useState<boolean>(false);
-
+  /**
+   * Form fields to build the update person form
+   */
   const formFields: IFormField[] = [
     {
       name: "firstName",

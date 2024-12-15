@@ -1,13 +1,14 @@
 import { Dispatch, useEffect, useState } from "react";
 import * as peopleService from "../../services/people.service";
-import { IResponseWrapper } from "../../models/response-wrapper.model";
+import { IResponseWrapper } from "../../models/response.model";
 import { IPerson, IPersonResponse } from "../../models/person.model";
 import { CircleLoader } from "react-spinners";
 import { ColumnDef } from "@tanstack/react-table";
 import { ReusableTable } from "../../components/tables/reusable-table/ReusableTable";
 import Grid2 from "@mui/material/Grid2";
 import Button from "@mui/material/Button";
-import { Delete, Edit } from "@mui/icons-material";
+import Edit from "@mui/icons-material/Edit";
+import Delete from "@mui/icons-material/Delete";
 import { ConfirmationDialog } from "../../components/dialogs/confirmation-dialog/ConfirmationDialog";
 import "./People.css";
 import { BannerWithHeaderText } from "../../components/messaging/banner-with-header-text/BannerWithHeaderText";

@@ -2,7 +2,7 @@ import { FieldValues, SubmitHandler } from "react-hook-form";
 import { IFormField } from "../../models/form.model";
 import { useState } from "react";
 import * as peopleService from "../../services/people.service";
-import { IResponseWrapper } from "../../models/response-wrapper.model";
+import { IResponseWrapper } from "../../models/response.model";
 import { IPerson, IPersonResponse } from "../../models/person.model";
 import { ReusableForm } from "../../components/forms/reusable-form/ReusableForm";
 import { Grid2 } from "@mui/material";

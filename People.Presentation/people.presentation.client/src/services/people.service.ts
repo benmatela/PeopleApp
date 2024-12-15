@@ -1,5 +1,5 @@
 import axios, { HttpStatusCode } from "axios";
-import { IResponseWrapper } from "../models/response-wrapper.model";
+import { IResponseWrapper } from "../models/response.model";
 import { people } from "../constants";
 import { IPerson, IPersonResponse } from "../models/person.model";
 import configUtils from "../utils/config.utils";
