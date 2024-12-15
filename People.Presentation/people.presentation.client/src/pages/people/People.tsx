@@ -26,7 +26,7 @@ export const People = () => {
   /**
    * Is there any data loading currently in progress?
    */
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   /**
    * Is there any delete action going on?
    */

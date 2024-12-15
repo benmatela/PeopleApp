@@ -2,7 +2,6 @@ import { Dispatch } from "react";
 import * as peopleService from "../../services/people.service";
 import { IResponseWrapper } from "../../models/response.model";
 import { IPerson } from "../../models/person.model";
-import { CircleLoader } from "react-spinners";
 import { ColumnDef } from "@tanstack/react-table";
 import { ReusableTable } from "../../components/tables/reusable-table/ReusableTable";
 import Grid2 from "@mui/material/Grid2";
@@ -12,6 +11,7 @@ import Delete from "@mui/icons-material/Delete";
 import { ConfirmationDialog } from "../../components/dialogs/confirmation-dialog/ConfirmationDialog";
 import "./People.css";
 import { BannerWithHeaderText } from "../../components/messaging/banner-with-header-text/BannerWithHeaderText";
+import { ReusableSpinner } from "../../components/loaders/ReusableSpinner";
 
 interface ListPeopleProps {
   isConfirmDialogOpen: boolean;
@@ -169,9 +169,12 @@ export const ListPeople = ({
   return (
     <Grid2>
       {isLoading || isDeleting ? (
-        <Grid2>
-          <CircleLoader size={100} color="#2563eb" />
-        </Grid2>
+        <ReusableSpinner
+          spinnerSize={200}
+          spinnerColor="#2563eb"
+          minContainerHeight="50vh"
+          loadingMessage={isLoading ? "Loading..." : "Deleting..."}
+        />
       ) : (
         <>
           {allPeople.length > 0 ? (

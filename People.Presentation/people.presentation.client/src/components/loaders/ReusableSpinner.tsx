@@ -30,7 +30,7 @@ export const ReusableSpinner = ({
       justifyContent="center"
       sx={{ minHeight: minContainerHeight }}
     >
-      <h2>{loadingMessage}</h2>
+      <h3>{loadingMessage}</h3>
       <Grid2>
         <CircleLoader size={spinnerSize} color={spinnerColor} />
       </Grid2>
