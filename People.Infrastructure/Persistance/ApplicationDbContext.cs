@@ -11,6 +11,6 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseInMemoryDatabase("PeopleDB");
+        optionsBuilder.UseInMemoryDatabase("People");
     }
 }
