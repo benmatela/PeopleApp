@@ -45,6 +45,8 @@ export const CreatePerson = ({
   const [isInfoDialogOpen, setInfoDialogOpen] = useState<boolean>(false);
   /**
    * Form fields to build the create a person form
+   * 
+   * We don't use "useState" because we don't expect the fields to change
    */
   const formFields: IFormField[] = [
     {
@@ -52,6 +54,7 @@ export const CreatePerson = ({
       label: "First Name:",
       type: "text",
       placeholder: "First Name",
+      defaultValue: "",
       validation: {
         required: "First Name is required",
         minLength: {
@@ -64,6 +67,7 @@ export const CreatePerson = ({
       name: "lastName",
       label: "Last Name:",
       type: "text",
+      defaultValue: "",
       placeholder: "Last Name",
       validation: {
         required: "Last Name is required",
@@ -78,6 +82,7 @@ export const CreatePerson = ({
       label: "Date Of Birth:",
       type: "date",
       placeholder: "Date Of Birth",
+      defaultValue: "",
       validation: {
         required: "Date Of Birth is required",
       },

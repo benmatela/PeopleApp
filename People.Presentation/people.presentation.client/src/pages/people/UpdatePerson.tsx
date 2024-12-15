@@ -1,6 +1,6 @@
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { IFormField } from "../../models/form.model";
-import { Dispatch, useState } from "react";
+import { Dispatch, useEffect, useState } from "react";
 import * as peopleService from "../../services/people.service";
 import { IResponseWrapper } from "../../models/response.model";
 import { IPerson, IPersonResponse } from "../../models/person.model";
@@ -39,16 +39,23 @@ export const UpdatePerson = ({
    * Is there any updating action going on?
    */
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
-  /**
+   /**
+   * Is there any loading action going on?
+   */
+   const [isLoading, setIsLoading] = useState<boolean>(true);
   /**
    * Form fields to build the update person form
+   *
+   * We use "useState" compared to what we have in Create form because we
+   * expect the fields to change(set default values using "currentPerson" variable)
    */
-  const formFields: IFormField[] = [
+  const [formFields, setFormFields] = useState<IFormField[]>([
     {
       name: "firstName",
       label: "First Name:",
       type: "text",
       placeholder: "First Name",
+      defaultValue: "",
       validation: {
         required: "First Name is required",
         minLength: {
@@ -62,6 +69,7 @@ export const UpdatePerson = ({
       label: "Last Name:",
       type: "text",
       placeholder: "Last Name",
+      defaultValue: "",
       validation: {
         required: "Last Name is required",
         minLength: {
@@ -74,12 +82,33 @@ export const UpdatePerson = ({
       name: "dateOfBirth",
       label: "Date Of Birth:",
       type: "date",
+      defaultValue: "",
       placeholder: "Date Of Birth",
       validation: {
         required: "Date Of Birth is required",
       },
     },
-  ];
+  ]);
+
+  /**
+   * Populate default values for the Update person form
+   */
+  useEffect(() => {
+    if (currentPerson) {
+      const updatedFormFields = formFields;
+      // First Name
+      updatedFormFields[0].defaultValue = currentPerson.firstName;
+      // Last Name
+      updatedFormFields[1].defaultValue = currentPerson.lastName;
+      // Date Of Birth
+      updatedFormFields[2].defaultValue = currentPerson.dateOfBirth.toString();
+
+      // Update state with default values
+      setFormFields(updatedFormFields);
+
+      setIsLoading(false);
+    }
+  }, [currentPerson, formFields, isLoading]);
 
   /**
    * Submits the form
@@ -144,12 +173,16 @@ export const UpdatePerson = ({
 
   return (
     <Grid2>
-      <ReusableForm
-        formLabel="Update Person"
-        fields={formFields}
-        onSubmit={onSubmit}
-        isLoading={isUpdating}
-      />
+      {/* Because "defaultValue" can only be set once when the form is is
+      initialized, we wait for the update person data to be available */}
+      {!isLoading ? (
+        <ReusableForm
+          formLabel="Update Person"
+          fields={formFields}
+          onSubmit={onSubmit}
+          isLoading={isUpdating}
+        />
+      ) : null}
       <p>{successMessage}</p>
       <p>{errorMessage}</p>
     </Grid2>

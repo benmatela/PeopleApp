@@ -2,6 +2,7 @@ import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { IFormField } from "../../../models/form.model";
 import { Button, TextField, FormLabel, Grid2, Box } from "@mui/material";
 import { ReusableSpinner } from "../../loaders/ReusableSpinner";
+import { useEffect } from "react";
 
 interface ReusableFormProps {
   /**
@@ -53,6 +54,10 @@ export const ReusableForm: React.FC<ReusableFormProps> = ({
   } = useForm<FieldValues>();
   const classes: any = useStyles;
 
+  useEffect(() => {
+    console.log("fields: ", fields)
+  }, [fields])
+
   return (
     <Box
       sx={{
@@ -63,6 +68,7 @@ export const ReusableForm: React.FC<ReusableFormProps> = ({
         borderRadius: 5,
       }}
     >
+      {fields[0].defaultValue}
       <form
         className={classes.root}
         onSubmit={handleSubmit(onSubmit)}
@@ -94,6 +100,7 @@ export const ReusableForm: React.FC<ReusableFormProps> = ({
                 id={field.name}
                 type={field.type}
                 placeholder={field.placeholder}
+                defaultValue={field.defaultValue}
                 {...register(field.name, field.validation)}
                 sx={{
                   sm: { minWidth: "100vw" },

@@ -7,4 +7,5 @@ export interface IFormField {
   type: string;
   placeholder?: string;
   validation?: Record<string, any>;
+  defaultValue: any;
 }
