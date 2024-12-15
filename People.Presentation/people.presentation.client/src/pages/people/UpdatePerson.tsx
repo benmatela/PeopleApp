@@ -154,6 +154,8 @@ export const UpdatePerson = ({
         throw new Error(apiResponse.message);
       }
 
+      console.log("response: ", apiResponse);
+
       // Update global current person with the newly added person
       setCurrentPerson(apiResponse.data);
 

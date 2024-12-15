@@ -112,13 +112,12 @@ namespace People.Presentation.Server.Controllers
             try
             {
                 var result = await sender.Send(new UpdatePersonCommand(personId, person));
-                if (!result)
-                {
-                    // Build our response
-                    responseWrapper.Success = false;
-                    responseWrapper.Message = "Item not found.";
-                    responseWrapper.StatusCode = HttpStatusCode.NotFound;
-                }
+               
+                // Build our response
+                responseWrapper.Success = true;
+                responseWrapper.Message = "";
+                responseWrapper.StatusCode = HttpStatusCode.OK;
+                responseWrapper.Data = result;
 
                 return Ok(responseWrapper);
             }

@@ -8,5 +8,5 @@ namespace People.Application.Interfaces;
 public interface IPersonRepository : IBaseRepository<PersonResponse>
 {
     Task<PersonResponse> Create(CreatePersonRequest request);
-    Task<bool> Update(Guid personId, UpdatePersonRequest request);
+    Task<PersonResponse> Update(Guid personId, UpdatePersonRequest request);
 }
