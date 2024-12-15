@@ -85,6 +85,8 @@ export const CreatePerson = ({
    * @param {FieldValues} data
    */
   const onSubmit: SubmitHandler<FieldValues> = (data: FieldValues) => {
+    setErrorMessage("");
+    setSuccessMessage("");
     try {
       const personToCreate: IPerson = data as any;
       setCurrentPerson(personToCreate);
@@ -104,17 +106,12 @@ export const CreatePerson = ({
    * @throws {Error} error
    */
   const createNewPerson = async (person: IPerson): Promise<void> => {
-    setIsSaving(true);
-    setErrorMessage("");
-    setSuccessMessage("");
     try {
       const apiResponse: IResponseWrapper<IPersonResponse> =
         await peopleService.create(person);
 
       // Throw an error which will bubble up if request not successful
       if (!apiResponse.success) {
-        setErrorMessage(apiResponse.message);
-        setSuccessMessage("");
         throw new Error(apiResponse.message);
       }
 
@@ -125,6 +122,7 @@ export const CreatePerson = ({
       setAllPeople(allExistingPeople);
 
       setSuccessMessage("Person created successfully.");
+      setErrorMessage("");
       setIsSaving(false);
     } catch (error: any) {
       setIsSaving(false);

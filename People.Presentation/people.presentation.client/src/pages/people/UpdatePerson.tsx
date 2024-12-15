@@ -107,9 +107,6 @@ export const UpdatePerson = ({
    * @throws {Error} error
    */
   const updatePerson = async (person: IPerson): Promise<void> => {
-    setIsUpdating(true);
-    setErrorMessage("");
-    setSuccessMessage("");
     try {
       const apiResponse: IResponseWrapper<IPersonResponse> =
         await peopleService.update(person);
@@ -128,10 +125,12 @@ export const UpdatePerson = ({
       setAllPeople(allExistingPeople);
 
       setSuccessMessage("Person created successfully.");
+      setErrorMessage("");
       setIsUpdating(false);
     } catch (error: any) {
       setIsUpdating(false);
-      throw new Error(error.message);
+      setSuccessMessage("");
+      setErrorMessage(error.message);
     }
   };
 
