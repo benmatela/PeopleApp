@@ -5,7 +5,7 @@ import { useState } from "react";
 import * as peopleService from "../../services/people.service";
 import { IResponseWrapper } from "../../models/response-wrapper.model";
 import { IPerson, IPersonResponse } from "../../models/person.model";
-import { ReusableForm } from "../../components/forms/ReusableForm";
+import { ReusableForm } from "../../components/forms/reusable-form/ReusableForm";
 import { InfoDialog } from "../../components/dialogs/info-dialog/InfoDialog";
 
 /**

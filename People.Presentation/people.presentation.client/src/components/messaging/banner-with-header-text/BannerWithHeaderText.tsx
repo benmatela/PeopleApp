@@ -1,6 +1,6 @@
 import Grid2 from "@mui/material/Grid2";
 import Box from "@mui/material/Box";
-import EmptyPersonImg from "../../assets/empty_people.svg";
+import EmptyPersonImg from "../../../assets/empty_people.svg";
 
 interface NotFoundBannerProps {
   text: string;

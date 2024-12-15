@@ -1,5 +1,5 @@
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
-import { IFormField } from "../../models/form.model";
+import { IFormField } from "../../../models/form.model";
 import { CircleLoader } from "react-spinners";
 import { Button, TextField, FormLabel, Grid2 } from "@mui/material";
 

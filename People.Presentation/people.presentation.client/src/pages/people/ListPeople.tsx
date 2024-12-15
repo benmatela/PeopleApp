@@ -5,13 +5,13 @@ import { IResponseWrapper } from "../../models/response-wrapper.model";
 import { IPerson, IPersonResponse } from "../../models/person.model";
 import { CircleLoader } from "react-spinners";
 import { ColumnDef } from "@tanstack/react-table";
-import { ReusableTable } from "../../components/tables/ReusableTable";
+import { ReusableTable } from "../../components/tables/reusable-table/ReusableTable";
 import Grid2 from "@mui/material/Grid2";
 import Button from "@mui/material/Button";
 import { Delete, Edit } from "@mui/icons-material";
 import { ConfirmationDialog } from "../../components/dialogs/confirmation-dialog/ConfirmationDialog";
 import "./People.css";
-import { BannerWithHeaderText } from "../../components/messaging/BannerWithHeaderText";
+import { BannerWithHeaderText } from "../../components/messaging/banner-with-header-text/BannerWithHeaderText";
 
 interface ListPeopleProps {
   currentlySelectedPerson: IPerson | undefined;
@@ -219,24 +219,15 @@ export const ListPeople = ({
             </>
           ) : (
             <>
-              <Grid2
-                container
-                spacing={0}
-                direction="column"
-                alignItems="center"
-                justifyContent="center"
-                sx={{ minHeight: "50vh" }}
-              >
-                <BannerWithHeaderText
-                  text="Psst! There's nobody here.."
-                  imageAlt="No people found"
-                  minContainerHeight="50vh"
-                  mdScreenMaxWidth={450}
-                  mdScreenMaxHeight={367}
-                  bannerImageHeight={300}
-                  bannerImageWidth={400}
-                />
-              </Grid2>
+              <BannerWithHeaderText
+                text="Psst! There's nobody here.."
+                imageAlt="No people found"
+                minContainerHeight="50vh"
+                mdScreenMaxWidth={450}
+                mdScreenMaxHeight={367}
+                bannerImageHeight={300}
+                bannerImageWidth={400}
+              />
             </>
           )}
         </>
