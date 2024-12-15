@@ -13,7 +13,7 @@ interface NotFoundBannerProps {
 }
 
 /**
- * Default banner with text at the top
+ * Default banner with with a message
  *
  * @returns {JSX.Element} component
  */

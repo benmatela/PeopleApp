@@ -8,11 +8,10 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ReusableTable } from "../../components/tables/ReusableTable";
 import Grid2 from "@mui/material/Grid2";
 import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
 import { Delete, Edit } from "@mui/icons-material";
 import { ConfirmationDialog } from "../../components/dialogs/ConfirmationDialog";
-import EmptyPersonImg from "../../assets/empty_people.svg";
 import "./People.css";
+import { BannerWithHeaderText } from "../../components/messaging/BannerWithHeaderText";
 
 interface ListPeopleProps {
   currentlySelectedPerson: IPerson | undefined;
@@ -228,20 +227,15 @@ export const ListPeople = ({
                 justifyContent="center"
                 sx={{ minHeight: "50vh" }}
               >
-                <h2>Psst! There's nobody here. Add a new person ☝️</h2>
-                <Grid2>
-                  <Box
-                    component="img"
-                    sx={{
-                      height: 233,
-                      width: 350,
-                      maxHeight: { xs: 233, md: 167 },
-                      maxWidth: { xs: 350, md: 250 },
-                    }}
-                    alt="People not found."
-                    src={EmptyPersonImg}
-                  />
-                </Grid2>
+                <BannerWithHeaderText
+                  text="Psst! There's nobody here. Add a new person ☝️"
+                  imageAlt="No people found"
+                  minContainerHeight="50vh"
+                  mdScreenMaxWidth={450}
+                  mdScreenMaxHeight={367}
+                  bannerImageHeight={300}
+                  bannerImageWidth={400}
+                />
               </Grid2>
             </>
           )}
