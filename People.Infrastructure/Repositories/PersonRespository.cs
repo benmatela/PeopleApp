@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using People.Application.DTOs;
 using People.Application.Interfaces;
 using People.Domain.Entities;
-using People.Domain.Helpers;
 using People.Infrastructure.Persistance;
 
 namespace People.Infrastructure.Repositories;
@@ -15,9 +14,6 @@ public class PersonRepository(ApplicationDbContext DbContext, IMapper Mapper) : 
 
     public async Task<PersonResponse> Create(CreatePersonRequest request)
     {
-        request.Id = Guid.NewGuid();
-        request.Age = DateHelpers.GetAge(request.DateOfBirth);
-
         var mappedPerson = _mapper.Map<Person>(request);
 
         _dbContext.People.Add(mappedPerson);

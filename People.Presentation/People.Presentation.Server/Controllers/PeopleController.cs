@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using People.Application.Commands;
 using People.Application.DTOs;
+using People.Application.Helpers;
 using People.Application.Queries;
 using People.Presentation.Server.Models;
 
@@ -23,6 +24,7 @@ namespace People.Presentation.Server.Controllers
 
                 // Build our response
                 responseWrapper.Data = result;
+                responseWrapper.Data.Age = DateHelpers.GetAge(request.DateOfBirth);
 
                 return Ok(responseWrapper);
             }
@@ -52,12 +54,18 @@ namespace People.Presentation.Server.Controllers
                     responseWrapper.Success = false;
                     responseWrapper.Message = "Item not found.";
                     responseWrapper.StatusCode = HttpStatusCode.NotFound;
+
+                    return Ok(responseWrapper);
+                }
+                else
+                {
+                    // Build our response
+                    responseWrapper.Data = result;
+                    responseWrapper.Data.Age = DateHelpers.GetAge(result.DateOfBirth);
+
+                    return Ok(responseWrapper);
                 }
 
-                // Build our response
-                responseWrapper.Data = result;
-
-                return Ok(responseWrapper);
             }
             catch (Exception e)
             {
@@ -112,12 +120,13 @@ namespace People.Presentation.Server.Controllers
             try
             {
                 var result = await sender.Send(new UpdatePersonCommand(personId, person));
-               
+
                 // Build our response
                 responseWrapper.Success = true;
                 responseWrapper.Message = "";
                 responseWrapper.StatusCode = HttpStatusCode.OK;
                 responseWrapper.Data = result;
+                responseWrapper.Data.Age = DateHelpers.GetAge(result.DateOfBirth);
 
                 return Ok(responseWrapper);
             }
