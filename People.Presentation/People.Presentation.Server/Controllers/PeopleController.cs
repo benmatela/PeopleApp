@@ -55,7 +55,7 @@ namespace People.Presentation.Server.Controllers
                     responseWrapper.Message = "Item not found.";
                     responseWrapper.StatusCode = HttpStatusCode.NotFound;
 
-                    return Ok(responseWrapper);
+                    return NotFound(responseWrapper);
                 }
                 else
                 {
@@ -108,7 +108,7 @@ namespace People.Presentation.Server.Controllers
                 responseWrapper.Success = false;
                 responseWrapper.StatusCode = HttpStatusCode.InternalServerError;
 
-                return Ok(responseWrapper);
+                return new ObjectResult(responseWrapper);
             }
         }
 
@@ -156,7 +156,47 @@ namespace People.Presentation.Server.Controllers
                 responseWrapper.StatusCode = result ? HttpStatusCode.OK : HttpStatusCode.BadRequest;
                 responseWrapper.Success = result;
 
-                return Ok(responseWrapper);
+                return result ? Ok(responseWrapper) : NotFound(responseWrapper);
+            }
+            catch (Exception e)
+            {
+                // Build our response
+                responseWrapper.Exception = e;
+                responseWrapper.Message = e.Message;
+                responseWrapper.Success = false;
+                responseWrapper.StatusCode = HttpStatusCode.InternalServerError;
+
+                return new ObjectResult(responseWrapper);
+            }
+        }
+
+        [HttpGet]
+        [Route("Search")]
+        public async Task<ActionResult<IEnumerable<PersonResponse>>> SearchPeople(
+           [FromQuery] string firstName,
+           [FromQuery] string lastName)
+        {
+            var responseWrapper = new ResponseWrapper<IEnumerable<PersonResponse>>();
+            try
+            {
+                // CancellationTokenSource provides the token and have authority to cancel the token
+                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+                CancellationToken token = cancellationTokenSource.Token;
+
+                // Create a DTO for our queries
+                var searchQueries = new SearchPersonRequest();
+                searchQueries.FirstName = firstName;
+                searchQueries.LastName = lastName;
+
+                var result = await sender.Send(new SearchPersonQuery(searchQueries, token));
+
+                // Build our response
+                responseWrapper.Message = result.Count() > 0 ? "" : "Items not found.";
+                responseWrapper.StatusCode = result.Count() > 0 ? HttpStatusCode.OK : HttpStatusCode.NotFound;
+                responseWrapper.Success = result.Count() > 0 ? true : false;
+                responseWrapper.Data = result;
+
+                return result.Count() > 0 ? Ok(responseWrapper) : NotFound(responseWrapper);
             }
             catch (Exception e)
             {
@@ -168,20 +208,6 @@ namespace People.Presentation.Server.Controllers
 
                 return Ok(responseWrapper);
             }
-        }
-
-         [HttpGet]
-        [Route("Search")]
-        public async Task<ActionResult<IEnumerable<PersonResponse>>> SearchPeople(
-            [FromQuery] string firstName,
-            [FromQuery] string lastName)
-        {
-            var result = await _peopleService.SearchPeopleAsync(firstName, lastName);
-            if (result == null || result.Count == 0)
-            {
-                return NotFound("No people found with the given criteria.");
-            }
-            return Ok(result);
         }
     }
 }
