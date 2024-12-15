@@ -93,7 +93,6 @@ export const UpdatePerson = ({
       const personToCreate: IPerson = data as any;
       // Make sure we don't update and unknown person
       if (currentPerson) {
-        personToCreate.dateCreated = currentPerson?.dateCreated;
         personToCreate.id = currentPerson.id;
 
         updatePerson(personToCreate);

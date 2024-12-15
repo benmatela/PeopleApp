@@ -18,6 +18,12 @@ public class BasePersonRequest
     [Required]
     [StringLength(255, MinimumLength = 3)]
     public string LastName { get; set; } = string.Empty;
+
+    [Required]
+    public int Age { get; set; }
+
+    [Required]
+    public DateTime DateOfBirth { get; set; }
 }
 
 /// <summary>
@@ -27,12 +33,6 @@ public class CreatePersonRequest : BasePersonRequest
 {
     [Required]
     public DateTime DateCreated { get; set; }
-
-    [Required]
-    public DateTime DateOfBirth { get; set; }
-
-    [Required]
-    public int Age { get; set; }
 }
 
 /// <summary>
@@ -40,6 +40,7 @@ public class CreatePersonRequest : BasePersonRequest
 /// </summary>
 public class UpdatePersonRequest : BasePersonRequest
 {
+   
 }
 
 /// <summary>
