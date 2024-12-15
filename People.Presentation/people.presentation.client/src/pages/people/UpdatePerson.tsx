@@ -7,12 +7,13 @@ import { IPerson, IPersonResponse } from "../../models/person.model";
 import { ReusableForm } from "../../components/forms/reusable-form/ReusableForm";
 import { Grid2 } from "@mui/material";
 import { convertDateToYYYMMDD } from "../../utils/date.util";
+import { InfoDialog } from "../../components/dialogs/info-dialog/InfoDialog";
 
 interface UpdatePersonProps {
-  allPeople: IPerson[];
   currentPerson: IPerson | undefined;
-  setAllPeople: Dispatch<React.SetStateAction<IPerson[]>>;
+  isUpdating: boolean;
   setCurrentPerson: Dispatch<React.SetStateAction<IPerson | undefined>>;
+  setIsUpdating: Dispatch<React.SetStateAction<boolean>>;
 }
 
 /**
@@ -23,10 +24,10 @@ interface UpdatePersonProps {
  * @returns {JSX.Element} component
  */
 export const UpdatePerson = ({
-  allPeople,
   currentPerson,
+  isUpdating,
   setCurrentPerson,
-  setAllPeople,
+  setIsUpdating,
 }: UpdatePersonProps) => {
   /**
    * Holds error messages from performing certain actions such as API calls
@@ -37,13 +38,13 @@ export const UpdatePerson = ({
    */
   const [successMessage, setSuccessMessage] = useState<string>("");
   /**
-   * Is there any updating action going on?
-   */
-  const [isUpdating, setIsUpdating] = useState<boolean>(false);
-  /**
    * Is there any loading action going on?
    */
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  /**
+   * Shows/Hides the Confirmation Dialog
+   */
+  const [isInfoDialogOpen, setInfoDialogOpen] = useState<boolean>(false);
   /**
    * Form fields to build the update person form
    *
@@ -159,14 +160,8 @@ export const UpdatePerson = ({
       // Update global current person with the newly added person
       setCurrentPerson(apiResponse.data);
 
-      // Adds the newly created person to the currently displayed list
-      // This avoids too many unnecessary API calls
-      const allExistingPeople: IPerson[] = allPeople;
-      allExistingPeople.push(apiResponse.data);
-      setAllPeople(allExistingPeople);
-
       // Update states when API call is successful
-      setSuccessMessage("Person created successfully.");
+      setSuccessMessage("Person updated successfully.");
       setErrorMessage("");
       setIsUpdating(false);
     } catch (error: any) {
@@ -189,6 +184,13 @@ export const UpdatePerson = ({
           isLoading={isUpdating}
         />
       ) : null}
+      <InfoDialog
+        okButtonLabel="Ok"
+        title="Success"
+        description={`${currentPerson?.firstName} ${currentPerson?.lastName} updated successfully`}
+        isModalOpen={isInfoDialogOpen}
+        setIsModalOpen={setInfoDialogOpen}
+      />
       <p>{successMessage}</p>
       <p>{errorMessage}</p>
     </Grid2>

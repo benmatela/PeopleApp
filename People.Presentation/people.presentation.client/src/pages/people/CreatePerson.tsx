@@ -9,9 +9,10 @@ import { InfoDialog } from "../../components/dialogs/info-dialog/InfoDialog";
 
 interface CreatePersonProps {
   currentPerson: IPerson | undefined;
-  allPeople: IPerson[];
+  isSaving: boolean;
   setCurrentPerson: Dispatch<React.SetStateAction<IPerson | undefined>>;
-  setAllPeople: Dispatch<React.SetStateAction<IPerson[]>>;
+  setPersonCreated: Dispatch<React.SetStateAction<boolean>>;
+  setIsSaving: Dispatch<React.SetStateAction<boolean>>;
 }
 
 /**
@@ -22,10 +23,9 @@ interface CreatePersonProps {
  * @returns {JSX.Element} component
  */
 export const CreatePerson = ({
-  allPeople,
   currentPerson,
+  setPersonCreated,
   setCurrentPerson,
-  setAllPeople,
 }: CreatePersonProps) => {
   /**
    * Holds error messages from performing certain actions such as API calls
@@ -129,17 +129,11 @@ export const CreatePerson = ({
       // Create global current person with the newly added person
       setCurrentPerson(apiResponse.data);
 
-      // Adds the newly create person to the currently displayed list
-      // This avoids too many unnecessary API calls
-      const allExistingPeople: IPerson[] = allPeople;
-      allExistingPeople.push(apiResponse.data);
-      setAllPeople(allExistingPeople);
-
       // Update states when API call is successful
       setSuccessMessage("Person created successfully.");
       setErrorMessage("");
       setIsSaving(false);
-      setInfoDialogOpen(true);
+      setPersonCreated(true);
     } catch (error: any) {
       setIsSaving(false);
 

@@ -4,21 +4,20 @@ import { Header } from "../../components/header/Header";
 import { CreatePerson } from "./CreatePerson";
 import { ListPeople } from "./ListPeople";
 import { UpdatePerson } from "./UpdatePerson";
-import Box from "@mui/material/Box";
 import { IPerson, IPersonResponse } from "../../models/person.model";
 import "./People.css";
 import { IResponseWrapper } from "../../models/response.model";
+import { Grid2 } from "@mui/material";
 
 /**
  * People base component
  *
+ * This is the parent component which will control majority of our state variables
+ * unless they are specific to a child component.
+ *
  * @returns {JSX.Element} component
  */
 export const People = () => {
-  /**
-   * Is this the first time the page loads?
-   */
-  const [isInitialPageLoad, setIsInitialPageLoad] = useState<boolean>(true);
   /**
    * Is there any data loading currently in progress?
    */
@@ -27,6 +26,14 @@ export const People = () => {
    * Is there any delete action going on?
    */
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
+  /**
+   * Is there any delete in action?
+   */
+  const [isSaving, setIsSaving] = useState<boolean>(false);
+  /**
+   * Is there any update in action?
+   */
+  const [isUpdating, setIsUpdating] = useState<boolean>(false);
   /**
    * Holds error messages from performing certain actions such as API calls
    */
@@ -50,12 +57,22 @@ export const People = () => {
    * All people from the API
    */
   const [allPeople, setAllPeople] = useState<IPerson[]>([]);
+  /**
+   * Watches for user created event
+   */
+  const [personCreated, setPersonCreated] = useState<boolean>(false);
 
   useEffect(() => {
-    if (isInitialPageLoad) {
-      setIsInitialPageLoad(false);
+    console.log("personCreated: ", personCreated);
+    console.log("setCurrentPerson: ", setCurrentPerson);
+    if (personCreated && currentPerson) {
+      // Adds the newly create person to the currently displayed list
+      // This avoids too many unnecessary API calls
+      const allExistingPeople: IPerson[] = allPeople;
+      allExistingPeople.push(currentPerson);
+      setAllPeople(allExistingPeople);
     }
-  }, [isInitialPageLoad]);
+  }, [personCreated, allPeople, currentPerson]);
 
   /**
    * Gets all users on first page load then ignores other state changes
@@ -93,7 +110,7 @@ export const People = () => {
   };
 
   return (
-    <Box>
+    <Grid2>
       <Header
         title="Co-Flo People"
         subTitle="A directory of very important people"
@@ -101,16 +118,17 @@ export const People = () => {
       {isCreateMode ? (
         <CreatePerson
           currentPerson={currentPerson}
-          allPeople={allPeople}
           setCurrentPerson={setCurrentPerson}
-          setAllPeople={setAllPeople}
+          setPersonCreated={setPersonCreated}
+          isSaving={isSaving}
+          setIsSaving={setIsSaving}
         />
       ) : (
         <UpdatePerson
-          allPeople={allPeople}
-          setAllPeople={setAllPeople}
           currentPerson={currentPerson}
           setCurrentPerson={setCurrentPerson}
+          setIsUpdating={setIsUpdating}
+          isUpdating={isUpdating}
         />
       )}
       <ListPeople
@@ -127,6 +145,6 @@ export const People = () => {
         setErrorMessage={setErrorMessage}
         setCurrentPerson={setCurrentPerson}
       />
-    </Box>
+    </Grid2>
   );
 };
