@@ -40,5 +40,8 @@ COPY --from=build /app/publish .
 # Expose the port that IIS Express will listen on
 EXPOSE 80
 
+# A useful debugging 
+RUN ls -al
+
 # Start IIS Express to host the application
 ENTRYPOINT ["dotnet", "People.Presentation.Server.dll"]

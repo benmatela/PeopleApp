@@ -4,13 +4,14 @@ services:
       context: .
       dockerfile: Dockerfile.server
     ports:
-      - "5165:80"  # Exposing backend API on port 5165 (IIS Express runs on port 80 inside the container)
+      - "8000:8080"  # Exposing backend API on port 5000 (IIS Express runs on port 8080 inside the container)
     networks:
       - webapp-network
     # depends_on:
     #   - people-client
     environment:
-      - ASPNETCORE_URLS=http://+:80 # This allows IIS Express to listen on port 80
+      - ASPNETCORE_URLS=http://0.0.0.0:8080 # This allows IIS Express to listen on port 8080
+      - ASPNETCORE_HTTP_PORTS=8080
 
   # people-client:
   #   build:
