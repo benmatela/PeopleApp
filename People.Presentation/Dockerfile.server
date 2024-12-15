@@ -7,7 +7,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 
 COPY ["./People.Presentation.Server/People.Presentation.Server.csproj", "./"]
-COPY ["../People.Application/People.Application.csproj", "./"]
+# COPY ["../People.Application/People.Application.csproj", "./"]
 #RUN dotnet restore "./People.Presentation/People.Presentation.Server.csproj"
 # COPY . .
 
