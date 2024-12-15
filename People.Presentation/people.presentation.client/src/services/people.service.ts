@@ -91,7 +91,7 @@ export const update = async (
     };
 
     const apiResponse = await axios.put(
-      `${configUtils.server.peopleApiBaseUrl}/${people}/Update`,
+      `${configUtils.server.peopleApiBaseUrl}/${people}/Update/${person.id}`,
       person,
       headersConfig
     );

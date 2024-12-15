@@ -99,7 +99,9 @@ export const UpdatePerson = ({
       const updatedFormFields = formFields;
       updatedFormFields[0].defaultValue = currentPerson.firstName;
       updatedFormFields[1].defaultValue = currentPerson.lastName;
-      updatedFormFields[2].defaultValue = convertDateToYYYMMDD(currentPerson.dateOfBirth.toString());
+      updatedFormFields[2].defaultValue = convertDateToYYYMMDD(
+        currentPerson.dateOfBirth.toString()
+      );
 
       // Update state with default values
       setFormFields(updatedFormFields);
@@ -129,7 +131,7 @@ export const UpdatePerson = ({
         updatePerson(personToCreate);
       }
     } catch (error: any) {
-      // Update state with thrown error if any
+      // Update the state with the bubbled up error if any
       setErrorMessage(error.message);
       setSuccessMessage("");
     }

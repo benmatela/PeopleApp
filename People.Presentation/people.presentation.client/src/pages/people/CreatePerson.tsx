@@ -45,7 +45,7 @@ export const CreatePerson = ({
   const [isInfoDialogOpen, setInfoDialogOpen] = useState<boolean>(false);
   /**
    * Form fields to build the create a person form
-   * 
+   *
    * We don't use "useState" because we don't expect the fields to change
    */
   const formFields: IFormField[] = [
@@ -102,7 +102,7 @@ export const CreatePerson = ({
 
       createNewPerson(personToCreate);
     } catch (error: any) {
-      // Update state with thrown error if any
+      // Update the state with the bubbled up error if any
       setErrorMessage(error.message);
       setSuccessMessage("");
     }
