@@ -6,12 +6,15 @@ import { IPerson, IPersonResponse } from "../../models/person.model";
 import { CircleLoader } from "react-spinners";
 import { ColumnDef } from "@tanstack/react-table";
 import { ReusableTable } from "../../components/tables/ReusableTable";
-import { Button, Grid2 } from "@mui/material";
+import Grid2 from "@mui/material/Grid2";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 import { Delete, Edit } from "@mui/icons-material";
 import { ConfirmationDialog } from "../../components/dialogs/ConfirmationDialog";
+import EmptyPersonImg from "../../assets/empty_people.svg";
 
 interface ListPeopledProps {
-  currentlySelectedUser: IPerson | undefined;
+  currentlySelectedPerson: IPerson | undefined;
   setIsCreateMode: Dispatch<React.SetStateAction<boolean>>;
   setCurrentlySelectedUser: React.Dispatch<
     React.SetStateAction<IPerson | undefined>
@@ -26,7 +29,7 @@ interface ListPeopledProps {
  * @returns {JSX.Element} component
  */
 export const ListPeople = ({
-  currentlySelectedUser,
+  currentlySelectedPerson,
   setCurrentlySelectedUser,
   setIsCreateMode,
 }: ListPeopledProps) => {
@@ -160,7 +163,7 @@ export const ListPeople = ({
     setSuccessMessage("");
     try {
       const apiResponse: IResponseWrapper<null> = await peopleService.remove(
-        String(currentlySelectedUser?.id)
+        String(currentlySelectedPerson?.id)
       );
 
       console.log("apiResponse: ", apiResponse);
@@ -187,19 +190,52 @@ export const ListPeople = ({
         </Grid2>
       ) : (
         <>
-          <p>{successMessage}</p>
-          <p>{errorMessage}</p>
-          <ReusableTable columns={tableColumns} data={allPeople} />
+          {allPeople.length > 0 ? (
+            <>
+              <p>{successMessage}</p>
+              <p>{errorMessage}</p>
+              <ReusableTable columns={tableColumns} data={allPeople} />
 
-          <ConfirmationDialog
-            title={"Delete Person"}
-            description={`Are you sure you want to delete this person: ${currentlySelectedUser?.firstName} ${currentlySelectedUser?.lastName}?`}
-            closeButtonLabel={"Cancel"}
-            okButtonLabel={"Delete"}
-            setIsModalOpen={setIsConfirmDialogOpen}
-            isModalOpen={isConfirmDialogOpen}
-            onConfirm={onConfirmDeletePerson}
-          />
+              <ConfirmationDialog
+                title={"Delete Person"}
+                description={`Are you sure you want to delete this person: ${currentlySelectedPerson?.firstName} ${currentlySelectedPerson?.lastName}?`}
+                closeButtonLabel={"Cancel"}
+                okButtonLabel={"Delete"}
+                setIsModalOpen={setIsConfirmDialogOpen}
+                isModalOpen={isConfirmDialogOpen}
+                onConfirm={onConfirmDeletePerson}
+              />
+            </>
+          ) : (
+            <>
+              <p>{successMessage}</p>
+              <p>{errorMessage}</p>
+              <Grid2
+                container
+                spacing={0}
+                direction="column"
+                alignItems="center"
+                justifyContent="center"
+                sx={{ minHeight: "50vh" }}
+              >
+                <p>Psst! There's nobody here. Add a new person ☝️</p>
+
+                <Grid2>
+                  <Box
+                    component="img"
+                    sx={{
+                      height: 233,
+                      width: 350,
+                      maxHeight: { xs: 233, md: 167 },
+                      maxWidth: { xs: 350, md: 250 },
+                    }}
+                    alt="People not found."
+                    src={EmptyPersonImg}
+                  />
+                </Grid2>
+              </Grid2>
+            </>
+          )}
         </>
       )}
     </Grid2>

@@ -7,28 +7,30 @@ import { Grid2 } from "@mui/material";
 import { IPerson } from "../../models/person.model";
 
 /**
+ * People base component
+ * 
  * @returns {JSX.Element} component
  */
 export const People = () => {
   const [isCreateMode, setIsCreateMode] = useState<boolean>(true);
-  const [currentlySelectedUser, setCurrentlySelectedUser] = useState<IPerson>();
+  const [currentlySelectedPerson, setCurrentlySelectedPerson] =
+    useState<IPerson>();
 
   return (
     <Grid2>
       <Header
         title="Co-Flo People"
-        subTitle="A directory of important people"
+        subTitle="A directory of very important people"
       />
-      {currentlySelectedUser?.firstName}
       {isCreateMode ? (
         <CreatePerson />
       ) : (
         <UpdatePerson isCreateMode={isCreateMode} />
       )}
       <ListPeople
-        setCurrentlySelectedUser={setCurrentlySelectedUser}
+        setCurrentlySelectedUser={setCurrentlySelectedPerson}
         setIsCreateMode={setIsCreateMode}
-        currentlySelectedUser={currentlySelectedUser}
+        currentlySelectedPerson={currentlySelectedPerson}
       />
     </Grid2>
   );
