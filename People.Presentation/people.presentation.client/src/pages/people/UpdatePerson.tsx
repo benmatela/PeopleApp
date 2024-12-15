@@ -8,6 +8,9 @@ import { ReusableForm } from "../../components/forms/reusable-form/ReusableForm"
 import { Grid2 } from "@mui/material";
 
 interface UpdatePersonProps {
+  /**
+   * Controls whether we see the Create or Update form on the page
+   */
   isCreateMode: boolean;
 }
 
