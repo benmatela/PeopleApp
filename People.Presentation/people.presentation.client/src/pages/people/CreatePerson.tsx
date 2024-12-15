@@ -134,8 +134,6 @@ export const CreatePerson = ({
       allExistingPeople.push(apiResponse.data);
       setAllPeople(allExistingPeople);
 
-      console.log("all people: ", allPeople);
-
       // Update states when API call is successful
       setSuccessMessage("Person created successfully.");
       setErrorMessage("");

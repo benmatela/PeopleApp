@@ -6,6 +6,7 @@ import { IResponseWrapper } from "../../models/response.model";
 import { IPerson, IPersonResponse } from "../../models/person.model";
 import { ReusableForm } from "../../components/forms/reusable-form/ReusableForm";
 import { Grid2 } from "@mui/material";
+import { convertDateToYYYMMDD } from "../../utils/date.util";
 
 interface UpdatePersonProps {
   allPeople: IPerson[];
@@ -98,7 +99,7 @@ export const UpdatePerson = ({
       const updatedFormFields = formFields;
       updatedFormFields[0].defaultValue = currentPerson.firstName;
       updatedFormFields[1].defaultValue = currentPerson.lastName;
-      updatedFormFields[2].defaultValue = currentPerson.dateOfBirth.toString();
+      updatedFormFields[2].defaultValue = convertDateToYYYMMDD(currentPerson.dateOfBirth.toString());
 
       // Update state with default values
       setFormFields(updatedFormFields);
