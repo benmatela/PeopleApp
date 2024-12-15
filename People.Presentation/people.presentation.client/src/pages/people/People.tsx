@@ -3,7 +3,7 @@ import { Header } from "../../components/header/Header";
 import { CreatePerson } from "./CreatePerson";
 import { ListPeople } from "./ListPeople";
 import { UpdatePerson } from "./UpdatePerson";
-import { Grid2 } from "@mui/material";
+import Box from "@mui/material/Box";
 import { IPerson } from "../../models/person.model";
 import "./People.css";
 
@@ -26,7 +26,7 @@ export const People = () => {
     useState<IPerson>();
 
   return (
-    <Grid2>
+    <Box>
       <Header
         title="Co-Flo People"
         subTitle="A directory of very important people"
@@ -41,6 +41,6 @@ export const People = () => {
         setIsCreateMode={setIsCreateMode}
         currentlySelectedPerson={currentlySelectedPerson}
       />
-    </Grid2>
+    </Box>
   );
 };

@@ -127,9 +127,9 @@ export const UpdatePerson = ({ isCreateMode }: UpdatePersonProps) => {
 
   return (
     <Grid2>
-      <h2>Update Person</h2>
       Create Mode: {String(isCreateMode)}
       <ReusableForm
+        formLabel="Create New Person"
         fields={formFields}
         onSubmit={onSubmit}
         isLoading={isUpdating}

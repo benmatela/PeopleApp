@@ -124,13 +124,12 @@ export const CreatePerson = () => {
 
   return (
     <div>
-      <h2>Create New Person</h2>
       <ReusableForm
+        formLabel="Add New Person"
         fields={formFields}
         onSubmit={onSubmit}
         isLoading={isSaving}
       />
-
       <InfoDialog
         title={"Success"}
         description={"Person created successfully."}
@@ -138,7 +137,6 @@ export const CreatePerson = () => {
         setIsModalOpen={setIsMessageDialogOpen}
         isModalOpen={isMessageDialogOpen}
       />
-
       <p>{successMessage}</p>
       <p>{errorMessage}</p>
       <p>{currentPerson?.firstName}</p>

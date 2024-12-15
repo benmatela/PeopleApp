@@ -29,19 +29,12 @@ export const InfoDialog = ({
   isModalOpen,
   setIsModalOpen,
 }: InfoDialogProps) => {
-  const handleClickOpen = () => {
-    setIsModalOpen(true);
-  };
-
   const handleClose = () => {
     setIsModalOpen(false);
   };
 
   return (
     <React.Fragment>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open alert dialog
-      </Button>
       <Dialog
         open={isModalOpen}
         onClose={handleClose}
