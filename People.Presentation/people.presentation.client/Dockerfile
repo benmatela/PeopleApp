@@ -1,15 +1,40 @@
-# Step 1: Build React App
-FROM node:18 AS build
-WORKDIR /app
-COPY package.json package-lock.json ./
-RUN npm install
-COPY . ./
+## Dockerfile
+################################
+## BUILD ENVIRONMENT ###########
+################################
+
+FROM node:20-alpine3.20 AS build
+
+# Set the working directory inside the container
+WORKDIR /usr/src/app
+
+# Copy package.json and package-lock.json into the container
+COPY package*.json package-lock.json ./
+
+# Install dependencies using npm
+RUN npm ci
+
+# Copy the project files into the working directory
+COPY ./ ./
+
+# Build the React app for production
 RUN npm run build
 
-# Step 2: Serve React App with Nginx
-WORKDIR /app/build
-FROM nginx:alpine
-COPY --from=build / /usr/share/nginx/html
-WORKDIR /app
+################################
+#### PRODUCTION ENVIRONMENT ####
+################################
+
+# Use the official NGINX image for production
+FROM nginx:stable-alpine AS production
+
+# copy nginx configuration in side conf.d folder
+COPY --from=build /usr/src/app/nginx /etc/nginx/conf.d
+
+# Copy the build output from the dist folder into the Nginx html directory
+COPY --from=build /usr/src/app/dist /usr/share/nginx/html
+
+# Expose port 80 to allow access to the app
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+
+# Run Nginx in the foreground
+ENTRYPOINT ["nginx", "-g", "daemon off;"] 
