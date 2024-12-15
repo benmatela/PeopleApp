@@ -1,7 +1,7 @@
-import { Dispatch, useEffect, useState } from "react";
+import { Dispatch } from "react";
 import * as peopleService from "../../services/people.service";
 import { IResponseWrapper } from "../../models/response.model";
-import { IPerson, IPersonResponse } from "../../models/person.model";
+import { IPerson } from "../../models/person.model";
 import { CircleLoader } from "react-spinners";
 import { ColumnDef } from "@tanstack/react-table";
 import { ReusableTable } from "../../components/tables/reusable-table/ReusableTable";
@@ -14,9 +14,18 @@ import "./People.css";
 import { BannerWithHeaderText } from "../../components/messaging/banner-with-header-text/BannerWithHeaderText";
 
 interface ListPeopleProps {
+  isConfirmDialogOpen: boolean;
+  errorMessage: string;
+  isLoading: boolean;
+  isDeleting: boolean;
+  allPeople: IPerson[];
   currentlySelectedPerson: IPerson | undefined;
+  setIsDeleting: Dispatch<React.SetStateAction<boolean>>;
+  setAllPeople: Dispatch<React.SetStateAction<IPerson[]>>;
   setIsCreateMode: Dispatch<React.SetStateAction<boolean>>;
-  setCurrentlySelectedUser: React.Dispatch<
+  setIsConfirmDialogOpen: Dispatch<React.SetStateAction<boolean>>;
+  setErrorMessage: Dispatch<React.SetStateAction<string>>;
+  setCurrentlySelectedPerson: React.Dispatch<
     React.SetStateAction<IPerson | undefined>
   >;
 }
@@ -29,31 +38,19 @@ interface ListPeopleProps {
  * @returns {JSX.Element} component
  */
 export const ListPeople = ({
+  isConfirmDialogOpen,
+  errorMessage,
+  isDeleting,
+  setErrorMessage,
+  setIsDeleting,
+  setIsConfirmDialogOpen,
+  isLoading,
+  allPeople,
+  setAllPeople,
   currentlySelectedPerson,
-  setCurrentlySelectedUser,
+  setCurrentlySelectedPerson,
   setIsCreateMode,
 }: ListPeopleProps) => {
-  /**
-   * Holds error messages from performing certain actions such as API calls
-   */
-  const [errorMessage, setErrorMessage] = useState<string>("");
-  /**
-   * Is there any data loading currently in progress?
-   */
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  /**
-   * Is there any delete action going on?
-   */
-  const [isDeleting, setIsDeleting] = useState<boolean>(false);
-  /**
-   * All people from the API
-   */
-  const [allPeople, setAllPeople] = useState<IPerson[]>([]);
-  /**
-   * Shows/Hides the Confirmation Dialog
-   */
-  const [isConfirmDialogOpen, setIsConfirmDialogOpen] =
-    useState<boolean>(false);
   /**
    * Table columns using custom headers
    */
@@ -118,46 +115,13 @@ export const ListPeople = ({
   ];
 
   /**
-   * Loads data once when the page loads
-   */
-  useEffect(() => {
-    getAllPeople();
-  }, []);
-
-  /**
-   * Gets all people
-   *
-   * @throws {Error} error
-   */
-  const getAllPeople = async () => {
-    setIsLoading(true);
-    setErrorMessage("");
-    try {
-      const apiResponse: IResponseWrapper<IPersonResponse[]> =
-        await peopleService.getAll();
-
-      if (!apiResponse.success) {
-        setErrorMessage(apiResponse.message);
-        throw new Error(apiResponse.message);
-      }
-
-      setAllPeople(apiResponse.data);
-
-      setIsLoading(false);
-    } catch (error: any) {
-      setIsLoading(false);
-      throw new Error(error.message);
-    }
-  };
-
-  /**
    * When the edit button for a row is clicked
    *
    * @param {IPerson} person
    */
   const onSelectPersonToUpdate = (person: IPerson) => {
     setIsCreateMode(false);
-    setCurrentlySelectedUser(person);
+    setCurrentlySelectedPerson(person);
   };
 
   /**
@@ -167,7 +131,7 @@ export const ListPeople = ({
    */
   const onSelectPersonToDelete = (value: IPerson) => {
     setIsCreateMode(true);
-    setCurrentlySelectedUser(value);
+    setCurrentlySelectedPerson(value);
     setIsConfirmDialogOpen(true);
   };
 
@@ -188,7 +152,11 @@ export const ListPeople = ({
       }
 
       // Remove person from currently displayed list
-      setAllPeople(allPeople.filter((person: IPerson) => person.id !== currentlySelectedPerson?.id));
+      setAllPeople(
+        allPeople.filter(
+          (person: IPerson) => person.id !== currentlySelectedPerson?.id
+        )
+      );
 
       setIsDeleting(false);
       setIsConfirmDialogOpen(false);

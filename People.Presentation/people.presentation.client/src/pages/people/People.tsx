@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import * as peopleService from "../../services/people.service";
 import { Header } from "../../components/header/Header";
 import { CreatePerson } from "./CreatePerson";
 import { ListPeople } from "./ListPeople";
 import { UpdatePerson } from "./UpdatePerson";
 import Box from "@mui/material/Box";
-import { IPerson } from "../../models/person.model";
+import { IPerson, IPersonResponse } from "../../models/person.model";
 import "./People.css";
+import { IResponseWrapper } from "../../models/response.model";
 
 /**
  * People base component
@@ -13,6 +15,27 @@ import "./People.css";
  * @returns {JSX.Element} component
  */
 export const People = () => {
+  /**
+   * Is this the first time the page loads?
+   */
+  const [isInitialPageLoad, setIsInitialPageLoad] = useState<boolean>(true);
+  /**
+   * Holds error messages from performing certain actions such as API calls
+   */
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  /**
+   * Is there any data loading currently in progress?
+   */
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  /**
+   * Is there any delete action going on?
+   */
+  const [isDeleting, setIsDeleting] = useState<boolean>(false);
+  /**
+   * Shows/Hides the Confirmation Dialog
+   */
+  const [isConfirmDialogOpen, setIsConfirmDialogOpen] =
+    useState<boolean>(false);
   /**
    * Controls the view for Create and Update components
    */
@@ -24,6 +47,46 @@ export const People = () => {
    */
   const [currentlySelectedPerson, setCurrentlySelectedPerson] =
     useState<IPerson>();
+  /**
+   * All people from the API
+   */
+  const [allPeople, setAllPeople] = useState<IPerson[]>([]);
+
+  useEffect(() => {
+    if (isInitialPageLoad) {
+      setIsInitialPageLoad(false);
+    }
+  }, [isInitialPageLoad]);
+
+  useEffect(() => {
+    getAllPeople();
+  }, []);
+
+  /**
+   * Gets all people
+   *
+   * @throws {Error} error
+   */
+  const getAllPeople = async () => {
+    setIsLoading(true);
+    setErrorMessage("");
+    try {
+      const apiResponse: IResponseWrapper<IPersonResponse[]> =
+        await peopleService.getAll();
+
+      if (!apiResponse.success) {
+        setErrorMessage(apiResponse.message);
+        throw new Error(apiResponse.message);
+      }
+
+      setAllPeople(apiResponse.data);
+
+      setIsLoading(false);
+    } catch (error: any) {
+      setIsLoading(false);
+      throw new Error(error.message);
+    }
+  };
 
   return (
     <Box>
@@ -37,9 +100,18 @@ export const People = () => {
         <UpdatePerson isCreateMode={isCreateMode} />
       )}
       <ListPeople
-        setCurrentlySelectedUser={setCurrentlySelectedPerson}
-        setIsCreateMode={setIsCreateMode}
+        isConfirmDialogOpen={isConfirmDialogOpen}
+        errorMessage={errorMessage}
+        isLoading={isLoading}
+        isDeleting={isDeleting}
+        allPeople={allPeople}
         currentlySelectedPerson={currentlySelectedPerson}
+        setIsDeleting={setIsDeleting}
+        setAllPeople={setAllPeople}
+        setIsCreateMode={setIsCreateMode}
+        setIsConfirmDialogOpen={setIsConfirmDialogOpen}
+        setErrorMessage={setErrorMessage}
+        setCurrentlySelectedPerson={setCurrentlySelectedPerson}
       />
     </Box>
   );
