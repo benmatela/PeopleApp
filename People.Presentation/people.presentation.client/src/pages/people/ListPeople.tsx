@@ -14,20 +14,18 @@ import { BannerWithHeaderText } from "../../components/messaging/banner-with-hea
 import { ReusableSpinner } from "../../components/loaders/ReusableSpinner";
 
 interface ListPeopleProps {
-  isConfirmDialogOpen: boolean;
   errorMessage: string;
+  isConfirmDialogOpen: boolean;
   isLoading: boolean;
   isDeleting: boolean;
   allPeople: IPerson[];
-  currentlySelectedPerson: IPerson | undefined;
+  currentPerson: IPerson | undefined;
+  setErrorMessage: Dispatch<React.SetStateAction<string>>;
   setIsDeleting: Dispatch<React.SetStateAction<boolean>>;
   setAllPeople: Dispatch<React.SetStateAction<IPerson[]>>;
   setIsCreateMode: Dispatch<React.SetStateAction<boolean>>;
   setIsConfirmDialogOpen: Dispatch<React.SetStateAction<boolean>>;
-  setErrorMessage: Dispatch<React.SetStateAction<string>>;
-  setCurrentlySelectedPerson: React.Dispatch<
-    React.SetStateAction<IPerson | undefined>
-  >;
+  setCurrentPerson: React.Dispatch<React.SetStateAction<IPerson | undefined>>;
 }
 
 /**
@@ -38,17 +36,17 @@ interface ListPeopleProps {
  * @returns {JSX.Element} component
  */
 export const ListPeople = ({
-  isConfirmDialogOpen,
   errorMessage,
+  isConfirmDialogOpen,
   isDeleting,
-  setErrorMessage,
-  setIsDeleting,
-  setIsConfirmDialogOpen,
   isLoading,
   allPeople,
+  currentPerson,
+  setIsDeleting,
+  setErrorMessage,
+  setIsConfirmDialogOpen,
   setAllPeople,
-  currentlySelectedPerson,
-  setCurrentlySelectedPerson,
+  setCurrentPerson,
   setIsCreateMode,
 }: ListPeopleProps) => {
   /**
@@ -121,7 +119,7 @@ export const ListPeople = ({
    */
   const onSelectPersonToUpdate = (person: IPerson) => {
     setIsCreateMode(false);
-    setCurrentlySelectedPerson(person);
+    setCurrentPerson(person);
   };
 
   /**
@@ -131,7 +129,7 @@ export const ListPeople = ({
    */
   const onSelectPersonToDelete = (value: IPerson) => {
     setIsCreateMode(true);
-    setCurrentlySelectedPerson(value);
+    setCurrentPerson(value);
     setIsConfirmDialogOpen(true);
   };
 
@@ -143,19 +141,19 @@ export const ListPeople = ({
     setErrorMessage("");
     try {
       const apiResponse: IResponseWrapper<null> = await peopleService.remove(
-        String(currentlySelectedPerson?.id)
+        String(currentPerson?.id)
       );
 
+      // Throw an error which will bubble up if request not successful
       if (!apiResponse.success) {
         setErrorMessage(apiResponse.message);
         throw new Error(apiResponse.message);
       }
 
-      // Remove person from currently displayed list
+      // Removes the newly added person from the view when deletion is a success
+      // This avoids too many unnecessary API calls
       setAllPeople(
-        allPeople.filter(
-          (person: IPerson) => person.id !== currentlySelectedPerson?.id
-        )
+        allPeople.filter((person: IPerson) => person.id !== currentPerson?.id)
       );
 
       setIsDeleting(false);
@@ -179,11 +177,10 @@ export const ListPeople = ({
         <>
           {allPeople.length > 0 ? (
             <>
-              <p>{errorMessage}</p>
               <ReusableTable columns={tableColumns} data={allPeople} />
               <ConfirmationDialog
                 title={"Delete Person"}
-                description={`Are you sure you want to delete this person: ${currentlySelectedPerson?.firstName} ${currentlySelectedPerson?.lastName}?`}
+                description={`Are you sure you want to delete this person: ${currentPerson?.firstName} ${currentPerson?.lastName}?`}
                 closeButtonLabel={"Cancel"}
                 okButtonLabel={"Delete"}
                 setIsModalOpen={setIsConfirmDialogOpen}
@@ -204,6 +201,7 @@ export const ListPeople = ({
               />
             </>
           )}
+          <h3>{errorMessage}</h3>
         </>
       )}
     </Grid2>

@@ -20,10 +20,6 @@ export const People = () => {
    */
   const [isInitialPageLoad, setIsInitialPageLoad] = useState<boolean>(true);
   /**
-   * Holds error messages from performing certain actions such as API calls
-   */
-  const [errorMessage, setErrorMessage] = useState<string>("");
-  /**
    * Is there any data loading currently in progress?
    */
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -31,6 +27,10 @@ export const People = () => {
    * Is there any delete action going on?
    */
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
+  /**
+   * Holds error messages from performing certain actions such as API calls
+   */
+  const [errorMessage, setErrorMessage] = useState<string>("");
   /**
    * Shows/Hides the Confirmation Dialog
    */
@@ -43,10 +43,9 @@ export const People = () => {
   /**
    * Acts as a DTO for the actioned user from the List component.
    *
-   * Used across People related components
+   * Currently selected person on the list(for deleting, updating or any other action)
    */
-  const [currentlySelectedPerson, setCurrentlySelectedPerson] =
-    useState<IPerson>();
+  const [currentPerson, setCurrentPerson] = useState<IPerson>();
   /**
    * All people from the API
    */
@@ -100,23 +99,32 @@ export const People = () => {
         subTitle="A directory of very important people"
       />
       {isCreateMode ? (
-        <CreatePerson />
+        <CreatePerson
+          allPeople={allPeople}
+          currentPerson={currentPerson}
+          setCurrentPerson={setCurrentPerson}
+          setAllPeople={setAllPeople}
+        />
       ) : (
-        <UpdatePerson isCreateMode={isCreateMode} />
+        <UpdatePerson
+          isCreateMode={isCreateMode}
+          allPeople={allPeople}
+          setAllPeople={setAllPeople}
+        />
       )}
       <ListPeople
         isConfirmDialogOpen={isConfirmDialogOpen}
-        errorMessage={errorMessage}
         isLoading={isLoading}
         isDeleting={isDeleting}
+        errorMessage={errorMessage}
         allPeople={allPeople}
-        currentlySelectedPerson={currentlySelectedPerson}
+        currentPerson={currentPerson}
         setIsDeleting={setIsDeleting}
         setAllPeople={setAllPeople}
         setIsCreateMode={setIsCreateMode}
         setIsConfirmDialogOpen={setIsConfirmDialogOpen}
         setErrorMessage={setErrorMessage}
-        setCurrentlySelectedPerson={setCurrentlySelectedPerson}
+        setCurrentPerson={setCurrentPerson}
       />
     </Box>
   );

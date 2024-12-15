@@ -1,6 +1,6 @@
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { IFormField } from "../../models/form.model";
-import { useState } from "react";
+import { Dispatch, useState } from "react";
 import * as peopleService from "../../services/people.service";
 import { IResponseWrapper } from "../../models/response.model";
 import { IPerson, IPersonResponse } from "../../models/person.model";
@@ -8,10 +8,9 @@ import { ReusableForm } from "../../components/forms/reusable-form/ReusableForm"
 import { Grid2 } from "@mui/material";
 
 interface UpdatePersonProps {
-  /**
-   * Controls whether we see the Create or Update form on the page
-   */
+  allPeople: IPerson[];
   isCreateMode: boolean;
+  setAllPeople: Dispatch<React.SetStateAction<IPerson[]>>;
 }
 
 /**
@@ -21,7 +20,11 @@ interface UpdatePersonProps {
  *
  * @returns {JSX.Element} component
  */
-export const UpdatePerson = ({ isCreateMode }: UpdatePersonProps) => {
+export const UpdatePerson = ({
+  isCreateMode,
+  allPeople,
+  setAllPeople,
+}: UpdatePersonProps) => {
   /**
    * Holds error messages from performing certain actions such as API calls
    */
@@ -111,11 +114,18 @@ export const UpdatePerson = ({ isCreateMode }: UpdatePersonProps) => {
       const apiResponse: IResponseWrapper<IPersonResponse> =
         await peopleService.update(person);
 
+      // Throw an error which will bubble up if request not successful
       if (!apiResponse.success) {
         setErrorMessage(apiResponse.message);
         setSuccessMessage("");
         throw new Error(apiResponse.message);
       }
+
+      // Adds the newly created person to the currently displayed list
+      // This avoids too many unnecessary API calls
+      const allExistingPeople: IPerson[] = allPeople;
+      allExistingPeople.push(apiResponse.data);
+      setAllPeople(allExistingPeople);
 
       setSuccessMessage("Person created successfully.");
       setIsUpdating(false);

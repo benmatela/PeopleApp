@@ -1,7 +1,7 @@
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { IFormField } from "../../../models/form.model";
-import { CircleLoader } from "react-spinners";
 import { Button, TextField, FormLabel, Grid2, Box } from "@mui/material";
+import { ReusableSpinner } from "../../loaders/ReusableSpinner";
 
 interface ReusableFormProps {
   /**
@@ -110,9 +110,12 @@ export const ReusableForm: React.FC<ReusableFormProps> = ({
         </Grid2>
         <Grid2>
           {isLoading ? (
-            <div className="">
-              <CircleLoader size={100} color="#2563eb" />
-            </div>
+            <ReusableSpinner
+              spinnerSize={50}
+              spinnerColor="#2563eb"
+              minContainerHeight="50vh"
+              loadingMessage={isLoading ? "Loading..." : "Deleting..."}
+            />
           ) : (
             <Button variant="contained" type="submit" disabled={isLoading}>
               Submit
