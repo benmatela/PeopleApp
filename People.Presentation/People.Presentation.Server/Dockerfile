@@ -4,22 +4,22 @@ FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /app
 
 # Copy the csproj files and restore dependencies
-COPY ["backend/WebAPI/WebAPI.csproj", "backend/WebAPI/"]
-COPY ["backend/Application/Application.csproj", "backend/Application/"]
-COPY ["backend/Domain/Domain.csproj", "backend/Domain/"]
-COPY ["backend/Infrastructure/Infrastructure.csproj", "backend/Infrastructure/"]
+COPY ["People.Presentation/People.Presentation.Server/People.Presentation.Server.csproj", "People.Presentation/People.Presentation.Server/"]
+COPY ["People.Application/People.Application.csproj", "People.Application/"]
+COPY ["People.Domain/People.Domain.csproj", "People.Domain/"]
+COPY ["People.Infrastructure/People.Infrastructure.csproj", "People.Infrastructure/"]
 
-RUN dotnet restore "backend/WebAPI/WebAPI.csproj"
+RUN dotnet restore "People.Presentation/People.Presentation.Server/People.Presentation.Server.csproj"
 
 # Copy the rest of the code
 COPY . .
 
 # Build the solution
 WORKDIR /app/backend/WebAPI
-RUN dotnet build "WebAPI.csproj" -c Release
+RUN dotnet build "People.Presentation.Server.csproj" -c Release
 
 # Publish the app (using the output directory)
-RUN dotnet publish "WebAPI.csproj" -c Release -o /app/publish
+RUN dotnet publish "People.Presentation.Server.csproj" -c Release -o /app/publish
 
 # Use the base image with IIS Express
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base

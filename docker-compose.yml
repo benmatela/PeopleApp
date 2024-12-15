@@ -1,17 +1,17 @@
 services:
-  # backend:
-  #   build:
-  #     context: ./backend
-  #   ports:
-  #     - "5000:80"  # Exposing backend API on port 5000 (IIS Express runs on port 80 inside the container)
-  #   networks:
-  #     - webapp-network
-  #   depends_on:
-  #     - frontend
-  #   environment:
-  #     - ASPNETCORE_URLS=http://+:80 # This allows IIS Express to listen on port 80
+  people-api:
+    build:
+      context: ./People.Presentation/People.Presentation.Server
+    ports:
+      - "5165:80"  # Exposing backend API on port 5165 (IIS Express runs on port 80 inside the container)
+    networks:
+      - webapp-network
+    depends_on:
+      - people-client
+    environment:
+      - ASPNETCORE_URLS=http://+:80 # This allows IIS Express to listen on port 80
 
-  client:
+  people-client:
     build:
       context: ./People.Presentation/people.presentation.client
     ports:
