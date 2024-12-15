@@ -34,7 +34,6 @@ export const ListPeople = ({
   setIsCreateMode,
 }: ListPeopledProps) => {
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const [successMessage, setSuccessMessage] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
   const [allPeople, setAllPeople] = useState<IPerson[]>([]);
@@ -112,20 +111,17 @@ export const ListPeople = ({
   const getAllPeople = async () => {
     setIsLoading(true);
     setErrorMessage("");
-    setSuccessMessage("");
     try {
       const apiResponse: IResponseWrapper<IPersonResponse[]> =
         await peopleService.getAll();
 
       if (!apiResponse.success) {
         setErrorMessage(apiResponse.message);
-        setSuccessMessage("");
         throw new Error(apiResponse.message);
       }
 
       setAllPeople(apiResponse.data);
 
-      setSuccessMessage("People loaded successfully.");
       setIsLoading(false);
     } catch (error: any) {
       setIsLoading(false);
@@ -160,7 +156,6 @@ export const ListPeople = ({
   const onConfirmDeletePerson = async () => {
     setIsDeleting(true);
     setErrorMessage("");
-    setSuccessMessage("");
     try {
       const apiResponse: IResponseWrapper<null> = await peopleService.remove(
         String(currentlySelectedPerson?.id)
@@ -170,11 +165,9 @@ export const ListPeople = ({
 
       if (!apiResponse.success) {
         setErrorMessage(apiResponse.message);
-        setSuccessMessage("");
         throw new Error(apiResponse.message);
       }
 
-      setSuccessMessage("Person deleted successfully.");
       setIsDeleting(false);
     } catch (error: any) {
       setIsDeleting(false);
@@ -192,7 +185,6 @@ export const ListPeople = ({
         <>
           {allPeople.length > 0 ? (
             <>
-              <p>{successMessage}</p>
               <p>{errorMessage}</p>
               <ReusableTable columns={tableColumns} data={allPeople} />
 
@@ -208,7 +200,6 @@ export const ListPeople = ({
             </>
           ) : (
             <>
-              <p>{successMessage}</p>
               <p>{errorMessage}</p>
               <Grid2
                 container
