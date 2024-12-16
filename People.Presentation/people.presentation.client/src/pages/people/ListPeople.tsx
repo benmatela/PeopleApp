@@ -157,7 +157,7 @@ export const ListPeople = ({
       );
 
       setIsDeleting(false);
-      setIsConfirmDialogOpen(true);
+      setIsConfirmDialogOpen(false);
     } catch (error: any) {
       setIsDeleting(false);
       setErrorMessage(error.message);
