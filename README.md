@@ -1,6 +1,9 @@
 # PeopleApp
 # PeopleApp
 
+```bash
+dotnet test
+```
 
 SQL Table Design:
 
