@@ -23,3 +23,20 @@ export const convertDateToYYYMMDD = (dateInput: string) => {
     throw new Error(error.message);
   }
 };
+
+/**
+ * Gets age from date of birth
+ *
+ * @param {Date} dateInput
+ *
+ * @returns {int} age
+ *
+ * @throws {Error} error
+ */
+export const getAge = (dateInput: Date) => {
+  try {
+    return new Date().getFullYear() - dateInput.getFullYear();
+  } catch (error: any) {
+    throw new Error(error.mesage);
+  }
+};
