@@ -9,7 +9,11 @@ public record UpdatePersonCommand(Guid PersonId, UpdatePersonRequest Person) : I
 
 /// <summary>
 /// Handles the command to update an existing person.
+/// 
+/// <para>Since commands are intended to modify the state, we implement scrictrer error handling</para>
 /// </summary>
+/// <param name="personRepository"></param>
+/// <param name="_logger"></param>
 public class UpdatePersonCommandHandler(IPersonRepository personRepository, ILogger<CreatePersonCommand> _logger)
     : IRequestHandler<UpdatePersonCommand, bool>
 {
