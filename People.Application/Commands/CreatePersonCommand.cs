@@ -10,10 +10,20 @@ public record CreatePersonCommand(CreatePersonRequest Person) : IRequest<PersonR
 
 /// <summary>
 /// Handles the command to create a new person.
+/// <para>Since commands are intended to modify the state, we implement scrictrer error handling</para>
 /// </summary>
+/// <param name="personRepository"></param>
+/// <param name="_logger"></param>
 public class CreatePersonCommandHandler(IPersonRepository personRepository, ILogger<CreatePersonCommand> _logger)
     : IRequestHandler<CreatePersonCommand, PersonResponse>
 {
+    private IPersonRepository @object;
+
+    public CreatePersonCommandHandler(IPersonRepository @object)
+    {
+        this.@object = @object;
+    }
+
     public async Task<PersonResponse> Handle(CreatePersonCommand request, CancellationToken cancellationToken)
     {
         try

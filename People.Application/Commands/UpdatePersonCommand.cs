@@ -8,8 +8,7 @@ namespace People.Application.Commands;
 public record UpdatePersonCommand(Guid PersonId, UpdatePersonRequest Person) : IRequest<bool>;
 
 /// <summary>
-/// Handles the command to update an existing person.
-/// 
+/// Handles the command to update a single person.
 /// <para>Since commands are intended to modify the state, we implement scrictrer error handling</para>
 /// </summary>
 /// <param name="personRepository"></param>

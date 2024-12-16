@@ -8,7 +8,7 @@ namespace People.Application.Extensions;
 public static class DependencyInjection
 {
     /// <summary>
-    /// Allows us to use the MediatR in the Presentation layer using Dependency Injection.
+    /// Allows us to use things like MediatR in other layers using Dependency Injection.
     /// </summary>
     public static void AddApplicationDI(this IServiceCollection services)
     {

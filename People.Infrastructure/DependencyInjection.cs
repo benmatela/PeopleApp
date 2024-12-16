@@ -8,7 +8,7 @@ namespace People.Infrastructure.Extensions;
 public static class DependencyInjection
 {
     /// <summary>
-    /// Allows us to use the DB Context in the Presentation layer using Dependency Injection.
+    /// Allows us to use things like DB Context in other layers using Dependency Injection.
     /// </summary>
     public static void AddInfrastructureDI(this IServiceCollection services)
     {

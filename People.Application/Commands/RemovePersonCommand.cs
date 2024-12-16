@@ -7,8 +7,11 @@ namespace People.Application.Commands;
 public record RemovePersonCommand(Guid PersonId) : IRequest<bool>;
 
 /// <summary>
-/// Handles the command to remove/delete an existing person.
+/// Handles the command to delete a single person.
+/// <para>Since commands are intended to modify the state, we implement scrictrer error handling</para>
 /// </summary>
+/// <param name="personRepository"></param>
+/// <param name="_logger"></param>
 public class RemovePersonCommandHandler(IPersonRepository personRepository, ILogger<CreatePersonCommand> _logger)
     : IRequestHandler<RemovePersonCommand, bool>
 {
