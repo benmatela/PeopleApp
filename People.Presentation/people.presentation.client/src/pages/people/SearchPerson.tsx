@@ -8,6 +8,7 @@ import {
   Box,
   Button,
   Grid2,
+  Container,
 } from "@mui/material";
 import * as peopleService from "../../services/people.service";
 import {
@@ -83,12 +84,17 @@ export const SearchPerson = () => {
   };
 
   return (
-    <Box
+    <Container
+      maxWidth="md"
       sx={{
-        width: "100%",
-        maxWidth: 600,
-        bgcolor: "background.paper",
-        padding: 2,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        boxShadow:
+          "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+        backgroundColor: "#f0f9ff",
+        borderRadius: 2,
+        padding: 3
       }}
     >
       {/* Search Fields Layout */}
@@ -101,7 +107,6 @@ export const SearchPerson = () => {
             fullWidth
             value={firstName}
             onChange={handleFirstNameChange}
-            sx={{ mb: 2 }}
           />
         </Grid2>
 
@@ -113,7 +118,6 @@ export const SearchPerson = () => {
             fullWidth
             value={lastName}
             onChange={handleLastNameChange}
-            sx={{ mb: 2 }}
           />
         </Grid2>
 
@@ -123,7 +127,6 @@ export const SearchPerson = () => {
             variant="contained"
             fullWidth
             onClick={searchPerson}
-            sx={{ mt: 2 }}
             disabled={isLoading}
           >
             Search
@@ -148,8 +151,8 @@ export const SearchPerson = () => {
       {/* Results List */}
       <List>
         {results.length > 0 ? (
-          results.map((item: ISearchPersonRequest, index) => (
-            <ListItem key={index}>
+          results.map((item: IPersonResponse) => (
+            <ListItem key={item.id}>
               <ListItemText primary={`${item.firstName} ${item.lastName}`} />
             </ListItem>
           ))
@@ -159,6 +162,6 @@ export const SearchPerson = () => {
           </ListItem>
         )}
       </List>
-    </Box>
+    </Container>
   );
 };

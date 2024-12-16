@@ -149,6 +149,7 @@ export const People = () => {
         subTitle="A directory of very important people"
       />
       <SearchPerson />
+      <br></br>
       {isCreateMode ? (
         <CreatePerson
           currentPerson={currentPerson}

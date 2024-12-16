@@ -88,6 +88,7 @@ export const ReusableForm: React.FC<ReusableFormProps> = ({
           <Grid2 container spacing={2} justifyContent="center">
             {fields.map((field: IFormField) => (
               <Grid2
+                key={field.label}
                 sx={{
                   xs: { width: 12 },
                   sm: { width: 4 },
