@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   TextField,
   List,
@@ -83,15 +83,6 @@ export const SearchPerson = () => {
     }
   };
 
-  // Trigger search when either input changes
-  useEffect(() => {
-    const debounceTimeout = setTimeout(() => {
-      searchPerson();
-    }, 500); // Debounce API call by 500ms
-
-    return () => clearTimeout(debounceTimeout); // Cleanup on component unmount or input change
-  }, [firstName, lastName]);
-
   return (
     <Box
       sx={{
@@ -160,9 +151,7 @@ export const SearchPerson = () => {
         {results.length > 0 ? (
           results.map((item: ISearchPersonRequest, index) => (
             <ListItem key={index}>
-              <ListItemText
-                primary={`${item.firstName} ${item.lastName}`}
-              />
+              <ListItemText primary={`${item.firstName} ${item.lastName}`} />
             </ListItem>
           ))
         ) : (
