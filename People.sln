@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "People.Application", "Peopl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "People.Presentation", "People.Presentation\People.Presentation.Server\People.Presentation.Server.csproj", "{C32B7B6B-338A-4589-BC6D-D6F2B98C12F1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "People.Tests", "People.Tests\People.Tests.csproj", "{224F3605-5E32-4FD9-B501-FC67B84E5BC8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{C32B7B6B-338A-4589-BC6D-D6F2B98C12F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C32B7B6B-338A-4589-BC6D-D6F2B98C12F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C32B7B6B-338A-4589-BC6D-D6F2B98C12F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{224F3605-5E32-4FD9-B501-FC67B84E5BC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{224F3605-5E32-4FD9-B501-FC67B84E5BC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{224F3605-5E32-4FD9-B501-FC67B84E5BC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{224F3605-5E32-4FD9-B501-FC67B84E5BC8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

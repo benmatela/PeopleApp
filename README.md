@@ -36,3 +36,7 @@ PeopleApp/
     └── appsettings.json        # Configuration files for backend services
 
 
+├── People.Tests/               # Tests
+│   ├── Commands/               # Business logic and use case handlers
+│   └── Queries/                # Interfaces for communication with Infrastructure layer
+
