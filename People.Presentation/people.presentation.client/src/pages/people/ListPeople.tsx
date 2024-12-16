@@ -36,7 +36,6 @@ interface ListPeopleProps {
  * @returns {JSX.Element} component
  */
 export const ListPeople = ({
-  errorMessage,
   isConfirmDialogOpen,
   isDeleting,
   isLoading,
@@ -189,17 +188,16 @@ export const ListPeople = ({
               />
             </>
           ) : (
-              <BannerWithHeaderText
-                text="Psst! There's nobody here.."
-                imageAlt="No people found"
-                minContainerHeight="50vh"
-                mdScreenMaxWidth={450}
-                mdScreenMaxHeight={367}
-                bannerImageHeight={300}
-                bannerImageWidth={400}
-              />
+            <BannerWithHeaderText
+              text="Psst! There's nobody here.."
+              imageAlt="No people found"
+              minContainerHeight="50vh"
+              mdScreenMaxWidth={450}
+              mdScreenMaxHeight={367}
+              bannerImageHeight={300}
+              bannerImageWidth={400}
+            />
           )}
-          <h3>{errorMessage}</h3>
         </>
       )}
     </Grid2>

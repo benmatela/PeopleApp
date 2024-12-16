@@ -1,6 +1,7 @@
 import Grid2 from "@mui/material/Grid2";
 import Box from "@mui/material/Box";
 import EmptyPersonImg from "../../../assets/empty_people.svg";
+import { Typography } from "@mui/material";
 
 interface NotFoundBannerProps {
   text: string;
@@ -35,7 +36,7 @@ export const BannerWithHeaderText = ({
       justifyContent="center"
       sx={{ minHeight: minContainerHeight }}
     >
-      <h2>{text}</h2>
+      <Typography variant="h5" sx={{ padding: 2 }}>{text}</Typography>
       <Grid2>
         <Box
           component="img"
