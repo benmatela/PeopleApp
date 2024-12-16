@@ -90,11 +90,17 @@ export const SearchPerson = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        boxShadow:
+          "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+        backgroundColor: "#f0f9ff",
+        borderRadius: 2,
         padding: 3,
+        marginBottom: 3,
       }}
     >
       {/* Search Fields Layout */}
       <Grid2 container spacing={2} alignItems="center">
+        {/* First Name Field */}
         <Grid2>
           <TextField
             label="First Name"
@@ -105,6 +111,7 @@ export const SearchPerson = () => {
           />
         </Grid2>
 
+        {/* Last Name Field */}
         <Grid2>
           <TextField
             label="Last Name"
@@ -128,34 +135,34 @@ export const SearchPerson = () => {
         </Grid2>
       </Grid2>
 
-      <Grid2>
-        {/* Loading spinner */}
-        {isLoading && (
-          <Box sx={{ display: "flex", justifyContent: "center", my: 2 }}>
-            <CircularProgress />
-          </Box>
-        )}
+      {/* Loading spinner */}
+      {isLoading && (
+        <Box sx={{ display: "flex", justifyContent: "center", my: 2 }}>
+          <CircularProgress />
+        </Box>
+      )}
 
-        {/* Error message */}
-        {error && (
-          <Box sx={{ color: "error.main", my: 2 }}>{/* <p>{error}</p> */}</Box>
-        )}
+      {/* Error message */}
+      {error && (
+        <Box sx={{ color: "error.main", my: 2 }}>
+          <p>{error}</p>
+        </Box>
+      )}
 
-        {/* Results List */}
-        <List>
-          {results.length > 0 ? (
-            results.map((item: IPersonResponse) => (
-              <ListItem key={item.id}>
-                <ListItemText primary={`${item.firstName} ${item.lastName}`} />
-              </ListItem>
-            ))
-          ) : (
-            <ListItem>
-              {/* <ListItemText primary="No results found" /> */}
+      {/* Results List */}
+      <List>
+        {results.length > 0 ? (
+          results.map((item: IPersonResponse) => (
+            <ListItem key={item.id}>
+              <ListItemText primary={`${item.firstName} ${item.lastName}`} />
             </ListItem>
-          )}
-        </List>
-      </Grid2>
+          ))
+        ) : (
+          <ListItem>
+            <ListItemText primary="No results found" />
+          </ListItem>
+        )}
+      </List>
     </Container>
   );
 };

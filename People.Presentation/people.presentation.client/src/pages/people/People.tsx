@@ -6,8 +6,16 @@ import { UpdatePerson } from "./UpdatePerson";
 import { IPerson, IPersonResponse } from "../../models/person.model";
 import "./People.css";
 import { IResponseWrapper } from "../../models/response.model";
-import { Grid2 } from "@mui/material";
-import { Header } from "../../components/header/Header";
+import {
+  AppBar,
+  Box,
+  Grid2,
+  InputAdornment,
+  TextField,
+  Toolbar,
+  Typography,
+} from "@mui/material";
+import { Search } from "@mui/icons-material";
 
 /**
  * People base component
@@ -69,6 +77,11 @@ export const People = () => {
    * Watches for user deleted event
    */
   const [personDeleted, setPersonDeleted] = useState<boolean>(false);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
 
   /**
    * This is used solely to keep track of a Person's's state
@@ -143,7 +156,41 @@ export const People = () => {
 
   return (
     <Grid2 sx={{ minHeight: "100vh" }}>
-     <Header title="Co-Flo" subTitle="A directory of very important people"/>
+      <AppBar
+        position="sticky"
+        sx={{ backgroundColor: "#1976d2", borderRadius: 2 }}
+      >
+        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+          {/* Logo or Title */}
+          <Typography variant="h6" noWrap sx={{ flexGrow: 1 }}>
+            Co-Flo People Management
+          </Typography>
+
+          {/* Search Bar */}
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <TextField
+              variant="outlined"
+              size="small"
+              placeholder="Search..."
+              value={searchTerm}
+              onChange={handleSearchChange}
+              sx={{
+                backgroundColor: "white",
+                borderRadius: 1,
+                width: "200px",
+                display: { xs: "none", sm: "block" }, // Hide on mobile
+              }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Search />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Box>
+        </Toolbar>
+      </AppBar>
       {isCreateMode ? (
         <CreatePerson
           currentPerson={currentPerson}

@@ -6,6 +6,7 @@ import { IPerson, IPersonResponse } from "../../models/person.model";
 import { ReusableForm } from "../../components/forms/reusable-form/ReusableForm";
 import { IFormField } from "../../models/form.model";
 import { InfoDialog } from "../../components/dialogs/info-dialog/InfoDialog";
+import { Box } from "@mui/material";
 
 interface CreatePersonProps {
   currentPerson: IPerson | undefined;
@@ -143,7 +144,7 @@ export const CreatePerson = ({
   };
 
   return (
-    <div>
+    <Box>
       <ReusableForm
         submitBtnText={"Add New Person"}
         formLabel="Add New Person"
@@ -160,6 +161,6 @@ export const CreatePerson = ({
       />
       <p>{successMessage}</p>
       <p>{errorMessage}</p>
-    </div>
+    </Box>
   );
 };

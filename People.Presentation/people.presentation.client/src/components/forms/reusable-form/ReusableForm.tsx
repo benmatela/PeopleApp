@@ -70,8 +70,9 @@ export const ReusableForm: React.FC<ReusableFormProps> = ({
         alignItems: "center",
         boxShadow:
           "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
-        backgroundColor: "white",
         borderRadius: 2,
+        backgroundColor: "#f0f9ff",
+        padding: 3,
       }}
     >
       <form
@@ -115,9 +116,7 @@ export const ReusableForm: React.FC<ReusableFormProps> = ({
                 </Box>
               </Grid2>
             ))}
-          </Grid2>
-
-          {/* Submit Button */}
+            {/* Submit Button */}
           <Grid2 container spacing={2} justifyContent="center">
             {isLoading ? (
               <ReusableSpinner
@@ -131,12 +130,15 @@ export const ReusableForm: React.FC<ReusableFormProps> = ({
                 variant="contained"
                 type="submit"
                 disabled={isLoading}
-                sx={{ width: "50%", mb: 2 }}
+                sx={{ width: "100%", height: 55, mt: 3 }}
               >
                 {submitBtnText}
               </Button>
             )}
           </Grid2>
+          </Grid2>
+
+          
         </Box>
       </form>
     </Card>
