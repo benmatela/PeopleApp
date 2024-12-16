@@ -181,6 +181,7 @@ export const UpdatePerson = ({
       initialized, we wait for "formFields" to be auto populated then render the update form */}
       {!isLoading ? (
         <ReusableForm
+          submitBtnText="Update Person"
           formLabel="Update Person"
           fields={formFields}
           onSubmit={onSubmit}
