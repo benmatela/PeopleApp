@@ -1,6 +1,14 @@
+import {
+  Container,
+  Grid2,
+  TextField,
+  Box,
+  Button,
+  Typography,
+  FormLabel,
+} from "@mui/material";
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { IFormField } from "../../../models/form.model";
-import { Button, TextField, FormLabel, Grid2, Box } from "@mui/material";
 import { ReusableSpinner } from "../../loaders/ReusableSpinner";
 
 interface ReusableFormProps {
@@ -54,77 +62,74 @@ export const ReusableForm: React.FC<ReusableFormProps> = ({
   const classes: any = useStyles;
 
   return (
-    <Box
+    <Container
+      maxWidth="md"
       sx={{
-        padding: 5,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
         boxShadow:
           "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
         backgroundColor: "#f0f9ff",
-        borderRadius: 5,
+        borderRadius: 2,
       }}
     >
-      {fields[0].defaultValue}
       <form
         className={classes.root}
         onSubmit={handleSubmit(onSubmit)}
         autoComplete="off"
       >
-        <Box
-          sx={{
-            fontSize: "1.5rem",
-            lineHeight: "2rem",
-            paddingBottom: 2,
-            fontWeight: 600,
-          }}
-        >
-          {formLabel}
-        </Box>
-        <Grid2 container spacing={3} minWidth={"100vw"}>
-          {fields.map((field) => (
-            <Box
-              key={field.name}
-              sx={{
-                sm: { minWidth: "100vw" },
-                md: { minWidth: "100%", padding: "5px" },
-              }}
-            >
-              <Grid2>
-                <FormLabel htmlFor={field.name}>{field.label}</FormLabel>
-              </Grid2>
-              <TextField
-                id={field.name}
-                type={field.type}
-                placeholder={field.placeholder}
-                defaultValue={field.defaultValue}
-                {...register(field.name, field.validation)}
+        <Box sx={{ width: "100%" }}>
+          <Typography variant="h5" align="center" sx={{ margin: 2 }}>
+            {formLabel}
+          </Typography>
+
+          {/* Grid2 to display form fields */}
+          <Grid2 container spacing={2} justifyContent="center">
+            {fields.map((field: IFormField) => (
+              <Grid2
                 sx={{
-                  sm: { minWidth: "100vw" },
-                  md: { minWidth: "30%", padding: "5px" },
+                  xs: { width: 12 },
+                  sm: { width: 4 },
                 }}
-              />
-              <Grid2>
-                {errors[field.name] && (
-                  <p>{String(errors[field.name]?.message)}</p>
-                )}
+              >
+                <Box>
+                  <TextField
+                    fullWidth
+                    variant="outlined"
+                    id={field.name}
+                    type={field.type}
+                    placeholder={field.placeholder}
+                    defaultValue={field.defaultValue}
+                    {...register(field.name, field.validation)}
+                  />
+                  <p>
+                    {errors[field.name] && (
+                      <p>{String(errors[field.name]?.message)}</p>
+                    )}
+                  </p>
+                </Box>
               </Grid2>
-            </Box>
-          ))}
-        </Grid2>
-        <Grid2>
-          {isLoading ? (
-            <ReusableSpinner
-              spinnerSize={50}
-              spinnerColor="#2563eb"
-              minContainerHeight="50vh"
-              loadingMessage={isLoading ? "Loading..." : "Deleting..."}
-            />
-          ) : (
-            <Button variant="contained" type="submit" disabled={isLoading}>
-              Submit
-            </Button>
-          )}
-        </Grid2>
+            ))}
+          </Grid2>
+
+          {/* Submit Button */}
+          <Grid2 container spacing={2} justifyContent="center">
+            {isLoading ? (
+              <ReusableSpinner
+                spinnerSize={50}
+                spinnerColor="#2563eb"
+                minContainerHeight="50vh"
+                loadingMessage={isLoading ? "Loading..." : "Deleting..."}
+              />
+            ) : (
+              <Button variant="contained" type="submit" disabled={isLoading}>
+                Submit
+              </Button>
+            )}
+          </Grid2>
+        </Box>
       </form>
-    </Box>
+    </Container>
   );
 };

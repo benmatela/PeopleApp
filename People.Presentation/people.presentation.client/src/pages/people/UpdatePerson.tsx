@@ -1,9 +1,6 @@
-import { FieldValues, SubmitHandler } from "react-hook-form";
 import { IFormField } from "../../models/form.model";
 import { Dispatch, useEffect, useState } from "react";
-import * as peopleService from "../../services/people.service";
-import { IResponseWrapper } from "../../models/response.model";
-import { IPerson, IPersonResponse } from "../../models/person.model";
+import { IPerson } from "../../models/person.model";
 import { ReusableForm } from "../../components/forms/reusable-form/ReusableForm";
 import { Grid2 } from "@mui/material";
 import { convertDateToYYYMMDD } from "../../utils/date.util";
@@ -24,21 +21,7 @@ interface UpdatePersonProps {
  *
  * @returns {JSX.Element} component
  */
-export const UpdatePerson = ({
-  currentPerson,
-  isUpdating,
-  setCurrentPerson,
-  setIsUpdating,
-  setPersonUpdated,
-}: UpdatePersonProps) => {
-  /**
-   * Holds error messages from performing certain actions such as API calls
-   */
-  const [errorMessage, setErrorMessage] = useState<string>("");
-  /**
-   * Holds success messages from performing certain actions such as API calls
-   */
-  const [successMessage, setSuccessMessage] = useState<string>("");
+export const UpdatePerson = ({ currentPerson }: UpdatePersonProps) => {
   /**
    * Is there any loading action going on?
    */
@@ -122,23 +105,23 @@ export const UpdatePerson = ({
    *
    * @param {FieldValues} data
    */
-  const onSubmit: SubmitHandler<FieldValues> = (data: FieldValues) => {
-    setErrorMessage("");
-    setSuccessMessage("");
-    try {
-      const personToCreate: IPerson = data as any;
-      // Make sure we don't update and unknown person
-      if (currentPerson) {
-        personToCreate.id = currentPerson.id;
+  // const onSubmit: SubmitHandler<FieldValues> = (data: FieldValues) => {
+  //   setErrorMessage("");
+  //   setSuccessMessage("");
+  //   try {
+  //     const personToCreate: IPerson = data as any;
+  //     // Make sure we don't update and unknown person
+  //     if (currentPerson) {
+  //       personToCreate.id = currentPerson.id;
 
-        updatePerson(personToCreate);
-      }
-    } catch (error: any) {
-      // Update the state with the bubbled up error if any
-      setErrorMessage(error.message);
-      setSuccessMessage("");
-    }
-  };
+  //       updatePerson(personToCreate);
+  //     }
+  //   } catch (error: any) {
+  //     // Update the state with the bubbled up error if any
+  //     setErrorMessage(error.message);
+  //     setSuccessMessage("");
+  //   }
+  // };
 
   /**
    * Updates a person
@@ -147,46 +130,39 @@ export const UpdatePerson = ({
    *
    * @throws {Error} error
    */
-  const updatePerson = async (person: IPerson): Promise<void> => {
-    try {
-      const apiResponse: IResponseWrapper<IPersonResponse> =
-        await peopleService.update(person);
+  // const updatePerson = async (person: IPerson): Promise<void> => {
+  //   try {
+  //     const apiResponse: IResponseWrapper<IPersonResponse> =
+  //       await peopleService.update(person);
 
-      // Throw an error which will bubble up if request not successful
-      if (!apiResponse.success) {
-        throw new Error(apiResponse.message);
-      }
+  //     // Throw an error which will bubble up if request not successful
+  //     if (!apiResponse.success) {
+  //       throw new Error(apiResponse.message);
+  //     }
 
-      console.log("response: ", apiResponse);
+  //     console.log("response: ", apiResponse);
 
-      // Update global current person with the newly added person
-      setCurrentPerson(apiResponse.data);
+  //     // Update global current person with the newly added person
+  //     setCurrentPerson(apiResponse.data);
 
-      // Update states when API call is successful
-      setSuccessMessage("Person updated successfully.");
-      setErrorMessage("");
-      setIsUpdating(false);
-      setPersonUpdated(true);
-    } catch (error: any) {
-      setIsUpdating(false);
+  //     // Update states when API call is successful
+  //     setSuccessMessage("Person updated successfully.");
+  //     setErrorMessage("");
+  //     setIsUpdating(false);
+  //     setPersonUpdated(true);
+  //   } catch (error: any) {
+  //     setIsUpdating(false);
 
-      // Throw error back to the calling function
-      throw new Error(error.message);
-    }
-  };
+  //     // Throw error back to the calling function
+  //     throw new Error(error.message);
+  //   }
+  // };
 
   return (
     <Grid2>
       {/* Because "defaultValue" can only be set once when the form is being
       initialized, we wait for "formFields" to be auto populated then render the update form */}
-      {!isLoading ? (
-        <ReusableForm
-          formLabel="Update Person"
-          fields={formFields}
-          onSubmit={onSubmit}
-          isLoading={isUpdating}
-        />
-      ) : null}
+      {!isLoading ? <ReusableForm /> : null}
       <InfoDialog
         okButtonLabel="Ok"
         title="Success"
@@ -194,8 +170,6 @@ export const UpdatePerson = ({
         isModalOpen={isInfoDialogOpen}
         setIsModalOpen={setInfoDialogOpen}
       />
-      <p>{successMessage}</p>
-      <p>{errorMessage}</p>
     </Grid2>
   );
 };
