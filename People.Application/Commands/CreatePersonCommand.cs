@@ -17,13 +17,6 @@ public record CreatePersonCommand(CreatePersonRequest Person) : IRequest<PersonR
 public class CreatePersonCommandHandler(IPersonRepository personRepository, ILogger<CreatePersonCommand> _logger)
     : IRequestHandler<CreatePersonCommand, PersonResponse>
 {
-    private IPersonRepository @object;
-
-    public CreatePersonCommandHandler(IPersonRepository @object)
-    {
-        this.@object = @object;
-    }
-
     public async Task<PersonResponse> Handle(CreatePersonCommand request, CancellationToken cancellationToken)
     {
         try
