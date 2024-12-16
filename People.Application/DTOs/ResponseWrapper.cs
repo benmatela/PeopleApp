@@ -7,7 +7,9 @@ namespace People.Presentation.Server.Models;
 /// </summary>
 public class ResponseWrapper<T>
 {
-    public HttpStatusCode StatusCode { get; set; } = HttpStatusCode.OK;
+    // Allows us to use the already defined status codes instead of
+    // us writing new codes
+    public int StatusCode { get; set; } = 200;
     public string Message { get; set; } = string.Empty;
     public bool Success { get; set; } = true;
     public T? Data { get; set; }

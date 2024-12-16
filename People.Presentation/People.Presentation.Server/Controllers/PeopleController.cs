@@ -30,7 +30,7 @@ namespace People.Presentation.Server.Controllers
                 // API do much of the heavy lifting.
                 responseWrapper.Data.Age = DateHelpers.GetAge(request.DateOfBirth);
                 responseWrapper.Message = result is not null ? "" : RecordsNotFoundMessage;
-                responseWrapper.StatusCode = result is not null ? HttpStatusCode.OK : HttpStatusCode.NotFound;
+                responseWrapper.StatusCode = result is not null ? StatusCodes.Status200OK : StatusCodes.Status404NotFound;
                 responseWrapper.Success = result is not null ? true : false;
 
                 return result is not null ? Ok(responseWrapper) : NotFound(responseWrapper);
@@ -38,12 +38,16 @@ namespace People.Presentation.Server.Controllers
             catch (Exception e)
             {
                 // Build our response
+                // This is the default response when all else fails
                 responseWrapper.Exception = e;
                 responseWrapper.Message = e.Message;
                 responseWrapper.Success = false;
-                responseWrapper.StatusCode = HttpStatusCode.InternalServerError;
+                responseWrapper.StatusCode = StatusCodes.Status500InternalServerError;
 
-                return Ok(responseWrapper);
+                return new ObjectResult(responseWrapper)
+                {
+                    StatusCode = responseWrapper.StatusCode,
+                };
             }
         }
 
@@ -57,7 +61,7 @@ namespace People.Presentation.Server.Controllers
                 var result = await sender.Send(new GetPersonByIdQuery(personId));
                 // Build our response
                 responseWrapper.Message = result is not null ? "" : RecordsNotFoundMessage;
-                responseWrapper.StatusCode = result is not null ? HttpStatusCode.OK : HttpStatusCode.NotFound;
+                responseWrapper.StatusCode = result is not null ? StatusCodes.Status200OK : StatusCodes.Status200OK;
                 responseWrapper.Success = result is not null ? true : false;
 
                 return result is not null ? Ok(responseWrapper) : NotFound(responseWrapper);
@@ -65,12 +69,16 @@ namespace People.Presentation.Server.Controllers
             catch (Exception e)
             {
                 // Build our response
+                // This is the default response when all else fails
                 responseWrapper.Exception = e;
                 responseWrapper.Message = e.Message;
                 responseWrapper.Success = false;
-                responseWrapper.StatusCode = HttpStatusCode.InternalServerError;
+                responseWrapper.StatusCode = StatusCodes.Status200OK;
 
-                return Ok(responseWrapper);
+                return new ObjectResult(responseWrapper)
+                {
+                    StatusCode = responseWrapper.StatusCode,
+                };
             }
         }
 
@@ -84,7 +92,7 @@ namespace People.Presentation.Server.Controllers
                 var result = await sender.Send(new GetAllPeopleQuery());
                 // Build our response
                 responseWrapper.Message = result.Count() > 0 ? "" : RecordsNotFoundMessage;
-                responseWrapper.StatusCode = result.Count() > 0 ? HttpStatusCode.OK : HttpStatusCode.NotFound;
+                responseWrapper.StatusCode = result.Count() > 0 ? StatusCodes.Status200OK : StatusCodes.Status404NotFound;
                 responseWrapper.Success = result.Count() > 0 ? true : false;
                 responseWrapper.Data = result;
 
@@ -93,12 +101,16 @@ namespace People.Presentation.Server.Controllers
             catch (Exception e)
             {
                 // Build our response
+                // This is the default response when all else fails
                 responseWrapper.Exception = e;
                 responseWrapper.Message = e.Message;
                 responseWrapper.Success = false;
-                responseWrapper.StatusCode = HttpStatusCode.InternalServerError;
+                responseWrapper.StatusCode = StatusCodes.Status500InternalServerError;
 
-                return new ObjectResult(responseWrapper);
+                return new ObjectResult(responseWrapper)
+                {
+                    StatusCode = responseWrapper.StatusCode,
+                };
             }
         }
 
@@ -114,23 +126,25 @@ namespace People.Presentation.Server.Controllers
                 var result = await sender.Send(new UpdatePersonCommand(personId, person));
 
                 // Build our response
-                responseWrapper.Success = true;
-                responseWrapper.Message = "";
-                responseWrapper.StatusCode = HttpStatusCode.OK;
-                responseWrapper.Data = result;
-                responseWrapper.Data.Age = DateHelpers.GetAge(result.DateOfBirth);
+                responseWrapper.Message = result is not null ? "" : "Record not updated.";
+                responseWrapper.StatusCode = result is not null ? StatusCodes.Status200OK : StatusCodes.Status404NotFound;
+                responseWrapper.Success = result is not null ? true : false;
 
-                return Ok(responseWrapper);
+                return result is not null ? Ok(responseWrapper) : NotFound(responseWrapper);
             }
             catch (Exception e)
             {
                 // Build our response
+                // This is the default response when all else fails
                 responseWrapper.Exception = e;
                 responseWrapper.Message = e.Message;
                 responseWrapper.Success = false;
-                responseWrapper.StatusCode = HttpStatusCode.InternalServerError;
+                responseWrapper.StatusCode = StatusCodes.Status500InternalServerError;
 
-                return Ok(responseWrapper);
+                return new ObjectResult(responseWrapper)
+                {
+                    StatusCode = responseWrapper.StatusCode,
+                };
             }
         }
 
@@ -145,7 +159,7 @@ namespace People.Presentation.Server.Controllers
 
                 // Build our response
                 responseWrapper.Message = result ? "" : "Record not deleted.";
-                responseWrapper.StatusCode = result ? HttpStatusCode.OK : HttpStatusCode.NotFound;
+                responseWrapper.StatusCode = result ? StatusCodes.Status200OK : StatusCodes.Status404NotFound;
                 responseWrapper.Success = result ? true : false;
 
                 return result ? Ok(responseWrapper) : NotFound(responseWrapper);
@@ -153,12 +167,16 @@ namespace People.Presentation.Server.Controllers
             catch (Exception e)
             {
                 // Build our response
+                // This is the default response when all else fails
                 responseWrapper.Exception = e;
                 responseWrapper.Message = e.Message;
                 responseWrapper.Success = false;
-                responseWrapper.StatusCode = HttpStatusCode.InternalServerError;
+                responseWrapper.StatusCode = StatusCodes.Status500InternalServerError;
 
-                return new ObjectResult(responseWrapper);
+                return new ObjectResult(responseWrapper)
+                {
+                    StatusCode = responseWrapper.StatusCode,
+                };
             }
         }
 
@@ -186,7 +204,7 @@ namespace People.Presentation.Server.Controllers
 
                 // Build our response
                 responseWrapper.Message = result.Count() > 0 ? "" : RecordsNotFoundMessage;
-                responseWrapper.StatusCode = result.Count() > 0 ? HttpStatusCode.OK : HttpStatusCode.NotFound;
+                responseWrapper.StatusCode = result.Count() > 0 ? StatusCodes.Status200OK : StatusCodes.Status404NotFound;
                 responseWrapper.Success = result.Count() > 0 ? true : false;
                 responseWrapper.Data = result;
 
@@ -195,12 +213,16 @@ namespace People.Presentation.Server.Controllers
             catch (Exception e)
             {
                 // Build our response
+                // This is the default response when all else fails
                 responseWrapper.Exception = e;
                 responseWrapper.Message = e.Message;
                 responseWrapper.Success = false;
-                responseWrapper.StatusCode = HttpStatusCode.InternalServerError;
+                responseWrapper.StatusCode = StatusCodes.Status500InternalServerError;
 
-                return Ok(responseWrapper);
+                return new ObjectResult(responseWrapper)
+                {
+                    StatusCode = responseWrapper.StatusCode,
+                };
             }
         }
     }
