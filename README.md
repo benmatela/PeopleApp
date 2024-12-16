@@ -13,20 +13,12 @@ CREATE TABLE [People] (
     DateCreated DATETIME DEFAULT GETDATE() NOT NULL  -- Automatically set current date/time on record creation
 );
 ```
-
-PeopleManagementApp/
+PeopleApp/
 │
 ├── People.Presentation/        # React frontend (UI)
-│   ├── src/
-│   │   ├── components/         # UI components (e.g., Buttons, Forms)
-│   │   ├── pages/              # Pages (e.g., Dashboard, People List)
-│   │   ├── services/           # API services to communicate with backend
-│   │   ├── App.tsx             # Main React component
-│   │   ├── index.tsx           # Entry point for the frontend
-│   │   └── vite.config.ts      # Vite configuration file
-│   │
-│   └── package.json            # Frontend dependencies
-│
+│   ├── /controllers            # API Controllers (Web)
+│   └── /views                  # UI Components (React)
+|
 ├── People.Domain/              # Domain logic, entities, and models
 │   ├── Entities/               # Domain models (e.g., Person)
 │   └── Interfaces/             # Interfaces for repository contracts
