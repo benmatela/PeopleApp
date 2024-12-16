@@ -1,10 +1,10 @@
-using System.Net;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using People.Application.Commands;
 using People.Application.DTOs;
 using People.Application.Helpers;
 using People.Application.Queries;
+using People.Presentation.Middleware;
 using People.Presentation.Server.Models;
 
 namespace People.Presentation.Server.Controllers
@@ -30,24 +30,19 @@ namespace People.Presentation.Server.Controllers
                 // API do much of the heavy lifting.
                 responseWrapper.Data.Age = DateHelpers.GetAge(request.DateOfBirth);
                 responseWrapper.Message = result is not null ? "" : RecordsNotFoundMessage;
-                responseWrapper.StatusCode = result is not null ? StatusCodes.Status200OK : StatusCodes.Status404NotFound;
+                responseWrapper.StatusCode = result is not null ?
+                    StatusCodes.Status200OK : StatusCodes.Status404NotFound;
                 responseWrapper.Success = result is not null ? true : false;
-
-                return result is not null ? Ok(responseWrapper) : NotFound(responseWrapper);
-            }
-            catch (Exception e)
-            {
-                // Build our response
-                // This is the default response when all else fails
-                responseWrapper.Exception = e;
-                responseWrapper.Message = e.Message;
-                responseWrapper.Success = false;
-                responseWrapper.StatusCode = StatusCodes.Status500InternalServerError;
 
                 return new ObjectResult(responseWrapper)
                 {
                     StatusCode = responseWrapper.StatusCode,
                 };
+            }
+            catch (Exception e)
+            {
+                return ControllerErrorHelper.HandleError(e);
+
             }
         }
 
@@ -59,12 +54,18 @@ namespace People.Presentation.Server.Controllers
             try
             {
                 var result = await sender.Send(new GetPersonByIdQuery(personId));
+
                 // Build our response
                 responseWrapper.Message = result is not null ? "" : RecordsNotFoundMessage;
-                responseWrapper.StatusCode = result is not null ? StatusCodes.Status200OK : StatusCodes.Status200OK;
+                responseWrapper.StatusCode = result is not null ?
+                    StatusCodes.Status200OK : StatusCodes.Status404NotFound;
                 responseWrapper.Success = result is not null ? true : false;
+                responseWrapper.Data = result;
 
-                return result is not null ? Ok(responseWrapper) : NotFound(responseWrapper);
+                return new ObjectResult(responseWrapper)
+                {
+                    StatusCode = responseWrapper.StatusCode,
+                };
             }
             catch (Exception e)
             {
@@ -92,25 +93,20 @@ namespace People.Presentation.Server.Controllers
                 var result = await sender.Send(new GetAllPeopleQuery());
                 // Build our response
                 responseWrapper.Message = result.Count() > 0 ? "" : RecordsNotFoundMessage;
-                responseWrapper.StatusCode = result.Count() > 0 ? StatusCodes.Status200OK : StatusCodes.Status404NotFound;
+                responseWrapper.StatusCode = result.Count() > 0 ?
+                    StatusCodes.Status200OK : StatusCodes.Status404NotFound;
                 responseWrapper.Success = result.Count() > 0 ? true : false;
                 responseWrapper.Data = result;
-
-                return result.Count() > 0 ? Ok(responseWrapper) : NotFound(responseWrapper);
-            }
-            catch (Exception e)
-            {
-                // Build our response
-                // This is the default response when all else fails
-                responseWrapper.Exception = e;
-                responseWrapper.Message = e.Message;
-                responseWrapper.Success = false;
-                responseWrapper.StatusCode = StatusCodes.Status500InternalServerError;
 
                 return new ObjectResult(responseWrapper)
                 {
                     StatusCode = responseWrapper.StatusCode,
                 };
+            }
+            catch (Exception e)
+            {
+                return ControllerErrorHelper.HandleError(e);
+
             }
         }
 
@@ -127,24 +123,18 @@ namespace People.Presentation.Server.Controllers
 
                 // Build our response
                 responseWrapper.Message = result is not null ? "" : "Record not updated.";
-                responseWrapper.StatusCode = result is not null ? StatusCodes.Status200OK : StatusCodes.Status404NotFound;
+                responseWrapper.StatusCode = result is not null ?
+                    StatusCodes.Status200OK : StatusCodes.Status404NotFound;
                 responseWrapper.Success = result is not null ? true : false;
-
-                return result is not null ? Ok(responseWrapper) : NotFound(responseWrapper);
-            }
-            catch (Exception e)
-            {
-                // Build our response
-                // This is the default response when all else fails
-                responseWrapper.Exception = e;
-                responseWrapper.Message = e.Message;
-                responseWrapper.Success = false;
-                responseWrapper.StatusCode = StatusCodes.Status500InternalServerError;
 
                 return new ObjectResult(responseWrapper)
                 {
                     StatusCode = responseWrapper.StatusCode,
                 };
+            }
+            catch (Exception e)
+            {
+                return ControllerErrorHelper.HandleError(e);
             }
         }
 
@@ -162,21 +152,15 @@ namespace People.Presentation.Server.Controllers
                 responseWrapper.StatusCode = result ? StatusCodes.Status200OK : StatusCodes.Status404NotFound;
                 responseWrapper.Success = result ? true : false;
 
-                return result ? Ok(responseWrapper) : NotFound(responseWrapper);
-            }
-            catch (Exception e)
-            {
-                // Build our response
-                // This is the default response when all else fails
-                responseWrapper.Exception = e;
-                responseWrapper.Message = e.Message;
-                responseWrapper.Success = false;
-                responseWrapper.StatusCode = StatusCodes.Status500InternalServerError;
-
                 return new ObjectResult(responseWrapper)
                 {
                     StatusCode = responseWrapper.StatusCode,
                 };
+            }
+            catch (Exception e)
+            {
+                return ControllerErrorHelper.HandleError(e);
+
             }
         }
 
@@ -204,25 +188,20 @@ namespace People.Presentation.Server.Controllers
 
                 // Build our response
                 responseWrapper.Message = result.Count() > 0 ? "" : RecordsNotFoundMessage;
-                responseWrapper.StatusCode = result.Count() > 0 ? StatusCodes.Status200OK : StatusCodes.Status404NotFound;
+                responseWrapper.StatusCode = result.Count() > 0 ?
+                    StatusCodes.Status200OK : StatusCodes.Status404NotFound;
                 responseWrapper.Success = result.Count() > 0 ? true : false;
                 responseWrapper.Data = result;
-
-                return result.Count() > 0 ? Ok(responseWrapper) : NotFound(responseWrapper);
-            }
-            catch (Exception e)
-            {
-                // Build our response
-                // This is the default response when all else fails
-                responseWrapper.Exception = e;
-                responseWrapper.Message = e.Message;
-                responseWrapper.Success = false;
-                responseWrapper.StatusCode = StatusCodes.Status500InternalServerError;
 
                 return new ObjectResult(responseWrapper)
                 {
                     StatusCode = responseWrapper.StatusCode,
                 };
+            }
+            catch (Exception e)
+            {
+                return ControllerErrorHelper.HandleError(e);
+
             }
         }
     }
