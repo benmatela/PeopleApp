@@ -51,9 +51,7 @@ public class PersonResponse
 }
 
 /// <summary>
-/// Used to hold all keys to search by
-/// 
-/// <para>This can easily be extended compared to hard coded keys</para>
+/// Used to hold all keys to search people by
 /// </summary>
 public class SearchPersonRequest
 {

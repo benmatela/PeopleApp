@@ -13,6 +13,8 @@ namespace People.Presentation.Server.Controllers
     [Route("[controller]")]
     public class PeopleController(ISender sender) : ControllerBase
     {
+        private string RecordsNotFoundMessage = "Record(s) not found.";
+
         [HttpPost]
         [Route("Create")]
         public async Task<IActionResult> Create([FromBody] CreatePersonRequest request)
@@ -24,9 +26,14 @@ namespace People.Presentation.Server.Controllers
 
                 // Build our response
                 responseWrapper.Data = result;
+                // Send calculated age to the client when possible to let the 
+                // API do much of the heavy lifting.
                 responseWrapper.Data.Age = DateHelpers.GetAge(request.DateOfBirth);
+                responseWrapper.Message = result is not null ? "" : RecordsNotFoundMessage;
+                responseWrapper.StatusCode = result is not null ? HttpStatusCode.OK : HttpStatusCode.NotFound;
+                responseWrapper.Success = result is not null ? true : false;
 
-                return Ok(responseWrapper);
+                return result is not null ? Ok(responseWrapper) : NotFound(responseWrapper);
             }
             catch (Exception e)
             {
@@ -48,24 +55,12 @@ namespace People.Presentation.Server.Controllers
             try
             {
                 var result = await sender.Send(new GetPersonByIdQuery(personId));
-                if (result is null)
-                {
-                    // Build our response
-                    responseWrapper.Success = false;
-                    responseWrapper.Message = "Item not found.";
-                    responseWrapper.StatusCode = HttpStatusCode.NotFound;
+                // Build our response
+                responseWrapper.Message = result is not null ? "" : RecordsNotFoundMessage;
+                responseWrapper.StatusCode = result is not null ? HttpStatusCode.OK : HttpStatusCode.NotFound;
+                responseWrapper.Success = result is not null ? true : false;
 
-                    return NotFound(responseWrapper);
-                }
-                else
-                {
-                    // Build our response
-                    responseWrapper.Data = result;
-                    responseWrapper.Data.Age = DateHelpers.GetAge(result.DateOfBirth);
-
-                    return Ok(responseWrapper);
-                }
-
+                return result is not null ? Ok(responseWrapper) : NotFound(responseWrapper);
             }
             catch (Exception e)
             {
@@ -87,18 +82,13 @@ namespace People.Presentation.Server.Controllers
             try
             {
                 var result = await sender.Send(new GetAllPeopleQuery());
-                if (result.Count() == 0)
-                {
-                    // Build our response
-                    responseWrapper.Success = false;
-                    responseWrapper.Message = "Items not found.";
-                    responseWrapper.StatusCode = HttpStatusCode.NotFound;
-                }
-
                 // Build our response
+                responseWrapper.Message = result.Count() > 0 ? "" : RecordsNotFoundMessage;
+                responseWrapper.StatusCode = result.Count() > 0 ? HttpStatusCode.OK : HttpStatusCode.NotFound;
+                responseWrapper.Success = result.Count() > 0 ? true : false;
                 responseWrapper.Data = result;
 
-                return Ok(responseWrapper);
+                return result.Count() > 0 ? Ok(responseWrapper) : NotFound(responseWrapper);
             }
             catch (Exception e)
             {
@@ -114,7 +104,9 @@ namespace People.Presentation.Server.Controllers
 
         [HttpPut]
         [Route("Update/{personId}")]
-        public async Task<IActionResult> Update([FromRoute] Guid personId, [FromBody] UpdatePersonRequest person)
+        public async Task<IActionResult> Update(
+            [FromRoute] Guid personId,
+            [FromBody] UpdatePersonRequest person)
         {
             var responseWrapper = new ResponseWrapper<PersonResponse>();
             try
@@ -152,9 +144,9 @@ namespace People.Presentation.Server.Controllers
                 var result = await sender.Send(new RemovePersonCommand(personId));
 
                 // Build our response
-                responseWrapper.Message = result ? "" : "Item not deleted.";
-                responseWrapper.StatusCode = result ? HttpStatusCode.OK : HttpStatusCode.BadRequest;
-                responseWrapper.Success = result;
+                responseWrapper.Message = result ? "" : "Record not deleted.";
+                responseWrapper.StatusCode = result ? HttpStatusCode.OK : HttpStatusCode.NotFound;
+                responseWrapper.Success = result ? true : false;
 
                 return result ? Ok(responseWrapper) : NotFound(responseWrapper);
             }
@@ -190,10 +182,10 @@ namespace People.Presentation.Server.Controllers
                 searchQueries.FirstName = firstName;
                 searchQueries.LastName = lastName;
 
-                var result = await sender.Send(new SearchPersonQuery(searchQueries, token));
+                var result = await sender.Send(new SearchPersonByFirstAndLastNameQuery(searchQueries, token));
 
                 // Build our response
-                responseWrapper.Message = result.Count() > 0 ? "" : "Items not found.";
+                responseWrapper.Message = result.Count() > 0 ? "" : RecordsNotFoundMessage;
                 responseWrapper.StatusCode = result.Count() > 0 ? HttpStatusCode.OK : HttpStatusCode.NotFound;
                 responseWrapper.Success = result.Count() > 0 ? true : false;
                 responseWrapper.Data = result;
