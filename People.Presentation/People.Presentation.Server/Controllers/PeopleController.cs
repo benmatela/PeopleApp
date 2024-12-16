@@ -13,7 +13,7 @@ namespace People.Presentation.Server.Controllers
     [Route("[controller]")]
     public class PeopleController(ISender sender) : ControllerBase
     {
-        private string RecordsNotFoundMessage = "Record(s) not found.";
+        public static readonly string RecordsNotFoundMessage = "Record(s) not found.";
 
         [HttpPost]
         [Route("Create")]
