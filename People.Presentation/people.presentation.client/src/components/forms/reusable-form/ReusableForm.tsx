@@ -5,6 +5,7 @@ import {
   Button,
   FormLabel,
   Card,
+  Typography,
 } from "@mui/material";
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { IFormField } from "../../../models/form.model";
@@ -106,11 +107,11 @@ export const ReusableForm: React.FC<ReusableFormProps> = ({
                     defaultValue={field.defaultValue}
                     {...register(field.name, field.validation)}
                   />
-                  <p>
+                  <Typography sx={{ color: "#dc2626", fontSize: 14 }}>
                     {errors[field.name] && (
                       <p>{String(errors[field.name]?.message)}</p>
                     )}
-                  </p>
+                  </Typography>
                 </Box>
               </Grid2>
             ))}
