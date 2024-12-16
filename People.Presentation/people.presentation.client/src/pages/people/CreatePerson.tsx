@@ -10,10 +10,10 @@ import { Box } from "@mui/material";
 
 interface CreatePersonProps {
   currentPerson: IPerson | undefined;
-  isSaving: boolean;
   setCurrentPerson: Dispatch<React.SetStateAction<IPerson | undefined>>;
   setPersonCreated: Dispatch<React.SetStateAction<boolean>>;
-  setIsSaving: Dispatch<React.SetStateAction<boolean>>;
+  setErrorMessage: Dispatch<React.SetStateAction<string>>;
+  setSuccessMessage: Dispatch<React.SetStateAction<string>>;
 }
 
 /**
@@ -27,15 +27,9 @@ export const CreatePerson = ({
   currentPerson,
   setPersonCreated,
   setCurrentPerson,
+  setErrorMessage,
+  setSuccessMessage,
 }: CreatePersonProps) => {
-  /**
-   * Holds error messages from performing certain actions such as API calls
-   */
-  const [errorMessage, setErrorMessage] = useState<string>("");
-  /**
-   * Holds success messages from performing certain actions such as API calls
-   */
-  const [successMessage, setSuccessMessage] = useState<string>("");
   /**
    * Is there any saving action going on?
    */
@@ -159,8 +153,15 @@ export const CreatePerson = ({
         isModalOpen={isInfoDialogOpen}
         setIsModalOpen={setInfoDialogOpen}
       />
-      <p>{successMessage}</p>
-      <p>{errorMessage}</p>
+      <Box
+        sx={{
+          display: "grid",
+          justifyContent: "center",
+          alignItems: "center",
+          borderRadius: 2,
+          padding: 3,
+        }}
+      ></Box>
     </Box>
   );
 };

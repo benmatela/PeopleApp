@@ -12,6 +12,7 @@ import { ConfirmationDialog } from "../../components/dialogs/confirmation-dialog
 import "./People.css";
 import { BannerWithHeaderText } from "../../components/messaging/banner-with-header-text/BannerWithHeaderText";
 import { ReusableSpinner } from "../../components/loaders/ReusableSpinner";
+import { Typography } from "@mui/material";
 
 interface ListPeopleProps {
   errorMessage: string;
@@ -156,7 +157,7 @@ export const ListPeople = ({
       );
 
       setIsDeleting(false);
-      setIsConfirmDialogOpen(false);
+      setIsConfirmDialogOpen(true);
     } catch (error: any) {
       setIsDeleting(false);
       setErrorMessage(error.message);
@@ -174,6 +175,7 @@ export const ListPeople = ({
         />
       ) : (
         <>
+          <Typography variant="h5" sx={{mb: 3, fontWeight: "bold"}}>Total People: ({allPeople.length})</Typography>
           {allPeople.length > 0 ? (
             <>
               <ReusableTable columns={tableColumns} data={allPeople} />

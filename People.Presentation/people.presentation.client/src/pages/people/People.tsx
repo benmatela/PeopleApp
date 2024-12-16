@@ -11,11 +11,13 @@ import {
   Box,
   Grid2,
   InputAdornment,
+  Snackbar,
+  SnackbarCloseReason,
   TextField,
   Toolbar,
   Typography,
 } from "@mui/material";
-import { Search } from "@mui/icons-material";
+import { PeopleOutlined, Search } from "@mui/icons-material";
 
 /**
  * People base component
@@ -35,10 +37,6 @@ export const People = () => {
    */
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
   /**
-   * Is there any delete in action?
-   */
-  const [isSaving, setIsSaving] = useState<boolean>(false);
-  /**
    * Is there any update in action?
    */
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
@@ -46,6 +44,10 @@ export const People = () => {
    * Holds error messages from performing certain actions such as API calls
    */
   const [errorMessage, setErrorMessage] = useState<string>("");
+  /**
+   * Holds success messages from performing certain actions such as API calls
+   */
+  const [successMessage, setSuccessMessage] = useState<string>("");
   /**
    * Shows/Hides the Confirmation Dialog
    */
@@ -69,22 +71,28 @@ export const People = () => {
    * Watches for user created event
    */
   const [personCreated, setPersonCreated] = useState<boolean>(false);
-  /**
-   * Watches for user updated event
-   */
-  const [personUpdated, setPersonUpdated] = useState<boolean>(false);
-  /**
-   * Watches for user deleted event
-   */
-  const [personDeleted, setPersonDeleted] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
 
+  const handleCloseSnackbar = (
+    event: React.SyntheticEvent | Event,
+    reason?: SnackbarCloseReason
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    console.log(event);
+    console.log(openSnackbar);
+
+    setOpenSnackbar(false);
+  };
+
   /**
-   * This is used solely to keep track of a Person's's state
+   * This is used solely to keep watch of a Person's CRUD operations
    *
    * This brings the question of too many state variables vs
    * using state management frameworks such as Redux
@@ -95,29 +103,12 @@ export const People = () => {
       // This avoids too many unnecessary API calls
       const allExistingPeople: IPerson[] = allPeople;
       allExistingPeople.push(currentPerson);
-      setAllPeople(allExistingPeople);
-      setPersonCreated(false);
-    } else if (personUpdated && currentPerson) {
-      // Updates the currently displayed list with the updated person
-      // This avoids too many unnecessary API calls
-      const allExistingPeople: IPerson[] = allPeople;
-      const updatedPerson = allPeople.find((p) => p.id === currentPerson.id);
-      if (updatedPerson) {
-        allExistingPeople.push(currentPerson);
-        setAllPeople(allExistingPeople);
-      }
-      setPersonUpdated(false);
-    } else if (personDeleted && currentPerson) {
-      // Removes the deleted person person from the currently displayed list
-      // This avoids too many unnecessary API calls
-      const allExistingPeople: IPerson[] = allPeople.filter(
-        (p) => p.id !== currentPerson.id
+      setSuccessMessage(
+        `Added a new person: ${currentPerson.firstName} ${currentPerson.lastName}`
       );
-      allExistingPeople.push(currentPerson);
-      setAllPeople(allExistingPeople);
-      setPersonDeleted(false);
+      setOpenSnackbar(true);
     }
-  }, [personCreated, allPeople, currentPerson, personUpdated, personDeleted]);
+  }, [personCreated, allPeople, currentPerson]);
 
   /**
    * Gets all users on first page load then ignores other state changes
@@ -162,8 +153,9 @@ export const People = () => {
       >
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
           {/* Logo or Title */}
-          <Typography variant="h6" noWrap sx={{ flexGrow: 1 }}>
-            Co-Flo People Management
+          <PeopleOutlined sx={{ fontSize: 60, pt: 1 }} />
+          <Typography variant="h6" noWrap sx={{ flexGrow: 1, mt: 1, ml: 2 }}>
+            People Management
           </Typography>
 
           {/* Search Bar */}
@@ -191,23 +183,36 @@ export const People = () => {
           </Box>
         </Toolbar>
       </AppBar>
+      Person Created: {String(personCreated)}
+      All people: {allPeople.length}
       {isCreateMode ? (
+        // Create new Person
         <CreatePerson
           currentPerson={currentPerson}
           setCurrentPerson={setCurrentPerson}
           setPersonCreated={setPersonCreated}
-          isSaving={isSaving}
-          setIsSaving={setIsSaving}
+          setErrorMessage={setErrorMessage}
+          setSuccessMessage={setSuccessMessage}
         />
       ) : (
+        // Update a person
         <UpdatePerson
           currentPerson={currentPerson}
           setCurrentPerson={setCurrentPerson}
           setIsUpdating={setIsUpdating}
           isUpdating={isUpdating}
-          setPersonUpdated={setPersonUpdated}
+          setPersonUpdated={() => {}}
         />
       )}
+      {/* Notifications */}
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={5000}
+        onClose={handleCloseSnackbar}
+        message={successMessage || errorMessage}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      />
+      {/* List of people */}
       <ListPeople
         isConfirmDialogOpen={isConfirmDialogOpen}
         isLoading={isLoading}
