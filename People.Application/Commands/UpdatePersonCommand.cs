@@ -4,15 +4,15 @@ using People.Application.Interfaces;
 
 namespace People.Application.Commands;
 
-public record UpdatePersonCommand(Guid PersonId, UpdatePersonRequest Person) : IRequest<PersonResponse>;
+public record UpdatePersonCommand(Guid PersonId, UpdatePersonRequest Person) : IRequest<bool>;
 
 /// <summary>
 /// Handles the command to update an existing person.
 /// </summary>
 public class UpdatePersonCommandHandler(IPersonRepository personRepository)
-    : IRequestHandler<UpdatePersonCommand, PersonResponse>
+    : IRequestHandler<UpdatePersonCommand, bool>
 {
-    public async Task<PersonResponse> Handle(UpdatePersonCommand request, CancellationToken cancellationToken)
+    public async Task<bool> Handle(UpdatePersonCommand request, CancellationToken cancellationToken)
     {
         return await personRepository.Update(request.PersonId, request.Person);
     }

@@ -119,12 +119,11 @@ namespace People.Presentation.Server.Controllers
             var responseWrapper = new ResponseWrapper<PersonResponse>();
             try
             {
-                var result = await sender.Send(new UpdatePersonCommand(personId, person));
+                var isSuccessful = await sender.Send(new UpdatePersonCommand(personId, person));
 
                 // Build our response
-                responseWrapper.Message = result is not null ? "" : "Record not updated.";
-                responseWrapper.StatusCode = result is not null ?
-                    StatusCodes.Status200OK : StatusCodes.Status404NotFound;
+                responseWrapper.Message = isSuccessful ? "" : "Record not updated.";
+                responseWrapper.StatusCode = isSuccessful ? StatusCodes.Status200OK : StatusCodes.Status404NotFound;
 
                 return new ObjectResult(responseWrapper)
                 {

@@ -39,7 +39,7 @@ public class PersonRepository(ApplicationDbContext DbContext, IMapper Mapper) : 
         return _mapper.Map<IEnumerable<PersonResponse>>(allExistingPeople);
     }
 
-    public async Task<PersonResponse> Update(Guid personId, UpdatePersonRequest request)
+    public async Task<bool> Update(Guid personId, UpdatePersonRequest request)
     {
         var existingPerson = await _dbContext.People.FirstOrDefaultAsync(person => person.Id == personId);
         if (existingPerson is not null)
@@ -49,10 +49,10 @@ public class PersonRepository(ApplicationDbContext DbContext, IMapper Mapper) : 
 
             await _dbContext.SaveChangesAsync();
 
-            return _mapper.Map<PersonResponse>(existingPerson);
+            return true;
         }
 
-        return _mapper.Map<PersonResponse>(request); ;
+        return false;
     }
 
     public async Task<bool> Remove(Guid personId)
