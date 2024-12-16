@@ -3,7 +3,6 @@ using Moq;
 using People.Application.Commands;
 using People.Application.DTOs;
 using People.Application.Interfaces;
-using People.Domain.Entities;
 using Xunit;
 
 public class CreatePersonCommandHandlerTests
@@ -12,7 +11,6 @@ public class CreatePersonCommandHandlerTests
     private readonly CreatePersonCommandHandler _handler;
     private readonly IMapper _mapper;
 
-
     public CreatePersonCommandHandlerTests(IMapper Mapper)
     {
         _mockPersonRepository = new Mock<IPersonRepository>();
@@ -20,6 +18,11 @@ public class CreatePersonCommandHandlerTests
         _mapper = Mapper;
     }
 
+    /// <summary>
+    /// This test ensures that when a valid CreatePersonCommand is passed to the handler, 
+    /// the AddAsync method on the repository is called once and returns the correct Person.
+    /// </summary>
+    /// <returns></returns>
     [Fact]
     public async Task Handle_ShouldCreatePerson_WhenValidCommand()
     {
@@ -28,7 +31,6 @@ public class CreatePersonCommandHandlerTests
         expectedPerson.DateOfBirth = new DateTime();
         expectedPerson.FirstName = "John";
         expectedPerson.LastName = "Doe";
-
         // This is the object responsible for creating a cancellation token and sending a 
         // cancellation request to all copies of that token.
         CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
@@ -50,13 +52,16 @@ public class CreatePersonCommandHandlerTests
         _mockPersonRepository.Verify(repo => repo.Create(It.IsAny<CreatePersonRequest>()), Times.Once);
     }
 
+    /// <summary>
+    /// This test verifies that an exception is thrown if the command contains 
+    /// invalid input (e.g., missing first name, last name, or age).
+    /// </summary>
     [Fact]
     public void Handle_ShouldThrowException_WhenFieldsAreMissing()
     {
         // 1. Arrange
         var expectedPerson = new CreatePersonRequest();
-        expectedPerson.DateOfBirth = new DateTime(); // missing firstName and lastName
-
+        expectedPerson.DateOfBirth = new DateTime();
         // This is the object responsible for creating a cancellation token and sending a 
         // cancellation request to all copies of that token.
         CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
