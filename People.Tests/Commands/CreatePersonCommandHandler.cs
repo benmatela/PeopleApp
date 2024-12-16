@@ -1,4 +1,3 @@
-using AutoMapper;
 using Moq;
 using People.Application.Commands;
 using People.Application.DTOs;
