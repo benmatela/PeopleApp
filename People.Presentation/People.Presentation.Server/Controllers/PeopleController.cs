@@ -125,7 +125,6 @@ namespace People.Presentation.Server.Controllers
                 responseWrapper.Message = result is not null ? "" : "Record not updated.";
                 responseWrapper.StatusCode = result is not null ?
                     StatusCodes.Status200OK : StatusCodes.Status404NotFound;
-                responseWrapper.Success = result is not null ? true : false;
 
                 return new ObjectResult(responseWrapper)
                 {
