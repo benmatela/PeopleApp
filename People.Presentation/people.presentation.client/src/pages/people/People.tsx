@@ -154,7 +154,7 @@ export const People = () => {
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
           {/* Logo or Title */}
           <PeopleOutlined sx={{ fontSize: 60, pt: 1 }} />
-          <Typography variant="h6" noWrap sx={{ flexGrow: 1, mt: 1, ml: 2 }}>
+          <Typography variant="h6" noWrap sx={{ flexGrow: 1, mt: 1, ml: 2, fontWeight: "bold" }}>
             People Management
           </Typography>
 
