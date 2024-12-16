@@ -55,7 +55,7 @@ public class CreatePersonCommandHandlerTests
     /// This test verifies that an exception is thrown if the command contains 
     /// invalid input (e.g., missing first name, last name, or age).
     /// </summary>
-    public void Handle_ShouldThrowException_WhenFieldsAreMissing()
+    public async void Handle_ShouldThrowException_WhenFieldsAreMissing()
     {
         // 1. Arrange
         var expectedPerson = new CreatePersonRequest();
@@ -69,7 +69,7 @@ public class CreatePersonCommandHandlerTests
         var command = new CreatePersonCommand(expectedPerson); // Missing fields
 
         // 2 & 3 Act & Assert
-        var exception = Assert.Throws<ArgumentException>(() => _handler.Handle(command, token));
+        var exception = await Assert.ThrowsAsync<ArgumentException>(() => _handler.Handle(command, token));
         Assert.Equal("Invalid input", exception.Message);
     }
 }
