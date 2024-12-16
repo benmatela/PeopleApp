@@ -8,6 +8,7 @@ import { IPerson, IPersonResponse } from "../../models/person.model";
 import "./People.css";
 import { IResponseWrapper } from "../../models/response.model";
 import { Grid2 } from "@mui/material";
+import { SearchPerson } from "./SearchPerson";
 
 /**
  * People base component
@@ -147,6 +148,7 @@ export const People = () => {
         title="Co-Flo People"
         subTitle="A directory of very important people"
       />
+      <SearchPerson />
       {isCreateMode ? (
         <CreatePerson
           currentPerson={currentPerson}
