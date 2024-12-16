@@ -16,7 +16,7 @@ public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, 
         _logger = logger;
     }
 
-    public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
         try
         {
@@ -33,10 +33,5 @@ public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, 
             _logger.LogInformation($"{ex} An error occurred while handling request of type {typeof(TRequest).Name}");
             throw;  // Rethrow the exception after logging
         }
-    }
-
-    public Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
     }
 }
