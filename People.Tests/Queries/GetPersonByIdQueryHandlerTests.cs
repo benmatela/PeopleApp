@@ -20,6 +20,7 @@ public class GetPersonByIdQueryHandlerTests
     /// This test verifies that null is returned if the person does not exist
     /// </summary>
     /// <returns></returns>
+    [Fact]
     public async Task Handle_ShouldReturnPerson_WhenPersonExists()
     {
         // Arrange
@@ -51,6 +52,7 @@ public class GetPersonByIdQueryHandlerTests
     /// This test verifies that null is returned if the person does not exist
     /// </summary>
     /// <returns></returns>
+    [Fact]
     public async Task Handle_ShouldReturnNull_WhenPersonDoesNotExist()
     {
         // Arrange

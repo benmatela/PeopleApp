@@ -20,6 +20,7 @@ public class CreatePersonCommandHandlerTests
     /// the AddAsync method on the repository is called once and returns the correct Person.
     /// </summary>
     /// <returns></returns>
+    [Fact]
     public async Task Handle_ShouldCreatePerson_WhenValidCommand()
     {
         // 1. Arrange
@@ -55,6 +56,7 @@ public class CreatePersonCommandHandlerTests
     /// This test verifies that an exception is thrown if the command contains 
     /// invalid input (e.g., missing first name, last name, or age).
     /// </summary>
+    [Fact]
     public async void Handle_ShouldThrowException_WhenFieldsAreMissing()
     {
         // 1. Arrange
