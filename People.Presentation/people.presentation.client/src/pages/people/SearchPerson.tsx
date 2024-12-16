@@ -90,16 +90,11 @@ export const SearchPerson = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        boxShadow:
-          "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
-        backgroundColor: "#f0f9ff",
-        borderRadius: 2,
-        padding: 3
+        padding: 3,
       }}
     >
       {/* Search Fields Layout */}
       <Grid2 container spacing={2} alignItems="center">
-        {/* First Name Field */}
         <Grid2>
           <TextField
             label="First Name"
@@ -110,7 +105,6 @@ export const SearchPerson = () => {
           />
         </Grid2>
 
-        {/* Last Name Field */}
         <Grid2>
           <TextField
             label="Last Name"
@@ -144,7 +138,7 @@ export const SearchPerson = () => {
       {/* Error message */}
       {error && (
         <Box sx={{ color: "error.main", my: 2 }}>
-          <p>{error}</p>
+          {/* <p>{error}</p> */}
         </Box>
       )}
 
@@ -158,7 +152,7 @@ export const SearchPerson = () => {
           ))
         ) : (
           <ListItem>
-            <ListItemText primary="No results found" />
+            {/* <ListItemText primary="No results found" /> */}
           </ListItem>
         )}
       </List>

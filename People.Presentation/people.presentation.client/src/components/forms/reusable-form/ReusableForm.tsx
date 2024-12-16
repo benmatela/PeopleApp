@@ -4,7 +4,6 @@ import {
   TextField,
   Box,
   Button,
-  Typography,
   FormLabel,
 } from "@mui/material";
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
@@ -49,7 +48,6 @@ const useStyles: any = () => ({
  * @returns {React.FC<ReusableFormProps>} component
  */
 export const ReusableForm: React.FC<ReusableFormProps> = ({
-  formLabel,
   isLoading,
   fields,
   onSubmit,
@@ -70,7 +68,7 @@ export const ReusableForm: React.FC<ReusableFormProps> = ({
         alignItems: "center",
         boxShadow:
           "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
-        backgroundColor: "#f0f9ff",
+        backgroundColor: "white",
         borderRadius: 2,
       }}
     >
@@ -80,12 +78,12 @@ export const ReusableForm: React.FC<ReusableFormProps> = ({
         autoComplete="off"
       >
         <Box sx={{ width: "100%" }}>
-          <Typography variant="h5" align="center" sx={{ margin: 2 }}>
-            {formLabel}
-          </Typography>
-
-          {/* Grid2 to display form fields */}
-          <Grid2 container spacing={2} justifyContent="center">
+          <Grid2
+            container
+            spacing={2}
+            justifyContent="center"
+            sx={{ width: "100%", padding: 2 }}
+          >
             {fields.map((field: IFormField) => (
               <Grid2
                 key={field.label}
@@ -127,7 +125,12 @@ export const ReusableForm: React.FC<ReusableFormProps> = ({
                 loadingMessage={isLoading ? "Loading..." : "Deleting..."}
               />
             ) : (
-              <Button variant="contained" type="submit" disabled={isLoading}>
+              <Button
+                variant="contained"
+                type="submit"
+                disabled={isLoading}
+                sx={{ width: "50%", mb: 2 }}
+              >
                 Submit
               </Button>
             )}
