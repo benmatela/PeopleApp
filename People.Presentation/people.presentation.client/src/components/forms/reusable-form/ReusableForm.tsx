@@ -94,6 +94,9 @@ export const ReusableForm: React.FC<ReusableFormProps> = ({
                 }}
               >
                 <Box>
+                  <Grid2>
+                    <FormLabel htmlFor={field.name}>{field.label}</FormLabel>
+                  </Grid2>
                   <TextField
                     fullWidth
                     variant="outlined"
