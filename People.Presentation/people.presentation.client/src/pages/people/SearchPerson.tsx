@@ -128,34 +128,34 @@ export const SearchPerson = () => {
         </Grid2>
       </Grid2>
 
-      {/* Loading spinner */}
-      {isLoading && (
-        <Box sx={{ display: "flex", justifyContent: "center", my: 2 }}>
-          <CircularProgress />
-        </Box>
-      )}
-
-      {/* Error message */}
-      {error && (
-        <Box sx={{ color: "error.main", my: 2 }}>
-          {/* <p>{error}</p> */}
-        </Box>
-      )}
-
-      {/* Results List */}
-      <List>
-        {results.length > 0 ? (
-          results.map((item: IPersonResponse) => (
-            <ListItem key={item.id}>
-              <ListItemText primary={`${item.firstName} ${item.lastName}`} />
-            </ListItem>
-          ))
-        ) : (
-          <ListItem>
-            {/* <ListItemText primary="No results found" /> */}
-          </ListItem>
+      <Grid2>
+        {/* Loading spinner */}
+        {isLoading && (
+          <Box sx={{ display: "flex", justifyContent: "center", my: 2 }}>
+            <CircularProgress />
+          </Box>
         )}
-      </List>
+
+        {/* Error message */}
+        {error && (
+          <Box sx={{ color: "error.main", my: 2 }}>{/* <p>{error}</p> */}</Box>
+        )}
+
+        {/* Results List */}
+        <List>
+          {results.length > 0 ? (
+            results.map((item: IPersonResponse) => (
+              <ListItem key={item.id}>
+                <ListItemText primary={`${item.firstName} ${item.lastName}`} />
+              </ListItem>
+            ))
+          ) : (
+            <ListItem>
+              {/* <ListItemText primary="No results found" /> */}
+            </ListItem>
+          )}
+        </List>
+      </Grid2>
     </Container>
   );
 };

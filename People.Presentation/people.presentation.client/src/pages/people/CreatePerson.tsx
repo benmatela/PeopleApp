@@ -145,6 +145,7 @@ export const CreatePerson = ({
   return (
     <div>
       <ReusableForm
+        submitBtnText={"Add New Person"}
         formLabel="Add New Person"
         fields={formFields}
         onSubmit={onSubmit}

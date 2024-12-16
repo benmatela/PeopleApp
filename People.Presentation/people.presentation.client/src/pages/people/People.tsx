@@ -6,8 +6,8 @@ import { UpdatePerson } from "./UpdatePerson";
 import { IPerson, IPersonResponse } from "../../models/person.model";
 import "./People.css";
 import { IResponseWrapper } from "../../models/response.model";
-import { SearchPerson } from "./SearchPerson";
-import { Container, Grid2, Typography } from "@mui/material";
+import { Grid2 } from "@mui/material";
+import { Header } from "../../components/header/Header";
 
 /**
  * People base component
@@ -143,40 +143,7 @@ export const People = () => {
 
   return (
     <Grid2 sx={{ minHeight: "100vh" }}>
-      <Container
-        sx={{
-          display: "grid",
-          justifyContent: "center",
-          alignItems: "center",
-          boxShadow:
-            "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
-          backgroundColor: "#f3f4f6",
-          borderRadius: 2,
-          marginBottom: 3,
-        }}
-      >
-        <Grid2
-          sx={{
-            display: "grid",
-            justifyContent: "center",
-            alignItems: "center",
-            textAlign: "center",
-            padding: 2,
-          }}
-        >
-          <Grid2>
-            <Typography variant="h3">Co-Flo</Typography>
-          </Grid2>
-          <Grid2>
-            <Typography variant="h6">
-              A directory of very important People
-            </Typography>
-          </Grid2>
-        </Grid2>
-        <Grid2>
-          <SearchPerson />
-        </Grid2>
-      </Container>
+     <Header title="Co-Flo" subTitle="A directory of very important people"/>
       {isCreateMode ? (
         <CreatePerson
           currentPerson={currentPerson}

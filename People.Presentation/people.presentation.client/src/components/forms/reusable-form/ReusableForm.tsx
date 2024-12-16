@@ -1,16 +1,17 @@
 import {
-  Container,
   Grid2,
   TextField,
   Box,
   Button,
   FormLabel,
+  Card,
 } from "@mui/material";
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { IFormField } from "../../../models/form.model";
 import { ReusableSpinner } from "../../loaders/ReusableSpinner";
 
 interface ReusableFormProps {
+  submitBtnText: string;
   /**
    * Label to be shown on the form
    */
@@ -48,6 +49,7 @@ const useStyles: any = () => ({
  * @returns {React.FC<ReusableFormProps>} component
  */
 export const ReusableForm: React.FC<ReusableFormProps> = ({
+  submitBtnText,
   isLoading,
   fields,
   onSubmit,
@@ -60,8 +62,7 @@ export const ReusableForm: React.FC<ReusableFormProps> = ({
   const classes: any = useStyles;
 
   return (
-    <Container
-      maxWidth="md"
+    <Card
       sx={{
         display: "flex",
         justifyContent: "center",
@@ -131,12 +132,12 @@ export const ReusableForm: React.FC<ReusableFormProps> = ({
                 disabled={isLoading}
                 sx={{ width: "50%", mb: 2 }}
               >
-                Submit
+                {submitBtnText}
               </Button>
             )}
           </Grid2>
         </Box>
       </form>
-    </Container>
+    </Card>
   );
 };

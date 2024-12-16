@@ -1,5 +1,6 @@
-import { Container, Grid2 } from "@mui/material";
+import { Card, Grid2, Typography } from "@mui/material";
 import "./styles.css";
+import { SearchPerson } from "../../pages/people/SearchPerson";
 
 /**
  * Header Props
@@ -18,20 +19,39 @@ type HeaderProps = {
  */
 export const Header = ({ title, subTitle }: HeaderProps) => {
   return (
-    <Container sx={{
-      display: "flex",
+    <Card
+    sx={{
+      display: "grid",
       justifyContent: "center",
       alignItems: "center",
       boxShadow:
         "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
-      backgroundColor: "#e0f2fe",
+      backgroundColor: "#f0f9ff",
       borderRadius: 2,
-      marginBottom: 3
-    }}>
-      <Grid2 className="">
-        <h1>{title}</h1>
-        <h3>{subTitle}</h3>
+      marginBottom: 3,
+    }}
+  >
+    <Grid2
+      sx={{
+        display: "grid",
+        justifyContent: "center",
+        alignItems: "center",
+        textAlign: "center",
+        padding: 2,
+      }}
+    >
+      <Grid2>
+        <Typography variant="h3">{title}</Typography>
       </Grid2>
-    </Container>
+      <Grid2>
+        <Typography variant="h6">
+          {subTitle}
+        </Typography>
+      </Grid2>
+    </Grid2>
+    <Grid2>
+      <SearchPerson />
+    </Grid2>
+  </Card>
   );
 };
