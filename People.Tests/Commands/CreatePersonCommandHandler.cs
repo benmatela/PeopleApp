@@ -9,13 +9,11 @@ public class CreatePersonCommandHandlerTests
 {
     private readonly Mock<IPersonRepository> _mockPersonRepository;
     private readonly CreatePersonCommandHandler _handler;
-    private readonly IMapper _mapper;
 
-    public CreatePersonCommandHandlerTests(IMapper Mapper)
+    public CreatePersonCommandHandlerTests()
     {
         _mockPersonRepository = new Mock<IPersonRepository>();
         _handler = new CreatePersonCommandHandler(_mockPersonRepository.Object);
-        _mapper = Mapper;
     }
 
     /// <summary>
@@ -26,7 +24,11 @@ public class CreatePersonCommandHandlerTests
     public async Task Handle_ShouldCreatePerson_WhenValidCommand()
     {
         // 1. Arrange
-        var expectedPerson = new CreatePersonRequest();
+        var personToCreate = new CreatePersonRequest();
+        personToCreate.DateOfBirth = new DateTime();
+        personToCreate.FirstName = "John";
+        personToCreate.LastName = "Doe";
+        var expectedPerson = new PersonResponse();
         expectedPerson.DateOfBirth = new DateTime();
         expectedPerson.FirstName = "John";
         expectedPerson.LastName = "Doe";
@@ -36,10 +38,9 @@ public class CreatePersonCommandHandlerTests
         // This is the structure used by listeners to monitor the token’s current state.
         CancellationToken token = cancellationTokenSource.Token;
 
-        var command = new CreatePersonCommand(expectedPerson);
-        var mapped = _mapper.Map<Task<PersonResponse>>(expectedPerson);
+        var command = new CreatePersonCommand(personToCreate);
         _mockPersonRepository.Setup(repo => repo.Create(It.IsAny<CreatePersonRequest>()))
-            .Returns(mapped);
+            .ReturnsAsync(expectedPerson);
 
         // 2. Act
         var result = await _handler.Handle(command, token);

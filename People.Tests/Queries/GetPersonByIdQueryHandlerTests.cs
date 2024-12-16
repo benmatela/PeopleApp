@@ -9,14 +9,12 @@ public class GetPersonByIdQueryHandlerTests
 {
     private readonly Mock<IPersonRepository> _mockPersonRepository;
     private readonly GetPersonByIdQueryHandler _handler;
-    private readonly IMapper _mapper;
 
 
-    public GetPersonByIdQueryHandlerTests(IMapper Mapper)
+    public GetPersonByIdQueryHandlerTests()
     {
         _mockPersonRepository = new Mock<IPersonRepository>();
         _handler = new GetPersonByIdQueryHandler(_mockPersonRepository.Object);
-        _mapper = Mapper;
     }
 
     /// <summary>
@@ -36,8 +34,6 @@ public class GetPersonByIdQueryHandlerTests
         CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         // This is the structure used by listeners to monitor the token’s current state.
         CancellationToken token = cancellationTokenSource.Token;
-
-        var mapped = _mapper.Map<CreatePersonRequest>(expectedPerson);
         _mockPersonRepository.Setup(repo => repo.Get(personId))
             .ReturnsAsync(expectedPerson);
 
