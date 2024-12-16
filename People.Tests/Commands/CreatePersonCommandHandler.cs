@@ -38,9 +38,9 @@ public class CreatePersonCommandHandlerTests
         CancellationToken token = cancellationTokenSource.Token;
 
         var command = new CreatePersonCommand(expectedPerson);
-        var mapped = _mapper.Map<IEnumerable<CreatePersonRequest>>(expectedPerson);
+        var mapped = _mapper.Map<Task<PersonResponse>>(expectedPerson);
         _mockPersonRepository.Setup(repo => repo.Create(It.IsAny<CreatePersonRequest>()))
-            .Returns((Task<PersonResponse>)mapped);
+            .Returns(mapped);
 
         // 2. Act
         var result = await _handler.Handle(command, token);
@@ -67,6 +67,7 @@ public class CreatePersonCommandHandlerTests
         CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         // This is the structure used by listeners to monitor the token’s current state.
         CancellationToken token = cancellationTokenSource.Token;
+
         var command = new CreatePersonCommand(expectedPerson); // Missing fields
 
         // 2 & 3 Act & Assert
