@@ -1,4 +1,5 @@
 using System.Reflection;
+using MediatR;
 using MediatR.NotificationPublishers;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,5 +18,7 @@ public static class DependencyInjection
                cfg.NotificationPublisher = new TaskWhenAllPublisher();
            });
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
+        // Register Logging Behavior for all requests
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
     }
 }
