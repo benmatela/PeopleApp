@@ -9,58 +9,79 @@ import {
   Button,
   Grid2,
 } from "@mui/material";
-import axios from "axios";
+import * as peopleService from "../../services/people.service";
+import {
+  IPersonResponse,
+  ISearchPersonRequest,
+} from "../../models/person.model";
+import { IResponseWrapper } from "../../models/response.model";
 
 export const SearchPerson = () => {
-  const [firstName, setFirstName] = useState(""); // First Name input state
-  const [lastName, setLastName] = useState(""); // Last Name input state
-  const [results, setResults] = useState([]); // API results
-  const [loading, setLoading] = useState(false); // Loading state
-  const [error, setError] = useState(""); // Error state
+  const [firstName, setFirstName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
+  const [results, setResults] = useState<IPersonResponse[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
 
-  // Handle changes in the First Name input
+  /**
+   * Handle changes in the firstName input
+   *
+   * @param event
+   */
   const handleFirstNameChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setFirstName(event.target.value);
   };
 
-  // Handle changes in the Last Name input
+  /**
+   * Handle changes in the lastName input
+   *
+   * @param {React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>} event
+   */
   const handleLastNameChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setLastName(event.target.value);
   };
 
-  // Fetch search results from the API based on the first and last name
-  const fetchResults = async () => {
-    // Check if both first name and last name are empty
-    if (!firstName.trim() && !lastName.trim()) {
-      setResults([]);
-      return;
-    }
-
-    setLoading(true);
+  /**
+   * Fetch search results from the API based on the first and last name
+   */
+  const searchPerson = async () => {
+    setIsLoading(true);
     setError("");
-
     try {
-      // Example API URL (replace with your API)
-      const response = await axios.get(
-        `https://api.example.com/search?firstName=${firstName}&lastName=${lastName}`
-      );
-      setResults(response.data); // Set the results from the API
+      /**
+       * Check if both first name and last name are empty
+       */
+      if (!firstName.trim() && !lastName.trim()) {
+        setResults([]);
+        return;
+      }
+
+      const searchRequest: ISearchPersonRequest = { firstName, lastName };
+      const apiResponse: IResponseWrapper<IPersonResponse[]> =
+        await peopleService.searchPersonByFirstAndLastName(searchRequest);
+
+      // Show an error if request not successful
+      if (!apiResponse.success) {
+        throw new Error(apiResponse.message);
+      }
+
+      setResults(apiResponse.data);
+      setIsLoading(false);
     } catch (err) {
       setError("Error fetching data");
+      setIsLoading(false);
       console.error(err);
-    } finally {
-      setLoading(false);
     }
   };
 
   // Trigger search when either input changes
   useEffect(() => {
     const debounceTimeout = setTimeout(() => {
-      fetchResults();
+      searchPerson();
     }, 500); // Debounce API call by 500ms
 
     return () => clearTimeout(debounceTimeout); // Cleanup on component unmount or input change
@@ -106,9 +127,9 @@ export const SearchPerson = () => {
           <Button
             variant="contained"
             fullWidth
-            onClick={fetchResults}
+            onClick={searchPerson}
             sx={{ mt: 2 }}
-            disabled={loading}
+            disabled={isLoading}
           >
             Search
           </Button>
@@ -116,7 +137,7 @@ export const SearchPerson = () => {
       </Grid2>
 
       {/* Loading spinner */}
-      {loading && (
+      {isLoading && (
         <Box sx={{ display: "flex", justifyContent: "center", my: 2 }}>
           <CircularProgress />
         </Box>
