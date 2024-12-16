@@ -17,3 +17,12 @@ export interface IPerson {
 export interface IPersonResponse extends IPerson {
  
 }
+
+/**
+ * DTO used to transfer person search query
+ */
+export interface ISearchPersonRequest
+{
+    firstName: string;
+    lastName: string;
+}

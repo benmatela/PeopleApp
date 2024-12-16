@@ -1,7 +1,11 @@
 import axios, { HttpStatusCode } from "axios";
 import { IResponseWrapper } from "../models/response.model";
 import { people } from "../constants";
-import { IPerson, IPersonResponse } from "../models/person.model";
+import {
+  IPerson,
+  IPersonResponse,
+  ISearchPersonRequest,
+} from "../models/person.model";
 import configUtils from "../utils/config.utils";
 
 /**
@@ -133,6 +137,39 @@ export const remove = async (
 
     // Build our response
     const responseWrapper = {} as IResponseWrapper<null>;
+    responseWrapper.data = apiResponse.data.data;
+    responseWrapper.statusCode = HttpStatusCode.Ok;
+    responseWrapper.message = "";
+    responseWrapper.success = true;
+
+    return responseWrapper;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+};
+
+/**
+ * Searches person by first and last name
+ *
+ * @returns {IResponseWrapper<IPersonResponse[]>} response
+ *
+ * @throws {Error} error
+ */
+export const searchPersonByFirstAndLastName = async (
+  searchPersonRequest: ISearchPersonRequest
+): Promise<IResponseWrapper<IPersonResponse[]>> => {
+  try {
+    const headersConfig = {
+      headers: {},
+    };
+
+    const apiResponse = await axios.get(
+      `${configUtils.server.peopleApiBaseUrl}/${people}/Search?firstName=${searchPersonRequest.firstName}&lastName=${searchPersonRequest.firstName}`,
+      headersConfig
+    );
+
+    // Build our response
+    const responseWrapper = {} as IResponseWrapper<IPersonResponse[]>;
     responseWrapper.data = apiResponse.data.data;
     responseWrapper.statusCode = HttpStatusCode.Ok;
     responseWrapper.message = "";
