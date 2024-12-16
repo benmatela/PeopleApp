@@ -16,6 +16,11 @@ import {
 } from "../../models/person.model";
 import { IResponseWrapper } from "../../models/response.model";
 
+/**
+ * Search person by firstName and lastName
+ *
+ * @returns {JSX.Element} component
+ */
 export const SearchPerson = () => {
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
@@ -153,11 +158,10 @@ export const SearchPerson = () => {
       {/* Results List */}
       <List>
         {results.length > 0 ? (
-          results.map((item: any, index) => (
+          results.map((item: ISearchPersonRequest, index) => (
             <ListItem key={index}>
               <ListItemText
                 primary={`${item.firstName} ${item.lastName}`}
-                secondary={item.email} // Example additional field
               />
             </ListItem>
           ))
