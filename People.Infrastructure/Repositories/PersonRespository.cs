@@ -73,6 +73,7 @@ public class PersonRepository(ApplicationDbContext DbContext, IMapper Mapper) : 
         // Apply filters based on the input parameters
         if (!string.IsNullOrEmpty(request.FirstName))
         {
+            // We declare the empty query for our person entity
             var searchQuery = _dbContext.People.Where(p => p.FirstName.Contains(request.FirstName));
             // Execute the query asynchronously
             var people = await searchQuery.ToListAsync(cancellationToken);
@@ -82,7 +83,6 @@ public class PersonRepository(ApplicationDbContext DbContext, IMapper Mapper) : 
         if (!string.IsNullOrEmpty(request.LastName))
         {
             // We declare the empty query for our person entity
-
             var searchQuery = _dbContext.People.Where(p => p.LastName.Contains(request.LastName));
             // Execute the query asynchronously
             var people = await searchQuery.ToListAsync(cancellationToken);
