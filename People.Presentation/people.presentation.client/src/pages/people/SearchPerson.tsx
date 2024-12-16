@@ -76,10 +76,9 @@ export const SearchPerson = () => {
 
       setResults(apiResponse.data);
       setIsLoading(false);
-    } catch (err) {
-      setError("Error fetching data");
+    } catch (error: any) {
+      setError(error.message);
       setIsLoading(false);
-      console.error(err);
     }
   };
 

@@ -128,8 +128,6 @@ export const People = () => {
       const apiResponse: IResponseWrapper<IPersonResponse[]> =
         await peopleService.getAll();
 
-      console.log("apiResponse: ", apiResponse);
-
       // Throw error when there's an API error
       if (!apiResponse.success) {
         throw new Error(apiResponse.message);
