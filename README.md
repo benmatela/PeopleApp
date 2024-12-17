@@ -9,6 +9,21 @@ The architecture is organized into multiple layers to achieve separation of conc
 
 * People.Application – The application layer, containing business logic and CQRS commands/queries.
 * People.Domain – The domain layer, containing domain entities, value objects, aggregates, and domain logic.
+
+Example SQL Table desing for our Person entity:
+
+SQL Table Design:
+
+```sql
+CREATE TABLE [People] (
+    Id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,  -- Set as primary key for uniqueness
+    FirstName VARCHAR(255) NOT NULL,             -- Make sure FirstName is not NULL
+    LastName VARCHAR(255) NOT NULL,              -- Make sure LastName is not NULL
+    DateOfBirth DATETIME NOT NULL,               -- Make sure DateOfBirth is not NULL
+    DateCreated DATETIME DEFAULT GETDATE() NOT NULL  -- Automatically set current date/time on record creation
+);
+```
+
 * People.Infrastructure – The infrastructure layer, providing implementations for data access, external services, and other technical concerns.
 * People.Tests – Unit and integration tests for the application.
 * People.Presentation – The presentation layer, containing client-side and server-side components.
@@ -152,3 +167,45 @@ public class GetPersonByIdQueryHandler(IPersonRepository personRepository)
 
 ### People.Presentation.Server
 * The server-side project, which hosts the web API or backend for handling HTTP requests, performing actions via commands, and returning data via queries.
+
+## Installation
+
+> Prerequisites
+
+* .NET 8 for the backend
+* NodeJs for the React frontend
+* Docker for containerization
+
+## Setting Up:
+
+1. Clone the repository:
+```bash
+git clone https://github.com/benmatela/PeopleApp.git
+cd PeopleApp
+```
+
+2. Restore dependencies:
+```bash
+dotnet restore
+```
+
+3. dotnet build
+```bash
+dotnet build
+```
+
+4. Run App
+```bash
+dotnet run --project dotnet run --project People.Presentation/People.Presentation.Server
+```
+Or simply go to this folder `People.Presentation/People.Presentation.Server`
+Then:
+```bash
+dotnet run
+```
+
+5. Run tests
+```bash
+dotnet test
+```
+
