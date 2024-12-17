@@ -200,7 +200,7 @@ export const SearchPerson = ({
             results.map((person: IPersonResponse) => (
               <ListItem key={person.id}>
                 <ListItemText
-                  primary={`${person.firstName} ${person.lastName} - ${person.age}`}
+                  primary={`${person.firstName} ${person.lastName} - Age ${person.age}`}
                 />
               </ListItem>
             ))
