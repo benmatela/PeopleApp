@@ -173,12 +173,22 @@ export const People = () => {
       </AppBar>
       {isCreateMode ? (
         // Create new Person
-        <CreatePerson setCurrentPerson={setCurrentPerson} />
+        <CreatePerson
+          setCurrentPerson={setCurrentPerson}
+          setOpenSnackbar={setOpenSnackbar}
+          setErrorMessage={setErrorMessage}
+          setSuccessMessage={setSuccessMessage}
+          setIsCreateMode={setIsCreateMode}
+        />
       ) : (
         // Update a person
         <UpdatePerson
           currentPerson={currentPerson}
           setCurrentPerson={setCurrentPerson}
+          setIsCreateMode={setIsCreateMode}
+          setOpenSnackbar={setOpenSnackbar}
+          setErrorMessage={setErrorMessage}
+          setSuccessMessage={setSuccessMessage}
         />
       )}
       {/* Notifications */}

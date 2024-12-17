@@ -5,12 +5,16 @@ import * as peopleService from "../../services/people.service";
 import { IResponseWrapper } from "../../models/response.model";
 import { IPerson, IPersonResponse } from "../../models/person.model";
 import { ReusableForm } from "../../components/forms/reusable-form/ReusableForm";
-import { Grid2, Snackbar, SnackbarCloseReason } from "@mui/material";
 import { convertDateToYYYMMDD } from "../../utils/date.util";
+import { Grid2 } from "@mui/material";
 
 interface UpdatePersonProps {
   currentPerson: IPerson | undefined;
   setCurrentPerson: Dispatch<React.SetStateAction<IPerson | undefined>>;
+  setIsCreateMode: Dispatch<React.SetStateAction<boolean>>;
+  setOpenSnackbar: Dispatch<React.SetStateAction<boolean>>;
+  setErrorMessage: Dispatch<React.SetStateAction<string>>;
+  setSuccessMessage: Dispatch<React.SetStateAction<string>>;
 }
 
 /**
@@ -23,15 +27,11 @@ interface UpdatePersonProps {
 export const UpdatePerson = ({
   currentPerson,
   setCurrentPerson,
+  setIsCreateMode,
+  setOpenSnackbar,
+  setErrorMessage,
+  setSuccessMessage,
 }: UpdatePersonProps) => {
-  /**
-   * Holds error messages from performing certain actions such as API calls
-   */
-  const [errorMessage, setErrorMessage] = useState<string>("");
-  /**
-   * Holds success messages from performing certain actions such as API calls
-   */
-  const [successMessage, setSuccessMessage] = useState<string>("");
   /**
    * Is there any loading action going on?
    */
@@ -40,10 +40,6 @@ export const UpdatePerson = ({
    * Is there any update in action?
    */
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
-  /**
-   * Show/hide snackbar
-   */
-  const [openSnackbar, setOpenSnackbar] = useState(false);
   /**
    * Form fields to build the update person form
    *
@@ -164,29 +160,13 @@ export const UpdatePerson = ({
       setErrorMessage("");
       setIsUpdating(false);
       setOpenSnackbar(true);
+      setIsCreateMode(true);
     } catch (error: any) {
       setIsUpdating(false);
 
       // Throw error back to the calling function
       throw new Error(error.message);
     }
-  };
-
-  /**
-   * Handles the snackbar
-   *
-   * @param {React.SyntheticEvent | Event} event
-   * @param {string} reason
-   * @returns {any} response
-   */
-  const handleCloseSnackbar = (
-    event: React.SyntheticEvent | Event,
-    reason?: SnackbarCloseReason
-  ) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpenSnackbar(false);
   };
 
   return (
@@ -202,14 +182,6 @@ export const UpdatePerson = ({
           isLoading={isUpdating}
         />
       ) : null}
-      {/* Notifications */}
-      <Snackbar
-        open={openSnackbar}
-        autoHideDuration={5000}
-        onClose={handleCloseSnackbar}
-        message={successMessage || errorMessage}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-      />
     </Grid2>
   );
 };
