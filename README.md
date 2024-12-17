@@ -7,6 +7,10 @@ How to run
 How to test
 How to deploy
 
+UI
+
+explain data flow and component structure
+
 
 ```bash
 dotnet test

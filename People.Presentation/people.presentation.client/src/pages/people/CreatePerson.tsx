@@ -125,6 +125,12 @@ export const CreatePerson = ({
       setErrorMessage("");
       setIsSaving(false);
       setOpenSnackbar(true);
+
+      // Temp solution: Best way to do this is to just update the existing list of people instead of
+      // having a new search with every create operation.
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     } catch (error: any) {
       setIsSaving(false);
 

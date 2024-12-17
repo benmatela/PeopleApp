@@ -164,6 +164,12 @@ export const UpdatePerson = ({
       setIsUpdating(false);
       setOpenSnackbar(true);
       setIsCreateMode(true);
+
+      // Temp solution: Best way to do this is to just update the existing list of people instead of
+      // having a new search with every update operation.
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     } catch (error: any) {
       setIsUpdating(false);
 
