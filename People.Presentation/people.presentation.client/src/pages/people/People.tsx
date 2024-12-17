@@ -84,9 +84,6 @@ export const People = () => {
     if (reason === "clickaway") {
       return;
     }
-    console.log(event);
-    console.log(openSnackbar);
-
     setOpenSnackbar(false);
   };
 
@@ -117,6 +114,7 @@ export const People = () => {
       }
 
       setAllPeople(apiResponse.data);
+      setSuccessMessage("Done fetching people..");
 
       setIsLoading(false);
     } catch (error: any) {
@@ -169,12 +167,7 @@ export const People = () => {
       </AppBar>
       {isCreateMode ? (
         // Create new Person
-        <CreatePerson
-          currentPerson={currentPerson}
-          setCurrentPerson={setCurrentPerson}
-          setErrorMessage={setErrorMessage}
-          setSuccessMessage={setSuccessMessage}
-        />
+        <CreatePerson setCurrentPerson={setCurrentPerson} />
       ) : (
         // Update a person
         <UpdatePerson

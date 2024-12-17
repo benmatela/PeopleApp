@@ -175,7 +175,7 @@ export const ListPeople = ({
         />
       ) : (
         <>
-          <Typography variant="h5" sx={{mb: 3, fontWeight: "bold"}}>Total People: ({allPeople.length})</Typography>
+          <Typography variant="h5" sx={{mb: 3}}>Total People: ({allPeople.length})</Typography>
           {allPeople.length > 0 ? (
             <>
               <ReusableTable columns={tableColumns} data={allPeople} />

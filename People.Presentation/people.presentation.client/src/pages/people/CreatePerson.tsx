@@ -9,10 +9,7 @@ import { InfoDialog } from "../../components/dialogs/info-dialog/InfoDialog";
 import { Box } from "@mui/material";
 
 interface CreatePersonProps {
-  currentPerson: IPerson | undefined;
   setCurrentPerson: Dispatch<React.SetStateAction<IPerson | undefined>>;
-  setErrorMessage: Dispatch<React.SetStateAction<string>>;
-  setSuccessMessage: Dispatch<React.SetStateAction<string>>;
 }
 
 /**
@@ -22,12 +19,15 @@ interface CreatePersonProps {
  *
  * @returns {JSX.Element} component
  */
-export const CreatePerson = ({
-  currentPerson,
-  setCurrentPerson,
-  setErrorMessage,
-  setSuccessMessage,
-}: CreatePersonProps) => {
+export const CreatePerson = ({ setCurrentPerson }: CreatePersonProps) => {
+  /**
+   * Holds error messages from performing certain actions such as API calls
+   */
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  /**
+   * Holds success messages from performing certain actions such as API calls
+   */
+  const [successMessage, setSuccessMessage] = useState<string>("");
   /**
    * Is there any saving action going on?
    */
@@ -123,9 +123,12 @@ export const CreatePerson = ({
       setCurrentPerson(apiResponse.data);
 
       // Update states when API call is successful
-      setSuccessMessage("Person created successfully.");
+      setSuccessMessage(
+        `${person.firstName} ${person.lastName} created successfully`
+      );
       setErrorMessage("");
       setIsSaving(false);
+      setInfoDialogOpen(true);
     } catch (error: any) {
       setIsSaving(false);
 
@@ -145,8 +148,8 @@ export const CreatePerson = ({
       />
       <InfoDialog
         okButtonLabel="Ok"
-        title="Success"
-        description={`${currentPerson?.firstName} ${currentPerson?.lastName} created successfully`}
+        title="Create New Person"
+        description={successMessage || errorMessage}
         isModalOpen={isInfoDialogOpen}
         setIsModalOpen={setInfoDialogOpen}
       />
