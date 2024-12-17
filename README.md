@@ -209,3 +209,16 @@ dotnet run
 dotnet test
 ```
 
+5. Running the containerized 
+```bash
+dotnet test
+```
+
+## Future Improvements: 
+* Add unit tests for the rest of the Commands, Qeuries and also othe application layers.
+* Implement asynchronous messaging (e.g., with MediatR, RabbitMQ, etc.) for decoupling commands and queries.
+* Add caching mechanisms for query optimization.
+* Implement authentication and authorization.
+* Expand domain logic to handle more complex use cases.
+* More tests for the React client side
+* Update the client side `SearchPerson` component to be reusable.
