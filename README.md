@@ -3,25 +3,20 @@
 
 This repository demonstrates how to implement Clean Architecture with CQRS (Command Query Responsibility Segregation) in a People Management system.
 
+This app is using C# for the backend and TypeScript with React for the frontend which is a common and powerful combination in modern web development.
+
+C# is a robust, mature, and feature-rich programming language, and when combined with ASP.NET Core, it becomes an excellent choice for backend development.
+
+React is one of the most popular libraries for building user interfaces, and when combined with TypeScript, it provides a strong foundation for building scalable and maintainable frontend applications.
+
+Using C# for the backend and TypeScript with React for the frontend offers a combination of performance, scalability, strong typing, and developer productivity. This stack is well-suited for building modern, scalable, and maintainable web applications, with a clear separation between the frontend and backend layers, which is ideal for complex projects, enterprise applications, and teams working on large codebases.
+
 The architecture is organized into multiple layers to achieve separation of concerns, maintainability, and scalability. The solution consists of the following projects:
 
 ## How its broken down:
 
 * People.Application – The application layer, containing business logic and CQRS commands/queries.
 * People.Domain – The domain layer, containing domain entities, value objects, aggregates, and domain logic.
-
-This app currently uses `In Memory Database` but an example SQL Table design for our `Person` entity would look like:
-
-```sql
-CREATE TABLE [People] (
-    Id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,  -- Set as primary key for uniqueness
-    FirstName VARCHAR(255) NOT NULL,             -- Make sure FirstName is not NULL
-    LastName VARCHAR(255) NOT NULL,              -- Make sure LastName is not NULL
-    DateOfBirth DATETIME NOT NULL,               -- Make sure DateOfBirth is not NULL
-    DateCreated DATETIME DEFAULT GETDATE() NOT NULL  -- Automatically set current date/time on record creation
-);
-```
-
 * People.Infrastructure – The infrastructure layer, providing implementations for data access, external services, and other technical concerns.
 * People.Tests – Unit and integration tests for the application.
 * People.Presentation – The presentation layer, containing client-side and server-side components.
@@ -146,6 +141,18 @@ public class GetPersonByIdQueryHandler(IPersonRepository personRepository)
 ### People.Domain
 * Entities: Core business objects representing data in the system (e.g., Person).
 * Common: Core business objects representing data in the system (e.g., Person)
+
+This app currently uses `In Memory Database` but an example SQL Table design for our `Person` entity would look like:
+
+```sql
+CREATE TABLE [People] (
+    Id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,  -- Set as primary key for uniqueness
+    FirstName VARCHAR(255) NOT NULL,             -- Make sure FirstName is not NULL
+    LastName VARCHAR(255) NOT NULL,              -- Make sure LastName is not NULL
+    DateOfBirth DATETIME NOT NULL,               -- Make sure DateOfBirth is not NULL
+    DateCreated DATETIME DEFAULT GETDATE() NOT NULL  -- Automatically set current date/time on record creation
+);
+```
 
 ### People.Infrastructure
 * Persistence: Responsible for data access, including implementations of repositories using databases or other storage systems.
