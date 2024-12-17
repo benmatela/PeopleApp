@@ -85,6 +85,14 @@ export const UpdatePerson = ({
       defaultValue: String(currentPerson?.age), // Default age is the current user's age using current date of birth
       disabled: true,
     },
+    {
+      name: "age",
+      label: "Age:",
+      type: "text",
+      placeholder: "Age",
+      defaultValue: "0", // Default age is 0 before date is selected on the form
+      disabled: true,
+    },
   ]);
 
   /**
@@ -105,7 +113,7 @@ export const UpdatePerson = ({
       updatedFormFields[2].defaultValue = convertDateToYYYMMDD(
         currentPerson.dateOfBirth.toString()
       );
-
+      updatedFormFields[3].defaultValue = currentPerson.age;
       // Update state with default values
       setFormFields(updatedFormFields);
 
