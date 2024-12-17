@@ -257,6 +257,10 @@ docker-compose up -d
 
 Use `docker-compose down` to shut `down` the container.
 
+Backend: http://0.0.0.0:5000
+
+Client: http://0.0.0.0:3000
+
 ## Future Improvements: 
 * Add unit tests for the rest of the Commands, Qeuries and also othe application layers.
 * Implement asynchronous messaging (e.g., with MediatR, RabbitMQ, etc.) for decoupling commands and queries.

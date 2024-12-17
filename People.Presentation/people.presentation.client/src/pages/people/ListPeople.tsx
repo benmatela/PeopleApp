@@ -10,9 +10,9 @@ import Edit from "@mui/icons-material/Edit";
 import Delete from "@mui/icons-material/Delete";
 import { ConfirmationDialog } from "../../components/dialogs/confirmation-dialog/ConfirmationDialog";
 import "./People.css";
-import { BannerWithHeaderText } from "../../components/messaging/banner-with-header-text/BannerWithHeaderText";
 import { ReusableSpinner } from "../../components/loaders/ReusableSpinner";
 import { Typography } from "@mui/material";
+import { BannerWithHeaderText } from "../../components/messaging/banner-with-header-text/BannerWithHeaderText";
 
 interface ListPeopleProps {
   errorMessage: string;
@@ -176,7 +176,7 @@ export const ListPeople = ({
       ) : (
         <>
           <Typography variant="h6" sx={{ mb: 3, mt: 3 }}>
-            Total People: ({allPeople?.length})
+            Total People: ({allPeople.length || 0})
           </Typography>
           {allPeople.length > 0 ? (
             <>

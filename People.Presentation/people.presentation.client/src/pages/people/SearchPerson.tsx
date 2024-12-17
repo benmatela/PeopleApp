@@ -214,10 +214,10 @@ export const SearchPerson = ({
         }}
       >
         <Typography variant="h5">
-          Search Results ({results.length}):{" "}
+          Search Results ({results?.length})
         </Typography>
         <List>
-          {results.length > 0
+          {results?.length > 0
             ? results.map((person: IPersonResponse) => (
                 <ListItem key={person.id}>
                   <ListItemText
