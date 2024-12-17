@@ -163,7 +163,6 @@ export const SearchPerson = ({
                 backgroundColor: "white",
                 borderRadius: 1,
                 width: "200px",
-                display: { xs: "none", sm: "block" }, // Hide on mobile
               }}
               fullWidth
               value={lastName}

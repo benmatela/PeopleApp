@@ -276,4 +276,5 @@ Client: http://0.0.0.0:3000
 * Expand domain logic to handle more complex use cases.
 * Make local dev environment for Docker
 * More tests for the React client side
+* Make client side mobile friendlhy
 * Update the client side `SearchPerson` component to be reusable.
