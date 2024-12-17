@@ -1,59 +1,42 @@
-# PeopleApp
-# PeopleApp
+# Clean Architecture with CQRS for People Management System
+### Author: Ben Matela
 
-API
+This repository demonstrates how to implement Clean Architecture with CQRS (Command Query Responsibility Segregation) in a People Management system.
 
-fix age
-relook at the DTOs and Entities
-update error should be not found when not found
-How to run
-How to test
-How to deploy
+The architecture is organized into multiple layers to achieve separation of concerns, maintainability, and scalability. The solution consists of the following projects:
 
-UI
-Home page
-explain data flow and component structure
-fix age
+## Architectural Overview:
 
-```bash
-dotnet test
+* People.Application – The application layer, containing business logic and CQRS commands/queries.
+* People.Domain – The domain layer, containing domain entities, value objects, aggregates, and domain logic.
+* People.Infrastructure – The infrastructure layer, providing implementations for data access, external services, and other technical concerns.
+* People.Tests – Unit and integration tests for the application.
+* People.Presentation – The presentation layer, containing client-side and server-side components.
+  - people.presentation.client – The client-side user interface (React).
+  - People.Presentation.Server – The server-side web API or backend for handling requests(.Net Core API).
+
+## Folder Structure:
+
 ```
-
-SQL Table Design:
-
-```bash
-CREATE TABLE [People] (
-    Id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,  -- Set as primary key for uniqueness
-    FirstName VARCHAR(255) NOT NULL,             -- Make sure FirstName is not NULL
-    LastName VARCHAR(255) NOT NULL,              -- Make sure LastName is not NULL
-    DateOfBirth DATETIME NOT NULL,               -- Make sure DateOfBirth is not NULL
-    DateCreated DATETIME DEFAULT GETDATE() NOT NULL  -- Automatically set current date/time on record creation
-);
-```
-PeopleApp/
-│
-├── People.Presentation/        # React frontend (UI)
-│   ├── /controllers            # API Controllers (Web)
-│   └── /views                  # UI Components (React)
-|
-├── People.Domain/              # Domain logic, entities, and models
-│   ├── Entities/               # Domain models (e.g., Person)
-│   └── Interfaces/             # Interfaces for repository contracts
-│
-├── People.Application/         # Application services and use cases
-│   ├── Services/               # Business logic and use case handlers
-│   ├── Dtos/                   # Data Transfer Objects (DTOs)
-│   └── Interfaces/             # Interfaces for communication with Infrastructure layer
-│
-└── People.Infrastructure/      # Data access, external services, and persistence
-    ├── Repositories/           # Repositories to handle database queries
-    ├── DataContext/            # Database context for Entity Framework Core
-    ├── Migrations/             # Database migrations for EF Core
-    ├── Api/                    # API controllers for the backend
-    └── appsettings.json        # Configuration files for backend services
-
-
-├── People.Tests/               # Tests
-│   ├── Commands/               # Business logic and use case handlers
-│   └── Queries/                # Interfaces for communication with Infrastructure layer
-
+People/
+├── People.Application/
+│   ├── Commands/
+│   ├── Queries/
+│   ├── Helpers/
+│   ├── Mapper/
+│   ├── Interfaces/
+│   └── DTOs/
+├── People.Domain/
+│   ├── Entities/
+│   ├── Common/
+│   └── Interfaces/
+├── People.Infrastructure/
+│   ├── Persistence/
+│   └── Repositories/
+├── People.Tests/
+│   ├── Application/
+│   ├── Domain/
+│   └── Infrastructure/
+├── People.Presentation/
+│   ├── Client/
+│   └── Server/
