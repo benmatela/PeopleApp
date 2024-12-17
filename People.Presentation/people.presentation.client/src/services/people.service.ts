@@ -164,7 +164,7 @@ export const searchPersonByFirstAndLastName = async (
     };
 
     const apiResponse = await axios.get(
-      `${configUtils.server.peopleApiBaseUrl}/${people}/Search?firstName=${searchPersonRequest.firstName}&lastName=${searchPersonRequest.firstName}`,
+      `${configUtils.server.peopleApiBaseUrl}/${people}/Search?firstName=${searchPersonRequest.firstName}&lastName=${searchPersonRequest.lastName}`,
       headersConfig
     );
 

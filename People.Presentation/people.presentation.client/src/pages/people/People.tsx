@@ -18,6 +18,7 @@ import {
   Typography,
 } from "@mui/material";
 import { PeopleOutlined, Search } from "@mui/icons-material";
+import { SearchPerson } from "./SearchPerson";
 
 /**
  * People base component
@@ -171,6 +172,7 @@ export const People = () => {
           </Box>
         </Toolbar>
       </AppBar>
+      <SearchPerson />
       {isCreateMode ? (
         // Create new Person
         <CreatePerson

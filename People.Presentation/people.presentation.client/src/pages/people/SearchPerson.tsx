@@ -66,9 +66,13 @@ export const SearchPerson = () => {
         return;
       }
 
-      const searchRequest: ISearchPersonRequest = { firstName, lastName };
+      // Similar model to what we have on the API for searching
+      const searchQuery: ISearchPersonRequest = { 
+        firstName: firstName, 
+        lastName: lastName
+      };
       const apiResponse: IResponseWrapper<IPersonResponse[]> =
-        await peopleService.searchPersonByFirstAndLastName(searchRequest);
+        await peopleService.searchPersonByFirstAndLastName(searchQuery);
 
       // Show an error if request not successful
       if (!apiResponse.success) {
@@ -98,9 +102,7 @@ export const SearchPerson = () => {
         marginBottom: 3,
       }}
     >
-      {/* Search Fields Layout */}
       <Grid2 container spacing={2} alignItems="center">
-        {/* First Name Field */}
         <Grid2>
           <TextField
             label="First Name"
@@ -111,7 +113,6 @@ export const SearchPerson = () => {
           />
         </Grid2>
 
-        {/* Last Name Field */}
         <Grid2>
           <TextField
             label="Last Name"
@@ -122,7 +123,6 @@ export const SearchPerson = () => {
           />
         </Grid2>
 
-        {/* Search Button */}
         <Grid2>
           <Button
             variant="contained"
@@ -154,7 +154,7 @@ export const SearchPerson = () => {
         {results.length > 0 ? (
           results.map((item: IPersonResponse) => (
             <ListItem key={item.id}>
-              <ListItemText primary={`${item.firstName} ${item.lastName}`} />
+              <ListItemText primary={`Yay! ${item.firstName} ${item.lastName} was found`} />
             </ListItem>
           ))
         ) : (
