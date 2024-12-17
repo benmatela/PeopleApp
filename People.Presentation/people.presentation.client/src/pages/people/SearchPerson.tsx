@@ -79,6 +79,7 @@ export const SearchPerson = ({
       // Check if both first name and last name are empty
       if (!firstName.trim() && !lastName.trim()) {
         setResults([]);
+        setIsLoading(false);
         return;
       }
 
@@ -146,7 +147,6 @@ export const SearchPerson = ({
                 backgroundColor: "white",
                 borderRadius: 1,
                 width: "200px",
-                display: { xs: "none", sm: "block" }, // Hide on mobile
               }}
               fullWidth
               value={firstName}
