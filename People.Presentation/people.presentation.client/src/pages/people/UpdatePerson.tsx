@@ -78,19 +78,22 @@ export const UpdatePerson = ({
       },
     },
     {
-      name: "age",
-      label: "Age:",
-      type: "text",
-      placeholder: "Age",
-      defaultValue: String(currentPerson?.age), // Default age is the current user's age using current date of birth
-      disabled: true,
+      name: "dateOfBirth",
+      label: "Date Of Birth:",
+      type: "date",
+      placeholder: "Date Of Birth",
+      defaultValue: "",
+      disabled: false,
+      validation: {
+        required: "Date Of Birth is required",
+      },
     },
     {
       name: "age",
       label: "Age:",
       type: "text",
       placeholder: "Age",
-      defaultValue: "0", // Default age is 0 before date is selected on the form
+      defaultValue: "0",
       disabled: true,
     },
   ]);

@@ -10,6 +10,8 @@ import {
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { IFormField } from "../../../models/form.model";
 import { ReusableSpinner } from "../../loaders/ReusableSpinner";
+import { getAge } from "../../../utils/date.util";
+import { useEffect } from "react";
 
 interface ReusableFormProps {
   submitBtnText: string;
@@ -31,6 +33,11 @@ interface ReusableFormProps {
   onSubmit: SubmitHandler<FieldValues>;
 }
 
+/**
+ * This is the cleaner way of adding styling
+ *
+ * @returns {any} styles
+ */
 const useStyles: any = () => ({
   root: {
     "& .MuiTextField-root": {
@@ -59,13 +66,30 @@ export const ReusableForm: React.FC<ReusableFormProps> = ({
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
+    watch,
   } = useForm<FieldValues>();
   const classes: any = useStyles; // Cleaner way to handle styles
+  const dateOfBirth: string = watch("dateOfBirth", ""); // Watch date of birth
+
+  /**
+   * Watch the date of birth input value change and set age
+   */
+  useEffect(() => {
+    // Only change to new date if the watch field has a value
+    if (dateOfBirth.length > 0) {
+      setValue("age", getAge(new Date(dateOfBirth)));
+    } else {
+      setValue("age", fields[3].defaultValue);
+    }
+  });
 
   return (
-    <Card sx={{
-      backgroundColor: "#fffbeb",
-    }}>
+    <Card
+      sx={{
+        backgroundColor: "#fffbeb",
+      }}
+    >
       <Grid2
         sx={{
           display: "flex",
