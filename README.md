@@ -184,6 +184,8 @@ CREATE TABLE [People] (
 * NodeJs for the React frontend
 * Docker and Docker Compose for containerization
 
+For the rest of the packages used in the app, in the client side you can look at `package.json` and for the API application(layers) look at the `csproj` in each layer eg `People.Infrastructure/People.Infrastructure.csproj`.
+
 ## Setting Up:
 
 1. Clone the repository:
@@ -197,7 +199,7 @@ cd PeopleApp
 dotnet restore
 ```
 
-3. dotnet build
+3. Build project
 ```bash
 dotnet build
 ```
@@ -220,18 +222,13 @@ Client: http://localhost:3000/
 dotnet test
 ```
 
-6. Running the containerized 
-```bash
-dotnet test
-```
-
 ## Deployments
 
-This app is already containerize so a few things need to be updated:
+This app is already containerized so a few things need to be updated:
 
 > Connection String
 
-In the example `docker-compose.yml`, we’ve configured the connection string for the API to connect to `In Memory Database` so we do not need the connection string.
+In the `docker-compose.yml`, we don't need the connection string for the API to connect to `In Memory Database` so we do cater for it.
 
 Example connection string when using SQL Server:
 
@@ -245,7 +242,7 @@ Example connection string when using SQL Server:
 
 > Docker Ignore Files
 
-To avoid unnecessary files being included in the Docker image, create .dockerignore files for each project to exclude unnecessary build and source files.
+To avoid unnecessary files being included in the Docker image, create `.dockerignore` files for each project to exclude unnecessary build and source files.
 
 > Build and Run the Docker Containers:
 
@@ -272,8 +269,8 @@ Backend: http://0.0.0.0:5000
 Client: http://0.0.0.0:3000
 
 ## Future Improvements: 
-* Add unit tests for the rest of the Commands, Qeuries and also othe application layers.
-* Implement asynchronous messaging (e.g., with MediatR, RabbitMQ, etc.) for decoupling commands and queries.
+* Add unit tests for the rest of the Commands, Qeuries and also other application layers.
+* Implement asynchronous messaging (e.g., RabbitMQ, etc.) for decoupling commands and queries.
 * Add caching mechanisms for query optimization.
 * Implement authentication and authorization.
 * Expand domain logic to handle more complex use cases.

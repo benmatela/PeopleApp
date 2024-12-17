@@ -8,6 +8,7 @@ import { IFormField } from "../../models/form.model";
 import { Grid2 } from "@mui/material";
 
 interface CreatePersonProps {
+  isCreateMode: boolean;
   setCurrentPerson: Dispatch<React.SetStateAction<IPerson | undefined>>;
   setIsCreateMode: Dispatch<React.SetStateAction<boolean>>;
   setOpenSnackbar: Dispatch<React.SetStateAction<boolean>>;
@@ -23,10 +24,12 @@ interface CreatePersonProps {
  * @returns {JSX.Element} component
  */
 export const CreatePerson = ({
+  isCreateMode,
   setCurrentPerson,
   setOpenSnackbar,
   setErrorMessage,
   setSuccessMessage,
+  setIsCreateMode,
 }: CreatePersonProps) => {
   /**
    * Is there any saving action going on?
@@ -151,13 +154,15 @@ export const CreatePerson = ({
   };
 
   return (
-    <Grid2 sx={{mt: 2}}>
+    <Grid2 sx={{ mt: 2 }}>
       <ReusableForm
         submitBtnText={"Add New Person"}
         formLabel="Add New Person"
         fields={formFields}
-        onSubmit={onSubmit}
         isLoading={isSaving}
+        isCreateMode={isCreateMode}
+        setIsCreateMode={setIsCreateMode}
+        onSubmit={onSubmit}
       />
     </Grid2>
   );

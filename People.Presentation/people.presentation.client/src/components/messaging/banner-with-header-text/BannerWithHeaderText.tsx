@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import EmptyPersonImg from "../../../assets/empty_people.svg";
 import { Typography } from "@mui/material";
 
-interface NotFoundBannerProps {
+interface BannerWithHeaderTextProps {
   text: string;
   imageAlt: string;
   bannerImageHeight: number;
@@ -26,7 +26,7 @@ export const BannerWithHeaderText = ({
   bannerImageWidth,
   mdScreenMaxHeight,
   mdScreenMaxWidth,
-}: NotFoundBannerProps) => {
+}: BannerWithHeaderTextProps) => {
   return (
     <Grid2
       container

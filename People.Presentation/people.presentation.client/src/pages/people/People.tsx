@@ -147,6 +147,7 @@ export const People = () => {
       {isCreateMode ? (
         // Create new Person
         <CreatePerson
+          isCreateMode={isCreateMode}
           setCurrentPerson={setCurrentPerson}
           setOpenSnackbar={setOpenSnackbar}
           setErrorMessage={setErrorMessage}
@@ -157,6 +158,7 @@ export const People = () => {
         // Update a person
         <UpdatePerson
           currentPerson={currentPerson}
+          isCreateMode={isCreateMode}
           setCurrentPerson={setCurrentPerson}
           setIsCreateMode={setIsCreateMode}
           setOpenSnackbar={setOpenSnackbar}

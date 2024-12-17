@@ -10,6 +10,7 @@ import { Grid2 } from "@mui/material";
 
 interface UpdatePersonProps {
   currentPerson: IPerson | undefined;
+  isCreateMode: boolean;
   setCurrentPerson: Dispatch<React.SetStateAction<IPerson | undefined>>;
   setIsCreateMode: Dispatch<React.SetStateAction<boolean>>;
   setOpenSnackbar: Dispatch<React.SetStateAction<boolean>>;
@@ -25,6 +26,7 @@ interface UpdatePersonProps {
  * @returns {JSX.Element} component
  */
 export const UpdatePerson = ({
+  isCreateMode,
   currentPerson,
   setCurrentPerson,
   setIsCreateMode,
@@ -190,7 +192,7 @@ export const UpdatePerson = ({
   };
 
   return (
-    <Grid2 sx={{mt: 2}}>
+    <Grid2 sx={{ mt: 2 }}>
       {/* Because "defaultValue" can only be set once when the form is being
       initialized, we wait for "formFields" to be auto populated then render the update form */}
       {!isLoading ? (
@@ -198,8 +200,10 @@ export const UpdatePerson = ({
           submitBtnText="Update Person"
           formLabel="Update Person"
           fields={formFields}
-          onSubmit={onSubmit}
           isLoading={isUpdating}
+          onSubmit={onSubmit}
+          isCreateMode={isCreateMode}
+          setIsCreateMode={setIsCreateMode}
         />
       ) : null}
     </Grid2>

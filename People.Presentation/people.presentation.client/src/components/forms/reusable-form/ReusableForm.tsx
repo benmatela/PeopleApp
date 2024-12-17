@@ -11,9 +11,16 @@ import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { IFormField } from "../../../models/form.model";
 import { ReusableSpinner } from "../../loaders/ReusableSpinner";
 import { getAge } from "../../../utils/date.util";
-import { useEffect } from "react";
+import { Dispatch, useEffect } from "react";
 
 interface ReusableFormProps {
+  /**
+   * Is this a Create or Update operation
+   */
+  isCreateMode: boolean;
+  /**
+   * Submit button label
+   */
   submitBtnText: string;
   /**
    * Label to be shown on the form
@@ -31,6 +38,10 @@ interface ReusableFormProps {
    * Handles the submit button
    */
   onSubmit: SubmitHandler<FieldValues>;
+  /**
+   * Change form mode(create or update)
+   */
+  setIsCreateMode: Dispatch<React.SetStateAction<boolean>>;
 }
 
 /**
@@ -57,10 +68,12 @@ const useStyles: any = () => ({
  * @returns {React.FC<ReusableFormProps>} component
  */
 export const ReusableForm: React.FC<ReusableFormProps> = ({
+  isCreateMode,
   submitBtnText,
   isLoading,
   fields,
   onSubmit,
+  setIsCreateMode,
 }) => {
   const {
     register,
@@ -68,6 +81,7 @@ export const ReusableForm: React.FC<ReusableFormProps> = ({
     formState: { errors },
     setValue,
     watch,
+    reset,
   } = useForm<FieldValues>();
   const classes: any = useStyles; // Cleaner way to handle styles
   const dateOfBirth: string = watch("dateOfBirth", ""); // Watch date of birth
@@ -84,6 +98,23 @@ export const ReusableForm: React.FC<ReusableFormProps> = ({
     }
   });
 
+  /**
+   * When the cancel button is clicked
+   */
+  const onCancel = () => {
+    /**
+     * If in create mode we just clear the form
+     *
+     * If we are in update mode we go back to create form
+     */
+    if (isCreateMode) {
+      reset();
+    } else {
+      reset();
+      setIsCreateMode(true);
+    }
+  };
+
   return (
     <Card
       sx={{
@@ -95,7 +126,6 @@ export const ReusableForm: React.FC<ReusableFormProps> = ({
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-
           borderRadius: 2,
           padding: 3,
         }}
@@ -144,7 +174,22 @@ export const ReusableForm: React.FC<ReusableFormProps> = ({
                 </Grid2>
               ))}
               {/* Submit Button */}
-              <Grid2 container spacing={2} justifyContent="center">
+              <Grid2
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Button
+                  variant="outlined"
+                  type="button"
+                  onClick={onCancel}
+                  disabled={isLoading}
+                  sx={{ width: "190px", height: 55, mt: 3, mr: 2 }}
+                >
+                  {isCreateMode ? "Clear" : "Cancel"}
+                </Button>
                 {isLoading ? (
                   <ReusableSpinner
                     spinnerSize={50}
@@ -157,7 +202,7 @@ export const ReusableForm: React.FC<ReusableFormProps> = ({
                     variant="contained"
                     type="submit"
                     disabled={isLoading}
-                    sx={{ width: "100%", height: 55, mt: 3 }}
+                    sx={{ width: "190px", height: 55, mt: 3 }}
                   >
                     {submitBtnText}
                   </Button>
