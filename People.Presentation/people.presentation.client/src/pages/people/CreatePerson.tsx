@@ -123,7 +123,7 @@ export const CreatePerson = ({ setCurrentPerson }: CreatePersonProps) => {
 
       // Update states when API call is successful
       setSuccessMessage(
-        `${person.firstName} ${person.lastName} created successfully`
+        `${person.firstName} ${person.lastName} created successfully..`
       );
       setErrorMessage("");
       setIsSaving(false);

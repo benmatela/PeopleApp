@@ -37,10 +37,6 @@ export const People = () => {
    */
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
   /**
-   * Is there any update in action?
-   */
-  const [isUpdating, setIsUpdating] = useState<boolean>(false);
-  /**
    * Holds error messages from performing certain actions such as API calls
    */
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -183,9 +179,6 @@ export const People = () => {
         <UpdatePerson
           currentPerson={currentPerson}
           setCurrentPerson={setCurrentPerson}
-          setIsUpdating={setIsUpdating}
-          isUpdating={isUpdating}
-          setPersonUpdated={() => {}}
         />
       )}
       {/* Notifications */}

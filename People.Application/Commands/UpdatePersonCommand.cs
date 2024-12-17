@@ -20,7 +20,7 @@ public class UpdatePersonCommandHandler(IPersonRepository personRepository, ILog
     {
         try
         {
-            _logger.LogWarning($"Attempt to update a person: {request}");
+            _logger.LogWarning($"Attempt to update a person: {request.Person.FirstName} {request.Person.LastName}");
 
             var updatedPerson = await personRepository.Update(request.PersonId, request.Person);
             if (!updatedPerson)

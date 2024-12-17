@@ -5,16 +5,12 @@ import * as peopleService from "../../services/people.service";
 import { IResponseWrapper } from "../../models/response.model";
 import { IPerson, IPersonResponse } from "../../models/person.model";
 import { ReusableForm } from "../../components/forms/reusable-form/ReusableForm";
-import { Grid2 } from "@mui/material";
+import { Grid2, Snackbar, SnackbarCloseReason } from "@mui/material";
 import { convertDateToYYYMMDD } from "../../utils/date.util";
-import { InfoDialog } from "../../components/dialogs/info-dialog/InfoDialog";
 
 interface UpdatePersonProps {
   currentPerson: IPerson | undefined;
-  isUpdating: boolean;
   setCurrentPerson: Dispatch<React.SetStateAction<IPerson | undefined>>;
-  setIsUpdating: Dispatch<React.SetStateAction<boolean>>;
-  setPersonUpdated: Dispatch<React.SetStateAction<boolean>>;
 }
 
 /**
@@ -26,10 +22,7 @@ interface UpdatePersonProps {
  */
 export const UpdatePerson = ({
   currentPerson,
-  isUpdating,
   setCurrentPerson,
-  setIsUpdating,
-  setPersonUpdated,
 }: UpdatePersonProps) => {
   /**
    * Holds error messages from performing certain actions such as API calls
@@ -44,9 +37,13 @@ export const UpdatePerson = ({
    */
   const [isLoading, setIsLoading] = useState<boolean>(true);
   /**
-   * Shows/Hides the Confirmation Dialog
+   * Is there any update in action?
    */
-  const [isInfoDialogOpen, setInfoDialogOpen] = useState<boolean>(false);
+  const [isUpdating, setIsUpdating] = useState<boolean>(false);
+  /**
+   * Show/hide snackbar
+   */
+  const [openSnackbar, setOpenSnackbar] = useState(false);
   /**
    * Form fields to build the update person form
    *
@@ -157,22 +154,39 @@ export const UpdatePerson = ({
         throw new Error(apiResponse.message);
       }
 
-      console.log("response: ", apiResponse);
-
       // Update global current person with the newly added person
       setCurrentPerson(apiResponse.data);
 
       // Update states when API call is successful
-      setSuccessMessage("Person updated successfully.");
+      setSuccessMessage(
+        `${person.firstName} ${person.lastName} updated successfully..`
+      );
       setErrorMessage("");
       setIsUpdating(false);
-      setPersonUpdated(true);
+      setOpenSnackbar(true);
     } catch (error: any) {
       setIsUpdating(false);
 
       // Throw error back to the calling function
       throw new Error(error.message);
     }
+  };
+
+  /**
+   * Handles the snackbar
+   *
+   * @param {React.SyntheticEvent | Event} event
+   * @param {string} reason
+   * @returns {any} response
+   */
+  const handleCloseSnackbar = (
+    event: React.SyntheticEvent | Event,
+    reason?: SnackbarCloseReason
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenSnackbar(false);
   };
 
   return (
@@ -188,15 +202,14 @@ export const UpdatePerson = ({
           isLoading={isUpdating}
         />
       ) : null}
-      <InfoDialog
-        okButtonLabel="Ok"
-        title="Success"
-        description={`${currentPerson?.firstName} ${currentPerson?.lastName} updated successfully`}
-        isModalOpen={isInfoDialogOpen}
-        setIsModalOpen={setInfoDialogOpen}
+      {/* Notifications */}
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={5000}
+        onClose={handleCloseSnackbar}
+        message={successMessage || errorMessage}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       />
-      <p>{successMessage}</p>
-      <p>{errorMessage}</p>
     </Grid2>
   );
 };
