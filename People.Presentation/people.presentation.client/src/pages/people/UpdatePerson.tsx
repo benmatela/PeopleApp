@@ -187,7 +187,7 @@ export const UpdatePerson = ({
   };
 
   return (
-    <Grid2>
+    <Grid2 sx={{mt: 2}}>
       {/* Because "defaultValue" can only be set once when the form is being
       initialized, we wait for "formFields" to be auto populated then render the update form */}
       {!isLoading ? (
