@@ -10,7 +10,7 @@ public record CreatePersonCommand(CreatePersonRequest Person) : IRequest<PersonR
 
 /// <summary>
 /// Handles the command to create a new person.
-/// <para>Since commands are intended to modify the state, we implement scrictrer error handling</para>
+/// <para>Since commands are intended to modify the state, we implement scricter error handling</para>
 /// </summary>
 /// <param name="personRepository"></param>
 /// <param name="_logger"></param>

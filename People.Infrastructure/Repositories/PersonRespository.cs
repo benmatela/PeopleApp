@@ -8,6 +8,11 @@ using People.Infrastructure.Persistance;
 
 namespace People.Infrastructure.Repositories;
 
+/// <summary>
+/// All CRUD operations for a person
+/// </summary>
+/// <param name="DbContext"></param>
+/// <param name="Mapper"></param>
 public class PersonRepository(ApplicationDbContext DbContext, IMapper Mapper) : IPersonRepository
 {
     private readonly ApplicationDbContext _dbContext = DbContext;

@@ -6,8 +6,6 @@ namespace People.Application.DTOs;
 /// </summary>
 public class ResponseWrapper<T>
 {
-    // Allows us to use the already defined status codes instead of
-    // us writing new codes
     public int StatusCode { get; set; } = 200;
     public string Message { get; set; } = string.Empty;
     public bool Success { get; set; } = true;

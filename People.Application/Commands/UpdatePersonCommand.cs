@@ -9,7 +9,7 @@ public record UpdatePersonCommand(Guid PersonId, UpdatePersonRequest Person) : I
 
 /// <summary>
 /// Handles the command to update a single person.
-/// <para>Since commands are intended to modify the state, we implement scrictrer error handling</para>
+/// <para>Since commands are intended to modify the state, we implement scricter error handling</para>
 /// </summary>
 /// <param name="personRepository"></param>
 /// <param name="_logger"></param>
