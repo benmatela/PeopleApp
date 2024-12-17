@@ -84,7 +84,7 @@ export const CreatePerson = ({
       label: "Age:",
       type: "text",
       placeholder: "Age",
-      defaultValue: "0",
+      defaultValue: "0", // Default age is 0 before date is selected on the form
       disabled: true,
     },
   ];

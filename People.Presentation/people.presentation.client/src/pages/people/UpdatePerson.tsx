@@ -53,6 +53,7 @@ export const UpdatePerson = ({
       type: "text",
       placeholder: "First Name",
       defaultValue: "",
+      disabled: false,
       validation: {
         required: "First Name is required",
         minLength: {
@@ -67,6 +68,7 @@ export const UpdatePerson = ({
       type: "text",
       placeholder: "Last Name",
       defaultValue: "",
+      disabled: false,
       validation: {
         required: "Last Name is required",
         minLength: {
@@ -76,14 +78,12 @@ export const UpdatePerson = ({
       },
     },
     {
-      name: "dateOfBirth",
-      label: "Date Of Birth:",
-      type: "date",
-      defaultValue: "",
-      placeholder: "Date Of Birth",
-      validation: {
-        required: "Date Of Birth is required",
-      },
+      name: "age",
+      label: "Age:",
+      type: "text",
+      placeholder: "Age",
+      defaultValue: String(currentPerson?.age), // Default age is the current user's age using current date of birth
+      disabled: true,
     },
   ]);
 

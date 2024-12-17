@@ -60,7 +60,7 @@ export const ReusableForm: React.FC<ReusableFormProps> = ({
     handleSubmit,
     formState: { errors },
   } = useForm<FieldValues>();
-  const classes: any = useStyles;
+  const classes: any = useStyles; // Cleaner way to handle styles 
 
   return (
     <Card
