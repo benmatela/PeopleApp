@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using People.Application.DTOs;
 using People.Application.Interfaces;
+using People.Application.Mapper;
 using People.Domain.Entities;
 using People.Infrastructure.Persistance;
 

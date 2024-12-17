@@ -9,6 +9,7 @@ import {
   Button,
   Grid2,
   Container,
+  Typography,
 } from "@mui/material";
 import * as peopleService from "../../services/people.service";
 import {
@@ -104,77 +105,112 @@ export const SearchPerson = ({
     }
   };
 
+  /**
+   * Clears search
+   */
+  const onClearSearch = () => {
+    setResults([]);
+    setIsLoading(false);
+    setFirstName("");
+    setLastName("");
+  };
+
   return (
-    <Container
-      maxWidth="md"
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        boxShadow:
-          "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
-        backgroundColor: "#f0f9ff",
-        borderRadius: 2,
-        padding: 3,
-        marginBottom: 3,
-      }}
-    >
-      <Grid2 container spacing={2} alignItems="center">
-        <Grid2>
-          <TextField
-            label="First Name"
-            variant="outlined"
-            fullWidth
-            value={firstName}
-            onChange={handleFirstNameChange}
-          />
+    <Grid2>
+      <Container
+        maxWidth="md"
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          boxShadow:
+            "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+          backgroundColor: "#f0f9ff",
+          borderRadius: 2,
+          padding: 3,
+          marginBottom: 3,
+        }}
+      >
+        <Grid2 container spacing={2} alignItems="center">
+          <Grid2>
+            <TextField
+              label="First Name"
+              variant="outlined"
+              fullWidth
+              value={firstName}
+              onChange={handleFirstNameChange}
+            />
+          </Grid2>
+
+          <Grid2>
+            <TextField
+              label="Last Name"
+              variant="outlined"
+              fullWidth
+              value={lastName}
+              onChange={handleLastNameChange}
+            />
+          </Grid2>
+
+          <Grid2>
+            <Button
+              variant="outlined"
+              fullWidth
+              onClick={onClearSearch}
+              disabled={isLoading}
+            >
+              Clear
+            </Button>
+          </Grid2>
+
+          <Grid2>
+            <Button
+              variant="contained"
+              fullWidth
+              onClick={searchPerson}
+              disabled={isLoading}
+            >
+              Search
+            </Button>
+          </Grid2>
+
+          {/* Loading spinner */}
+          {isLoading && (
+            <Box sx={{ display: "flex", justifyContent: "center", my: 2 }}>
+              <CircularProgress />
+            </Box>
+          )}
         </Grid2>
-
-        <Grid2>
-          <TextField
-            label="Last Name"
-            variant="outlined"
-            fullWidth
-            value={lastName}
-            onChange={handleLastNameChange}
-          />
-        </Grid2>
-
-        <Grid2>
-          <Button
-            variant="contained"
-            fullWidth
-            onClick={searchPerson}
-            disabled={isLoading}
-          >
-            Search
-          </Button>
-        </Grid2>
-      </Grid2>
-
-      {/* Loading spinner */}
-      {isLoading && (
-        <Box sx={{ display: "flex", justifyContent: "center", my: 2 }}>
-          <CircularProgress />
-        </Box>
-      )}
-
+      </Container>
       {/* Results List */}
-      <List>
-        {results.length > 0 ? (
-          results.map((person: IPersonResponse) => (
-            <ListItem key={person.id}>
-              <ListItemText
-                primary={`${person.firstName} ${person.lastName} - ${person.age}`}
-              />
+      <Grid2
+        sx={{
+          display: "grid",
+          justifyContent: "center",
+          alignItems: "center",
+          boxShadow:
+            "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+          borderRadius: 2,
+          backgroundColor: "#f7fee7",
+        }}
+      >
+        <Typography variant="h5">Search Results: </Typography>
+        <List>
+          {results.length > 0 ? (
+            results.map((person: IPersonResponse) => (
+              <ListItem key={person.id}>
+                <ListItemText
+                  primary={`${person.firstName} ${person.lastName} - ${person.age}`}
+                />
+              </ListItem>
+            ))
+          ) : (
+            <ListItem>
+              <ListItemText primary="No search results found" />
             </ListItem>
-          ))
-        ) : (
-          <ListItem>
-            <ListItemText primary="No results found" />
-          </ListItem>
-        )}
-      </List>
-    </Container>
+          )}
+        </List>
+      </Grid2>
+    </Grid2>
   );
 };

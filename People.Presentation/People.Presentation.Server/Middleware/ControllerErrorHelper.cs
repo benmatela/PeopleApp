@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using People.Application.DTOs;
-using People.Presentation.Server.Models;
 
 namespace People.Presentation.Middleware;
 
