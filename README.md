@@ -141,7 +141,6 @@ public class GetPersonByIdQueryHandler(IPersonRepository personRepository)
 
 ### People.Domain
 * Entities: Core business objects representing data in the system (e.g., Person).
-* Common: Core business objects representing data in the system (e.g., Person)
 
 This app currently uses `In Memory Database` but an example SQL Table design for our `Person` entity would look like:
 
