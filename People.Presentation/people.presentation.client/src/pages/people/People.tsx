@@ -77,7 +77,7 @@ export const People = () => {
     event: React.SyntheticEvent | Event,
     reason?: SnackbarCloseReason
   ) => {
-    if (reason === "clickaway") {
+    if (reason === "clickaway" && event.isTrusted) {
       return;
     }
     setOpenSnackbar(false);

@@ -210,10 +210,52 @@ Client: http://localhost:3000/
 dotnet test
 ```
 
-5. Running the containerized 
+6. Running the containerized 
 ```bash
 dotnet test
 ```
+
+## Deployments
+
+This app is already containerize so a few things need to be updated:
+
+> Connection String
+
+In the example `docker-compose.yml`, we’ve configured the connection string for the API to connect to `In Memory Database` so we do not need the connection string.
+
+Example connection string when using SQL Server:
+
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=db;Database=PeopleDb;User=sa;Password=your_password_here"
+  }
+}
+```
+
+> Docker Ignore Files
+
+To avoid unnecessary files being included in the Docker image, create .dockerignore files for each project to exclude unnecessary build and source files.
+
+> Build and Run the Docker Containers:
+
+From the root folder:
+
+```bash
+docker-compose up -d --build
+```
+
+The command asks `Docker Compose` to run our `Dockerfile` within the project eg `Dockerfile.client`.
+
+`-d` means run in detached mode(close terminal when done).
+
+`--build` only required if docker files changed. Meaning after the first command you can run:
+
+```bash
+docker-compose up -d
+```
+
+Use `docker-compose down` to shut `down` the container.
 
 ## Future Improvements: 
 * Add unit tests for the rest of the Commands, Qeuries and also othe application layers.

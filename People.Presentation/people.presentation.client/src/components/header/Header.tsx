@@ -1,6 +1,5 @@
 import { Card, Grid2, Typography } from "@mui/material";
 import "./styles.css";
-import { SearchPerson } from "../../pages/people/SearchPerson";
 
 /**
  * Header Props
@@ -48,9 +47,6 @@ export const Header = ({ title, subTitle }: HeaderProps) => {
           {subTitle}
         </Typography>
       </Grid2>
-    </Grid2>
-    <Grid2>
-      <SearchPerson />
     </Grid2>
   </Card>
   );
