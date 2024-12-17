@@ -10,6 +10,7 @@ import {
   Grid2,
   Container,
   Typography,
+  Card,
 } from "@mui/material";
 import * as peopleService from "../../services/people.service";
 import {
@@ -116,16 +117,20 @@ export const SearchPerson = ({
   };
 
   return (
-    <Grid2>
+    <Card
+      sx={{
+        boxShadow:
+          "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+        backgroundColor: "#f0f9ff",
+      }}
+    >
       <Container
         maxWidth="md"
         sx={{
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          boxShadow:
-            "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
-          backgroundColor: "#f0f9ff",
+
           borderRadius: 2,
           padding: 3,
           marginBottom: 3,
@@ -134,8 +139,15 @@ export const SearchPerson = ({
         <Grid2 container spacing={2} alignItems="center">
           <Grid2>
             <TextField
-              label="First Name"
               variant="outlined"
+              size="small"
+              placeholder="First Name"
+              sx={{
+                backgroundColor: "white",
+                borderRadius: 1,
+                width: "200px",
+                display: { xs: "none", sm: "block" }, // Hide on mobile
+              }}
               fullWidth
               value={firstName}
               onChange={handleFirstNameChange}
@@ -144,8 +156,15 @@ export const SearchPerson = ({
 
           <Grid2>
             <TextField
-              label="Last Name"
               variant="outlined"
+              size="small"
+              placeholder="Last Name"
+              sx={{
+                backgroundColor: "white",
+                borderRadius: 1,
+                width: "200px",
+                display: { xs: "none", sm: "block" }, // Hide on mobile
+              }}
               fullWidth
               value={lastName}
               onChange={handleLastNameChange}
@@ -191,7 +210,7 @@ export const SearchPerson = ({
           boxShadow:
             "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
           borderRadius: 2,
-          backgroundColor: "#f7fee7",
+          backgroundColor: "",
         }}
       >
         <Typography variant="h5">Search Results: </Typography>
@@ -211,6 +230,6 @@ export const SearchPerson = ({
           )}
         </List>
       </Grid2>
-    </Grid2>
+    </Card>
   );
 };

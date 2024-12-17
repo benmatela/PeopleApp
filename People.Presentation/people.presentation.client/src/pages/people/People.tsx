@@ -8,16 +8,13 @@ import "./People.css";
 import { IResponseWrapper } from "../../models/response.model";
 import {
   AppBar,
-  Box,
   Grid2,
-  InputAdornment,
   Snackbar,
   SnackbarCloseReason,
-  TextField,
   Toolbar,
   Typography,
 } from "@mui/material";
-import { PeopleOutlined, Search } from "@mui/icons-material";
+import { PeopleOutlined } from "@mui/icons-material";
 import { SearchPerson } from "./SearchPerson";
 
 /**
@@ -65,17 +62,9 @@ export const People = () => {
    */
   const [allPeople, setAllPeople] = useState<IPerson[]>([]);
   /**
-   * Watches for user created event
-   */
-  const [searchTerm, setSearchTerm] = useState("");
-  /**
    * Show/hide snackbar
    */
   const [openSnackbar, setOpenSnackbar] = useState(false);
-
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
-  };
 
   /**
    * Handles the snackbar
@@ -146,32 +135,9 @@ export const People = () => {
           >
             People Management
           </Typography>
-
-          {/* Search Bar */}
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <TextField
-              variant="outlined"
-              size="small"
-              placeholder="Search..."
-              value={searchTerm}
-              onChange={handleSearchChange}
-              sx={{
-                backgroundColor: "white",
-                borderRadius: 1,
-                width: "200px",
-                display: { xs: "none", sm: "block" }, // Hide on mobile
-              }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Search />
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Box>
         </Toolbar>
       </AppBar>
+      {/* Search Bar */}
       <SearchPerson
         setErrorMessage={setErrorMessage}
         setSuccessMessage={setSuccessMessage}

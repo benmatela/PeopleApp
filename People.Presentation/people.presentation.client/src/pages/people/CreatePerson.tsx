@@ -151,7 +151,7 @@ export const CreatePerson = ({
   };
 
   return (
-    <Grid2>
+    <Grid2 sx={{mt: 2}}>
       <ReusableForm
         submitBtnText={"Add New Person"}
         formLabel="Add New Person"
