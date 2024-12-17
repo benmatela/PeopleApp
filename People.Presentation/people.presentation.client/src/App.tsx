@@ -1,5 +1,4 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Home } from "./pages/home/Home";
 import { PageNotFound } from "./pages/page-not-found/PageNotFound";
 import "./App.css";
 import "@fontsource/roboto/300.css";
@@ -9,9 +8,12 @@ import "@fontsource/roboto/700.css";
 import { People } from "./pages/people/People";
 
 /**
+ * App component (main component)
+ *
  * @returns {JSX.Element} component
  */
 export const App = () => {
+  // Our app routes
   const router = createBrowserRouter([
     {
       path: "*",
@@ -19,11 +21,7 @@ export const App = () => {
     },
     {
       path: "/",
-      element: <Home />,
-    },
-    {
-      path: "/home",
-      element: <Home />,
+      element: <People />, // This can be the home page
     },
     {
       path: "/people",
