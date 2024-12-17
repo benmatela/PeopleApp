@@ -21,17 +21,16 @@ public class RemovePersonCommandHandler(IPersonRepository personRepository, ILog
         {
             _logger.LogWarning($"Attempt to delete a person: {request}");
 
-            var deletedPerson = await personRepository.Remove(request.PersonId);
-            if (!deletedPerson)
+            var success = await personRepository.Remove(request.PersonId);
+            if (!success)
             {
                 string errorMessage = $"There was an error while deleting a person: {request.PersonId}";
                 _logger.LogInformation(errorMessage);
-                throw new Exception(errorMessage); // bubbleup the error 
             }
 ;
             _logger.LogInformation($"Person deleted successfully: {request.PersonId}");
 
-            return deletedPerson;
+            return success;
         }
         catch (Exception e)
         {

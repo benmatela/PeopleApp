@@ -49,10 +49,10 @@ public class PersonRepository(ApplicationDbContext DbContext, IMapper Mapper) : 
         var existingPerson = await _dbContext.People.FirstOrDefaultAsync(person => person.Id == personId);
         if (existingPerson is not null)
         {
+            var mappedPerson = _mapper.Map<PersonResponse>(request);
             existingPerson.FirstName = request.FirstName;
             existingPerson.LastName = request.LastName;
             existingPerson.DateOfBirth = request.DateOfBirth;
-            existingPerson.Id = request.Id;
 
             await _dbContext.SaveChangesAsync();
 

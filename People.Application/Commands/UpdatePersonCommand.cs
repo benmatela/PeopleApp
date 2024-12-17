@@ -22,17 +22,16 @@ public class UpdatePersonCommandHandler(IPersonRepository personRepository, ILog
         {
             _logger.LogWarning($"Attempt to update a person: {request.Person.FirstName} {request.Person.LastName}");
 
-            var updatedPerson = await personRepository.Update(request.PersonId, request.Person);
-            if (!updatedPerson)
+            var isSuccess = await personRepository.Update(request.PersonId, request.Person);
+            if (!isSuccess)
             {
                 string errorMessage = $"There was an error while updating a person: {request.PersonId}";
                 _logger.LogInformation(errorMessage);
-                throw new Exception(errorMessage); // bubbleup the error 
             }
 ;
             _logger.LogInformation($"Person updated successfully: {request.PersonId}");
 
-            return updatedPerson;
+            return isSuccess;
         }
         catch (Exception e)
         {

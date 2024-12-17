@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using People.Application.Commands;
 using People.Application.DTOs;
@@ -126,11 +127,21 @@ namespace People.Presentation.Server.Controllers
             var responseWrapper = new ResponseWrapper<PersonResponse>();
             try
             {
-                var isSuccessful = await sender.Send(new UpdatePersonCommand(personId, person));
-
-                // Build our response
-                responseWrapper.Message = isSuccessful ? "" : "Record not updated.";
-                responseWrapper.StatusCode = isSuccessful ? StatusCodes.Status200OK : StatusCodes.Status404NotFound;
+                var isSuccess = await sender.Send(new UpdatePersonCommand(personId, person));
+                if (isSuccess)
+                {
+                    // Build our response
+                    responseWrapper.Message = "";
+                    responseWrapper.StatusCode = StatusCodes.Status200OK;
+                    responseWrapper.Success = true;
+                }
+                else
+                {
+                    // Build our response
+                    responseWrapper.Message = "Record not found.";
+                    responseWrapper.StatusCode = StatusCodes.Status404NotFound;
+                    responseWrapper.Success = false;
+                }
 
                 return new ObjectResult(responseWrapper)
                 {
@@ -150,12 +161,21 @@ namespace People.Presentation.Server.Controllers
             var responseWrapper = new ResponseWrapper<PersonResponse>();
             try
             {
-                var result = await sender.Send(new RemovePersonCommand(personId));
-
-                // Build our response
-                responseWrapper.Message = result ? "" : "Record not deleted.";
-                responseWrapper.StatusCode = result ? StatusCodes.Status200OK : StatusCodes.Status404NotFound;
-                responseWrapper.Success = result ? true : false;
+                var isSuccess = await sender.Send(new RemovePersonCommand(personId));
+                if (isSuccess)
+                {
+                    // Build our response
+                    responseWrapper.Message = "";
+                    responseWrapper.StatusCode = StatusCodes.Status200OK;
+                    responseWrapper.Success = true;
+                }
+                else
+                {
+                    // Build our response
+                    responseWrapper.Message = "Record not found.";
+                    responseWrapper.StatusCode = StatusCodes.Status404NotFound;
+                    responseWrapper.Success = false;
+                }
 
                 return new ObjectResult(responseWrapper)
                 {
@@ -165,7 +185,6 @@ namespace People.Presentation.Server.Controllers
             catch (Exception e)
             {
                 return ControllerErrorHelper.HandleError(e);
-
             }
         }
 
