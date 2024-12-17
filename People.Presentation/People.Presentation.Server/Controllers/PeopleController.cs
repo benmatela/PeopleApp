@@ -1,12 +1,10 @@
 using MediatR;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using People.Application.Commands;
 using People.Application.DTOs;
 using People.Application.Helpers;
 using People.Application.Queries;
 using People.Presentation.Middleware;
-using People.Presentation.Server.Models;
 
 namespace People.Presentation.Server.Controllers
 {
@@ -14,8 +12,6 @@ namespace People.Presentation.Server.Controllers
     [Route("[controller]")]
     public class PeopleController(ISender sender) : ControllerBase
     {
-        public static readonly string RecordsNotFoundMessage = "Record(s) not found.";
-
         [HttpPost]
         [Route("Create")]
         public async Task<IActionResult> Create([FromBody] CreatePersonRequest request)
@@ -26,7 +22,7 @@ namespace People.Presentation.Server.Controllers
                 var result = await sender.Send(new CreatePersonCommand(request));
 
                 // Build our response
-                responseWrapper.Message = result is not null ? "" : RecordsNotFoundMessage;
+                responseWrapper.Message = result is not null ? "" : "Record not found";
                 responseWrapper.StatusCode = result is not null ?
                     StatusCodes.Status200OK : StatusCodes.Status404NotFound;
                 responseWrapper.Success = result is not null ? true : false;
@@ -60,7 +56,7 @@ namespace People.Presentation.Server.Controllers
                 var result = await sender.Send(new GetPersonByIdQuery(personId));
 
                 // Build our response
-                responseWrapper.Message = result is not null ? "" : RecordsNotFoundMessage;
+                responseWrapper.Message = result is not null ? "" : "Record not found.";
                 responseWrapper.StatusCode = result is not null ?
                     StatusCodes.Status200OK : StatusCodes.Status404NotFound;
                 responseWrapper.Success = result is not null ? true : false;
@@ -100,7 +96,7 @@ namespace People.Presentation.Server.Controllers
             {
                 var result = await sender.Send(new GetAllPeopleQuery());
                 // Build our response
-                responseWrapper.Message = result.Count() > 0 ? "" : RecordsNotFoundMessage;
+                responseWrapper.Message = result.Count() > 0 ? "" : "Record not found.";
                 responseWrapper.StatusCode = result.Count() > 0 ?
                     StatusCodes.Status200OK : StatusCodes.Status404NotFound;
                 responseWrapper.Success = result.Count() > 0 ? true : false;
@@ -211,7 +207,7 @@ namespace People.Presentation.Server.Controllers
                 var result = await sender.Send(new SearchPersonByFirstAndLastNameQuery(searchQueries, token));
 
                 // Build our response
-                responseWrapper.Message = result.Count() > 0 ? "" : RecordsNotFoundMessage;
+                responseWrapper.Message = result.Count() > 0 ? "" : "Records not found.";
                 responseWrapper.StatusCode = result.Count() > 0 ?
                     StatusCodes.Status200OK : StatusCodes.Status404NotFound;
                 responseWrapper.Success = result.Count() > 0 ? true : false;

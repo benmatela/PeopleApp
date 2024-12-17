@@ -2,6 +2,8 @@ using People.Application.DTOs;
 using People.Application.Helpers;
 using People.Domain.Entities;
 
+namespace People.Application.Mapper;
+
 /// <summary>
 /// Used for custom data updating and mapping
 /// </summary>

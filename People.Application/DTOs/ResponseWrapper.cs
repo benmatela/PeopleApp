@@ -1,5 +1,5 @@
 
-namespace People.Presentation.Server.Models;
+namespace People.Application.DTOs;
 
 /// <summary>
 /// Used to standardize all our API responses for all clients
