@@ -172,7 +172,11 @@ export const People = () => {
           </Box>
         </Toolbar>
       </AppBar>
-      <SearchPerson />
+      <SearchPerson
+        setErrorMessage={setErrorMessage}
+        setSuccessMessage={setSuccessMessage}
+        setOpenSnackbar={setOpenSnackbar}
+      />
       {isCreateMode ? (
         // Create new Person
         <CreatePerson

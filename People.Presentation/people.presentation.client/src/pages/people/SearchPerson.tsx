@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Dispatch, useState } from "react";
 import {
   TextField,
   List,
@@ -17,6 +17,12 @@ import {
 } from "../../models/person.model";
 import { IResponseWrapper } from "../../models/response.model";
 
+interface SearchPersonProps {
+  setOpenSnackbar: Dispatch<React.SetStateAction<boolean>>;
+  setErrorMessage: Dispatch<React.SetStateAction<string>>;
+  setSuccessMessage: Dispatch<React.SetStateAction<string>>;
+}
+
 /**
  * Search person by firstName and lastName
  *
@@ -24,12 +30,14 @@ import { IResponseWrapper } from "../../models/response.model";
  *
  * @returns {JSX.Element} component
  */
-export const SearchPerson = () => {
+export const SearchPerson = ({setOpenSnackbar, setErrorMessage, setSuccessMessage}: SearchPersonProps) => {
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
+  /**
+   * All people found when searching
+   */
   const [results, setResults] = useState<IPersonResponse[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
 
   /**
    * Handle changes in the firstName input
@@ -58,7 +66,8 @@ export const SearchPerson = () => {
    */
   const searchPerson = async () => {
     setIsLoading(true);
-    setError("");
+    setErrorMessage("");
+    setSuccessMessage("")
     try {
       /**
        * Check if both first name and last name are empty
@@ -67,7 +76,6 @@ export const SearchPerson = () => {
         setResults([]);
         return;
       }
-
       // Similar model to what we have on the API for searching
       const searchQuery: ISearchPersonRequest = {
         firstName: firstName,
@@ -76,15 +84,17 @@ export const SearchPerson = () => {
       const apiResponse: IResponseWrapper<IPersonResponse[]> =
         await peopleService.searchPersonByFirstAndLastName(searchQuery);
 
-      // Show an error if request not successful
+      // Show an errorMessage if request not successful
       if (!apiResponse.success) {
         throw new Error(apiResponse.message);
       }
-
+    
       setResults(apiResponse.data);
+      setSuccessMessage(`Yay! a user was found`);
+      setOpenSnackbar(true);
       setIsLoading(false);
-    } catch (error: any) {
-      setError(error.message);
+    } catch (errorMessage: any) {
+      setErrorMessage(errorMessage.message);
       setIsLoading(false);
     }
   };
@@ -144,20 +154,13 @@ export const SearchPerson = () => {
         </Box>
       )}
 
-      {/* Error message */}
-      {error && (
-        <Box sx={{ color: "error.main", my: 2 }}>
-          <p>{error}</p>
-        </Box>
-      )}
-
       {/* Results List */}
       <List>
         {results.length > 0 ? (
-          results.map((item: IPersonResponse) => (
-            <ListItem key={item.id}>
+          results.map((person: IPersonResponse) => (
+            <ListItem key={person.id}>
               <ListItemText
-                primary={`Yay! ${item.firstName} ${item.lastName} was found`}
+                primary={`${person.firstName} ${person.lastName} - ${person.age}`}
               />
             </ListItem>
           ))
