@@ -88,6 +88,13 @@ export const UpdatePerson = ({
   ]);
 
   /**
+   * Auto populate fields when page loads
+   */
+  useEffect(() => {
+    onPopulateUpdateForm();
+  });
+
+  /**
    * Auto populates the "defaultValue" for the Update user form
    */
   const onPopulateUpdateForm = () => {
@@ -105,10 +112,6 @@ export const UpdatePerson = ({
       setIsLoading(false);
     }
   };
-
-  useEffect(() => {
-    onPopulateUpdateForm();
-  });
 
   /**
    * Submits the form

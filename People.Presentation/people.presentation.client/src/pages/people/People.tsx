@@ -191,14 +191,6 @@ export const People = () => {
           setSuccessMessage={setSuccessMessage}
         />
       )}
-      {/* Notifications */}
-      <Snackbar
-        open={openSnackbar}
-        autoHideDuration={5000}
-        onClose={handleCloseSnackbar}
-        message={successMessage || errorMessage}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-      />
       {/* List of people */}
       <ListPeople
         isConfirmDialogOpen={isConfirmDialogOpen}
@@ -213,6 +205,14 @@ export const People = () => {
         setIsConfirmDialogOpen={setIsConfirmDialogOpen}
         setErrorMessage={setErrorMessage}
         setCurrentPerson={setCurrentPerson}
+      />
+      {/* Notifications */}
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={5000}
+        onClose={handleCloseSnackbar}
+        message={successMessage || errorMessage}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       />
     </Grid2>
   );
