@@ -172,7 +172,7 @@ public class GetPersonByIdQueryHandler(IPersonRepository personRepository)
 
 * .NET 8 for the backend
 * NodeJs for the React frontend
-* Docker for containerization
+* Docker and Docker Compose for containerization
 
 ## Setting Up:
 
