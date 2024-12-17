@@ -61,17 +61,7 @@ namespace People.Presentation.Server.Controllers
             }
             catch (Exception e)
             {
-                // Build our response
-                // This is the default response when all else fails
-                responseWrapper.Exception = e;
-                responseWrapper.Message = e.Message;
-                responseWrapper.Success = false;
-                responseWrapper.StatusCode = StatusCodes.Status200OK;
-
-                return new ObjectResult(responseWrapper)
-                {
-                    StatusCode = responseWrapper.StatusCode,
-                };
+                return ControllerErrorHelper.HandleError(e);
             }
         }
 
