@@ -138,6 +138,9 @@ public class GetPersonByIdQueryHandler(IPersonRepository personRepository)
 * Commands: Contains classes for creating, updating, deleting, or performing other actions on domain entities.
 * Queries: Contains classes for querying data, typically read-only operations.
 * DTOs: Data Transfer Objects used for transferring data between layers.
+* Helpers: Common method that can be used across the app eg DateHelper which gets date by date of birth.
+* Mappers: Convert one object type to the other eg CreatePersonRequest DTO to Person entity.
+* Interfaces: Our interfaces eg IBaseRepository which has all the common fields across repositories.
 
 ### People.Domain
 * Entities: Core business objects representing data in the system (e.g., Person).
