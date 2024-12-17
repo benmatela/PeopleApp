@@ -26,11 +26,16 @@ interface SearchPersonProps {
 /**
  * Search person by firstName and lastName
  *
- * We can improve this by making it a reusabe component
+ * We can improve this by making it a reusabe component and
+ * also listening for firstName and lastName fields change to auto search
  *
  * @returns {JSX.Element} component
  */
-export const SearchPerson = ({setOpenSnackbar, setErrorMessage, setSuccessMessage}: SearchPersonProps) => {
+export const SearchPerson = ({
+  setOpenSnackbar,
+  setErrorMessage,
+  setSuccessMessage,
+}: SearchPersonProps) => {
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   /**
@@ -67,15 +72,14 @@ export const SearchPerson = ({setOpenSnackbar, setErrorMessage, setSuccessMessag
   const searchPerson = async () => {
     setIsLoading(true);
     setErrorMessage("");
-    setSuccessMessage("")
+    setSuccessMessage("");
     try {
-      /**
-       * Check if both first name and last name are empty
-       */
+      // Check if both first name and last name are empty
       if (!firstName.trim() && !lastName.trim()) {
         setResults([]);
         return;
       }
+
       // Similar model to what we have on the API for searching
       const searchQuery: ISearchPersonRequest = {
         firstName: firstName,
@@ -84,16 +88,17 @@ export const SearchPerson = ({setOpenSnackbar, setErrorMessage, setSuccessMessag
       const apiResponse: IResponseWrapper<IPersonResponse[]> =
         await peopleService.searchPersonByFirstAndLastName(searchQuery);
 
-      // Show an errorMessage if request not successful
+      // Throw an error if request is not successful
       if (!apiResponse.success) {
         throw new Error(apiResponse.message);
       }
-    
+
       setResults(apiResponse.data);
       setSuccessMessage(`Yay! a user was found`);
       setOpenSnackbar(true);
       setIsLoading(false);
     } catch (errorMessage: any) {
+      // Handle the errors
       setErrorMessage(errorMessage.message);
       setIsLoading(false);
     }
