@@ -25,14 +25,17 @@ namespace People.Presentation.Server.Controllers
                 var result = await sender.Send(new CreatePersonCommand(request));
 
                 // Build our response
-                responseWrapper.Data = result;
-                // Send calculated age to the client when possible to let the 
-                // API do much of the heavy lifting.
-                responseWrapper.Data.Age = DateHelpers.GetAge(request.DateOfBirth);
                 responseWrapper.Message = result is not null ? "" : RecordsNotFoundMessage;
                 responseWrapper.StatusCode = result is not null ?
                     StatusCodes.Status200OK : StatusCodes.Status404NotFound;
                 responseWrapper.Success = result is not null ? true : false;
+
+                // Update the age field for the client
+                if (result is not null)
+                {
+                    responseWrapper.Data = result;
+                    responseWrapper.Data.Age = DateHelpers.GetAge(result.DateOfBirth);
+                }
 
                 return new ObjectResult(responseWrapper)
                 {
@@ -60,7 +63,13 @@ namespace People.Presentation.Server.Controllers
                 responseWrapper.StatusCode = result is not null ?
                     StatusCodes.Status200OK : StatusCodes.Status404NotFound;
                 responseWrapper.Success = result is not null ? true : false;
-                responseWrapper.Data = result;
+
+                // Update the age field for the client
+                if (result is not null)
+                {
+                    responseWrapper.Data = result;
+                    responseWrapper.Data.Age = DateHelpers.GetAge(result.DateOfBirth);
+                }
 
                 return new ObjectResult(responseWrapper)
                 {
