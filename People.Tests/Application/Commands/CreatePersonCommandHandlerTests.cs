@@ -5,6 +5,9 @@ using People.Application.DTOs;
 using People.Application.Interfaces;
 using Xunit;
 
+/// <summary>
+/// Tests CreatePersonCommandHandler
+/// </summary>
 public class CreatePersonCommandHandlerTests
 {
     private readonly Mock<IPersonRepository> _mockPersonRepository;

@@ -4,11 +4,13 @@ using People.Application.Interfaces;
 using People.Application.Queries;
 using Xunit;
 
+/// <summary>
+/// Tests GetPersonByIdQueryHandler
+/// </summary>
 public class GetPersonByIdQueryHandlerTests
 {
     private readonly Mock<IPersonRepository> _mockPersonRepository;
     private readonly GetPersonByIdQueryHandler _handler;
-
 
     public GetPersonByIdQueryHandlerTests()
     {
