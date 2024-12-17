@@ -267,5 +267,6 @@ Client: http://0.0.0.0:3000
 * Add caching mechanisms for query optimization.
 * Implement authentication and authorization.
 * Expand domain logic to handle more complex use cases.
+* Make local dev environment for Docker
 * More tests for the React client side
 * Update the client side `SearchPerson` component to be reusable.
