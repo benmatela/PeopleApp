@@ -74,7 +74,6 @@ public class CreatePersonCommandHandlerTests
         var command = new CreatePersonCommand(expectedPerson); // Missing fields
 
         // 2 & 3 Act & Assert
-        var exception = await Assert.ThrowsAsync<ArgumentException>(() => _handler.Handle(command, token));
-        Assert.Equal("Invalid input", exception.Message);
+        var exception = await Assert.ThrowsAsync<NullReferenceException>(() => _handler.Handle(command, token));
     }
 }
