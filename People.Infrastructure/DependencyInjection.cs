@@ -5,11 +5,12 @@ using People.Application.Interfaces;
 
 namespace People.Infrastructure.Extensions;
 
+/// <summary>
+/// Adds Infrastructure layer services using dependencies
+/// <para>Allows us to use things like DB Context in other layers using Dependency Injection.</para>
+/// </summary>
 public static class DependencyInjection
 {
-    /// <summary>
-    /// Allows us to use things like DB Context in other layers using Dependency Injection.
-    /// </summary>
     public static void AddInfrastructureDI(this IServiceCollection services)
     {
         services.AddDbContext<ApplicationDbContext>();

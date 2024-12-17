@@ -1,5 +1,8 @@
 namespace People.Application.Helpers;
 
+/// <summary>
+/// Performs only date related operations
+/// </summary>
 public static class DateHelpers
 {
     /// <summary>

@@ -5,11 +5,12 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace People.Application.Extensions;
 
+/// <summary>
+/// Adds Application layer services using dependencies
+/// <para>Allows us to use things like MediatR in other layers using Dependency Injection.</para>
+/// </summary>
 public static class DependencyInjection
 {
-    /// <summary>
-    /// Allows us to use things like MediatR in other layers using Dependency Injection.
-    /// </summary>
     public static void AddApplicationDI(this IServiceCollection services)
     {
         services.AddMediatR(cfg =>
