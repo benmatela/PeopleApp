@@ -10,9 +10,7 @@ The architecture is organized into multiple layers to achieve separation of conc
 * People.Application – The application layer, containing business logic and CQRS commands/queries.
 * People.Domain – The domain layer, containing domain entities, value objects, aggregates, and domain logic.
 
-Example SQL Table desing for our Person entity:
-
-SQL Table Design:
+This app currently uses `In Memory Database` but an example SQL Table design for our `Person` entity would look like:
 
 ```sql
 CREATE TABLE [People] (
@@ -203,6 +201,9 @@ Then:
 ```bash
 dotnet run
 ```
+Swagger: http://localhost:5000/swagger/index.html
+
+Client: http://localhost:3000/
 
 5. Run tests
 ```bash

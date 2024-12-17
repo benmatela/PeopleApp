@@ -9,7 +9,9 @@ namespace People.Domain.Entities;
 public class BaseEntity
 {
     [Key]
+    [Required]
     public Guid Id { get; set; } = Guid.NewGuid();
+    
     [Required]
     public DateTime DateCreated { get; set; } = DateTime.UtcNow.Date;
 }
