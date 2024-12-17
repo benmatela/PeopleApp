@@ -75,5 +75,6 @@ public class CreatePersonCommandHandlerTests
 
         // 2 & 3 Act & Assert
         var exception = await Assert.ThrowsAsync<NullReferenceException>(() => _handler.Handle(command, token));
+        Assert.Contains("Object reference not set to an instance of", exception.Message);
     }
 }
