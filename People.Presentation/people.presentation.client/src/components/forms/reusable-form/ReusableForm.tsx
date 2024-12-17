@@ -137,7 +137,7 @@ export const ReusableForm: React.FC<ReusableFormProps> = ({
                     />
                     <Typography sx={{ color: "#dc2626", fontSize: 14 }}>
                       {errors[field.name] && (
-                        <p>{String(errors[field.name]?.message)}</p>
+                        <>{String(errors[field.name]?.message)}</>
                       )}
                     </Typography>
                   </Box>
