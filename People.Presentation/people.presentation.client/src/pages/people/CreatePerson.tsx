@@ -11,7 +11,6 @@ import { Box } from "@mui/material";
 interface CreatePersonProps {
   currentPerson: IPerson | undefined;
   setCurrentPerson: Dispatch<React.SetStateAction<IPerson | undefined>>;
-  setPersonCreated: Dispatch<React.SetStateAction<boolean>>;
   setErrorMessage: Dispatch<React.SetStateAction<string>>;
   setSuccessMessage: Dispatch<React.SetStateAction<string>>;
 }
@@ -25,7 +24,6 @@ interface CreatePersonProps {
  */
 export const CreatePerson = ({
   currentPerson,
-  setPersonCreated,
   setCurrentPerson,
   setErrorMessage,
   setSuccessMessage,
@@ -128,7 +126,6 @@ export const CreatePerson = ({
       setSuccessMessage("Person created successfully.");
       setErrorMessage("");
       setIsSaving(false);
-      setPersonCreated(true);
     } catch (error: any) {
       setIsSaving(false);
 

@@ -70,7 +70,6 @@ export const People = () => {
   /**
    * Watches for user created event
    */
-  const [personCreated, setPersonCreated] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
@@ -90,25 +89,6 @@ export const People = () => {
 
     setOpenSnackbar(false);
   };
-
-  /**
-   * This is used solely to keep watch of a Person's CRUD operations
-   *
-   * This brings the question of too many state variables vs
-   * using state management frameworks such as Redux
-   */
-  useEffect(() => {
-    if (personCreated && currentPerson) {
-      // Adds the newly created person to the currently displayed list
-      // This avoids too many unnecessary API calls
-      const allExistingPeople: IPerson[] = allPeople;
-      allExistingPeople.push(currentPerson);
-      setSuccessMessage(
-        `Added a new person: ${currentPerson.firstName} ${currentPerson.lastName}`
-      );
-      setOpenSnackbar(true);
-    }
-  }, [personCreated, allPeople, currentPerson]);
 
   /**
    * Gets all users on first page load then ignores other state changes
@@ -154,7 +134,11 @@ export const People = () => {
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
           {/* Logo or Title */}
           <PeopleOutlined sx={{ fontSize: 60, pt: 1 }} />
-          <Typography variant="h6" noWrap sx={{ flexGrow: 1, mt: 1, ml: 2, fontWeight: "bold" }}>
+          <Typography
+            variant="h6"
+            noWrap
+            sx={{ flexGrow: 1, mt: 1, ml: 2, fontWeight: "bold" }}
+          >
             People Management
           </Typography>
 
@@ -183,14 +167,11 @@ export const People = () => {
           </Box>
         </Toolbar>
       </AppBar>
-      Person Created: {String(personCreated)}
-      All people: {allPeople.length}
       {isCreateMode ? (
         // Create new Person
         <CreatePerson
           currentPerson={currentPerson}
           setCurrentPerson={setCurrentPerson}
-          setPersonCreated={setPersonCreated}
           setErrorMessage={setErrorMessage}
           setSuccessMessage={setSuccessMessage}
         />
