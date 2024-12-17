@@ -176,7 +176,7 @@ export const ListPeople = ({
       ) : (
         <>
           <Typography variant="h6" sx={{ mb: 3, mt: 3 }}>
-            Total People: ({allPeople.length})
+            Total People: ({allPeople?.length})
           </Typography>
           {allPeople.length > 0 ? (
             <>
