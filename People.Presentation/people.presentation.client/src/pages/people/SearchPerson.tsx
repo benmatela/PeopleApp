@@ -20,6 +20,8 @@ import { IResponseWrapper } from "../../models/response.model";
 /**
  * Search person by firstName and lastName
  *
+ * We can improve this by making it a reusabe component
+ *
  * @returns {JSX.Element} component
  */
 export const SearchPerson = () => {
@@ -67,9 +69,9 @@ export const SearchPerson = () => {
       }
 
       // Similar model to what we have on the API for searching
-      const searchQuery: ISearchPersonRequest = { 
-        firstName: firstName, 
-        lastName: lastName
+      const searchQuery: ISearchPersonRequest = {
+        firstName: firstName,
+        lastName: lastName,
       };
       const apiResponse: IResponseWrapper<IPersonResponse[]> =
         await peopleService.searchPersonByFirstAndLastName(searchQuery);
@@ -154,7 +156,9 @@ export const SearchPerson = () => {
         {results.length > 0 ? (
           results.map((item: IPersonResponse) => (
             <ListItem key={item.id}>
-              <ListItemText primary={`Yay! ${item.firstName} ${item.lastName} was found`} />
+              <ListItemText
+                primary={`Yay! ${item.firstName} ${item.lastName} was found`}
+              />
             </ListItem>
           ))
         ) : (
