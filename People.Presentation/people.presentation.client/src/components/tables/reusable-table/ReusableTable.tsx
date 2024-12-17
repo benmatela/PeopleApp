@@ -19,6 +19,14 @@ interface TableProps {
   columns: ColumnDef<any>[];
 }
 
+/**
+ * Displays data as a table 
+ * 
+ * Could be improved by making it mobile friendly
+ * 
+ * @param {TableProps} tableProps 
+ * @returns 
+ */
 export const ReusableTable: FC<TableProps> = ({ data, columns }) => {
   const { getHeaderGroups, getRowModel } = useReactTable({
     data,

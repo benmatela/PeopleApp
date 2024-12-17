@@ -49,7 +49,7 @@ export const SearchPerson = ({
   /**
    * Handle changes in the firstName input
    *
-   * @param event
+   * @param {React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>} event
    */
   const handleFirstNameChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -213,21 +213,19 @@ export const SearchPerson = ({
           backgroundColor: "",
         }}
       >
-        <Typography variant="h5">Search Results: </Typography>
+        <Typography variant="h5">
+          Search Results ({results.length}):{" "}
+        </Typography>
         <List>
-          {results.length > 0 ? (
-            results.map((person: IPersonResponse) => (
-              <ListItem key={person.id}>
-                <ListItemText
-                  primary={`${person.firstName} ${person.lastName} - Age ${person.age}`}
-                />
-              </ListItem>
-            ))
-          ) : (
-            <ListItem>
-              <ListItemText primary="No search results found" />
-            </ListItem>
-          )}
+          {results.length > 0
+            ? results.map((person: IPersonResponse) => (
+                <ListItem key={person.id}>
+                  <ListItemText
+                    primary={`${person.firstName} ${person.lastName} - Age ${person.age}`}
+                  />
+                </ListItem>
+              ))
+            : null}
         </List>
       </Grid2>
     </Card>
