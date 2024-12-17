@@ -44,6 +44,7 @@ export const CreatePerson = ({
       type: "text",
       placeholder: "First Name",
       defaultValue: "",
+      disabled: false,
       validation: {
         required: "First Name is required",
         minLength: {
@@ -57,6 +58,7 @@ export const CreatePerson = ({
       label: "Last Name:",
       type: "text",
       defaultValue: "",
+      disabled: false,
       placeholder: "Last Name",
       validation: {
         required: "Last Name is required",
@@ -72,9 +74,18 @@ export const CreatePerson = ({
       type: "date",
       placeholder: "Date Of Birth",
       defaultValue: "",
+      disabled: false,
       validation: {
         required: "Date Of Birth is required",
       },
+    },
+    {
+      name: "age",
+      label: "Age:",
+      type: "text",
+      placeholder: "Age",
+      defaultValue: "0",
+      disabled: true,
     },
   ];
 

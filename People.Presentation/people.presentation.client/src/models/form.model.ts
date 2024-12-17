@@ -6,6 +6,8 @@ export interface IFormField {
   label: string;
   type: string;
   placeholder?: string;
+  // Some fields don't need validation eg the age which is read only field
   validation?: Record<string, any>;
   defaultValue: any;
+  disabled: boolean;
 }

@@ -105,6 +105,7 @@ export const ReusableForm: React.FC<ReusableFormProps> = ({
                     variant="outlined"
                     id={field.name}
                     type={field.type}
+                    disabled={field.disabled}
                     placeholder={field.placeholder}
                     defaultValue={field.defaultValue}
                     {...register(field.name, field.validation)}
@@ -118,28 +119,26 @@ export const ReusableForm: React.FC<ReusableFormProps> = ({
               </Grid2>
             ))}
             {/* Submit Button */}
-          <Grid2 container spacing={2} justifyContent="center">
-            {isLoading ? (
-              <ReusableSpinner
-                spinnerSize={50}
-                spinnerColor="#2563eb"
-                minContainerHeight="50vh"
-                loadingMessage={isLoading ? "Loading..." : "Deleting..."}
-              />
-            ) : (
-              <Button
-                variant="contained"
-                type="submit"
-                disabled={isLoading}
-                sx={{ width: "100%", height: 55, mt: 3 }}
-              >
-                {submitBtnText}
-              </Button>
-            )}
+            <Grid2 container spacing={2} justifyContent="center">
+              {isLoading ? (
+                <ReusableSpinner
+                  spinnerSize={50}
+                  spinnerColor="#2563eb"
+                  minContainerHeight="50vh"
+                  loadingMessage={isLoading ? "Loading..." : "Deleting..."}
+                />
+              ) : (
+                <Button
+                  variant="contained"
+                  type="submit"
+                  disabled={isLoading}
+                  sx={{ width: "100%", height: 55, mt: 3 }}
+                >
+                  {submitBtnText}
+                </Button>
+              )}
+            </Grid2>
           </Grid2>
-          </Grid2>
-
-          
         </Box>
       </form>
     </Card>
