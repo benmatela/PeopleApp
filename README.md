@@ -3,6 +3,9 @@
 
 API
 
+How to run
+How to test
+How to deploy
 
 
 ```bash
