@@ -36,7 +36,9 @@ public class PersonRepository(ApplicationDbContext DbContext, IMapper Mapper) : 
     {
         var allExistingPeople = await _dbContext.People.ToListAsync();
 
-        return _mapper.Map<IEnumerable<PersonResponse>>(allExistingPeople);
+        var mappedPeople = allExistingPeople.Select(DataTransformers.MapToDTO).ToList();
+
+        return mappedPeople;
     }
 
     public async Task<bool> Update(Guid personId, UpdatePersonRequest request)
