@@ -71,12 +71,22 @@ export const People = () => {
    * Watches for user created event
    */
   const [searchTerm, setSearchTerm] = useState("");
+  /**
+   * Show/hide snackbar
+   */
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
 
+  /**
+   * Handles the snackbar
+   *
+   * @param {React.SyntheticEvent | Event} event
+   * @param {string} reason
+   * @returns {any} response
+   */
   const handleCloseSnackbar = (
     event: React.SyntheticEvent | Event,
     reason?: SnackbarCloseReason

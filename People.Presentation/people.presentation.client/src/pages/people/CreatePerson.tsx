@@ -5,8 +5,7 @@ import { IResponseWrapper } from "../../models/response.model";
 import { IPerson, IPersonResponse } from "../../models/person.model";
 import { ReusableForm } from "../../components/forms/reusable-form/ReusableForm";
 import { IFormField } from "../../models/form.model";
-import { InfoDialog } from "../../components/dialogs/info-dialog/InfoDialog";
-import { Box } from "@mui/material";
+import { Box, Snackbar, SnackbarCloseReason } from "@mui/material";
 
 interface CreatePersonProps {
   setCurrentPerson: Dispatch<React.SetStateAction<IPerson | undefined>>;
@@ -33,9 +32,9 @@ export const CreatePerson = ({ setCurrentPerson }: CreatePersonProps) => {
    */
   const [isSaving, setIsSaving] = useState<boolean>(false);
   /**
-   * Shows/Hides the Confirmation Dialog
+   * Show/hide snackbar
    */
-  const [isInfoDialogOpen, setInfoDialogOpen] = useState<boolean>(false);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
   /**
    * Form fields to build the create a person form
    *
@@ -128,13 +127,30 @@ export const CreatePerson = ({ setCurrentPerson }: CreatePersonProps) => {
       );
       setErrorMessage("");
       setIsSaving(false);
-      setInfoDialogOpen(true);
+      setOpenSnackbar(true);
     } catch (error: any) {
       setIsSaving(false);
 
       // Throw error back to the calling function
       throw new Error(error.message);
     }
+  };
+
+  /**
+   * Handles the snackbar
+   *
+   * @param {React.SyntheticEvent | Event} event
+   * @param {string} reason
+   * @returns {any} response
+   */
+  const handleCloseSnackbar = (
+    event: React.SyntheticEvent | Event,
+    reason?: SnackbarCloseReason
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenSnackbar(false);
   };
 
   return (
@@ -146,12 +162,13 @@ export const CreatePerson = ({ setCurrentPerson }: CreatePersonProps) => {
         onSubmit={onSubmit}
         isLoading={isSaving}
       />
-      <InfoDialog
-        okButtonLabel="Ok"
-        title="Create New Person"
-        description={successMessage || errorMessage}
-        isModalOpen={isInfoDialogOpen}
-        setIsModalOpen={setInfoDialogOpen}
+      {/* Notifications */}
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={5000}
+        onClose={handleCloseSnackbar}
+        message={successMessage || errorMessage}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       />
       <Box
         sx={{

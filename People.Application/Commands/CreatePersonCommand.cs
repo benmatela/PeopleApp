@@ -21,7 +21,7 @@ public class CreatePersonCommandHandler(IPersonRepository personRepository, ILog
     {
         try
         {
-            _logger.LogWarning($"Attempt to create a person: {request}");
+            _logger.LogWarning($"Attempt to create a person: {request.Person.FirstName} {request.Person.LastName}");
 
             var newPerson = await personRepository.Create(request.Person);
 
