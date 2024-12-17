@@ -8,7 +8,8 @@ public record GetPersonByIdQuery(Guid Guid) : IRequest<PersonResponse>;
 
 /// <summary>
 /// Handles the query to get a single person by ID 
-/// <para>Since commands are intended to modify the state, we implement scrictrer error handling</para>
+/// <para>Since queries are intended to return data without side effects or modifying the state, 
+/// we are not too strict with error handling</para>
 /// </summary>
 /// <param name="personRepository"></param>
 public class GetPersonByIdQueryHandler(IPersonRepository personRepository)
