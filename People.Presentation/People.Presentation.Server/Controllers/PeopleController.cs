@@ -2,7 +2,6 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using People.Application.Commands;
 using People.Application.DTOs;
-using People.Application.Helpers;
 using People.Application.Queries;
 using People.Presentation.Middleware;
 
@@ -26,13 +25,7 @@ namespace People.Presentation.Server.Controllers
                 responseWrapper.StatusCode = result is not null ?
                     StatusCodes.Status200OK : StatusCodes.Status404NotFound;
                 responseWrapper.Success = result is not null ? true : false;
-
-                // Update the age field for the client
-                if (result is not null)
-                {
-                    responseWrapper.Data = result;
-                    responseWrapper.Data.Age = DateHelpers.GetAge(result.DateOfBirth);
-                }
+                responseWrapper.Data = result;
 
                 return new ObjectResult(responseWrapper)
                 {
@@ -42,7 +35,6 @@ namespace People.Presentation.Server.Controllers
             catch (Exception e)
             {
                 return ControllerErrorHelper.HandleError(e);
-
             }
         }
 
@@ -60,11 +52,7 @@ namespace People.Presentation.Server.Controllers
                 responseWrapper.StatusCode = result is not null ?
                     StatusCodes.Status200OK : StatusCodes.Status404NotFound;
                 responseWrapper.Success = result is not null ? true : false;
-
-                if (result is not null)
-                {
-                    responseWrapper.Data = result;
-                }
+                responseWrapper.Data = result;
 
                 return new ObjectResult(responseWrapper)
                 {
@@ -110,7 +98,6 @@ namespace People.Presentation.Server.Controllers
             catch (Exception e)
             {
                 return ControllerErrorHelper.HandleError(e);
-
             }
         }
 
@@ -124,20 +111,10 @@ namespace People.Presentation.Server.Controllers
             try
             {
                 var isSuccess = await sender.Send(new UpdatePersonCommand(personId, person));
-                if (isSuccess)
-                {
-                    // Build our response
-                    responseWrapper.Message = "";
-                    responseWrapper.StatusCode = StatusCodes.Status200OK;
-                    responseWrapper.Success = true;
-                }
-                else
-                {
-                    // Build our response
-                    responseWrapper.Message = "Record not found.";
-                    responseWrapper.StatusCode = StatusCodes.Status404NotFound;
-                    responseWrapper.Success = false;
-                }
+                responseWrapper.Message = isSuccess ? "" : "Record not found.";
+                responseWrapper.StatusCode = isSuccess ?
+                    StatusCodes.Status200OK : StatusCodes.Status404NotFound;
+                responseWrapper.Success = isSuccess ? true : false;
 
                 return new ObjectResult(responseWrapper)
                 {
@@ -158,20 +135,10 @@ namespace People.Presentation.Server.Controllers
             try
             {
                 var isSuccess = await sender.Send(new RemovePersonCommand(personId));
-                if (isSuccess)
-                {
-                    // Build our response
-                    responseWrapper.Message = "";
-                    responseWrapper.StatusCode = StatusCodes.Status200OK;
-                    responseWrapper.Success = true;
-                }
-                else
-                {
-                    // Build our response
-                    responseWrapper.Message = "Record not found.";
-                    responseWrapper.StatusCode = StatusCodes.Status404NotFound;
-                    responseWrapper.Success = false;
-                }
+                responseWrapper.Message = isSuccess ? "" : "Records not found.";
+                responseWrapper.StatusCode = isSuccess ?
+                    StatusCodes.Status200OK : StatusCodes.Status404NotFound;
+                responseWrapper.Success = isSuccess;
 
                 return new ObjectResult(responseWrapper)
                 {
