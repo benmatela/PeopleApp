@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Threading;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using People.Application.DTOs;
@@ -22,12 +20,17 @@ public class PersonRepository(ApplicationDbContext DbContext, IMapper Mapper) : 
 
         await _dbContext.SaveChangesAsync();
 
-        return _mapper.Map<PersonResponse>(mappedPerson);
+        return DataTransformers.MapToDTO(mappedPerson);
     }
 
     public async Task<PersonResponse> Get(Guid personId)
     {
         var existingPerson = await _dbContext.People.FirstOrDefaultAsync(person => person.Id == personId);
+
+        if (existingPerson is not null)
+        {
+            return DataTransformers.MapToDTO(existingPerson);
+        }
 
         return _mapper.Map<PersonResponse>(existingPerson);
     }
@@ -48,6 +51,8 @@ public class PersonRepository(ApplicationDbContext DbContext, IMapper Mapper) : 
         {
             existingPerson.FirstName = request.FirstName;
             existingPerson.LastName = request.LastName;
+            existingPerson.DateOfBirth = request.DateOfBirth;
+            existingPerson.Id = request.Id;
 
             await _dbContext.SaveChangesAsync();
 
@@ -79,7 +84,8 @@ public class PersonRepository(ApplicationDbContext DbContext, IMapper Mapper) : 
             var searchQuery = _dbContext.People.Where(p => p.FirstName.Contains(request.FirstName));
             // Execute the query asynchronously
             var people = await searchQuery.ToListAsync(cancellationToken);
-            return _mapper.Map<IEnumerable<PersonResponse>>(people);
+
+            return people.Select(DataTransformers.MapToDTO).ToList();
         }
 
         if (!string.IsNullOrEmpty(request.LastName))
@@ -88,7 +94,7 @@ public class PersonRepository(ApplicationDbContext DbContext, IMapper Mapper) : 
             var searchQuery = _dbContext.People.Where(p => p.LastName.Contains(request.LastName));
             // Execute the query asynchronously
             var people = await searchQuery.ToListAsync(cancellationToken);
-            return _mapper.Map<IEnumerable<PersonResponse>>(people);
+            return people.Select(DataTransformers.MapToDTO).ToList();
         }
 
         return [];

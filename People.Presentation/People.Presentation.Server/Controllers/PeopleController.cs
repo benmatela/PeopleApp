@@ -64,11 +64,9 @@ namespace People.Presentation.Server.Controllers
                     StatusCodes.Status200OK : StatusCodes.Status404NotFound;
                 responseWrapper.Success = result is not null ? true : false;
 
-                // Update the age field for the client
                 if (result is not null)
                 {
                     responseWrapper.Data = result;
-                    responseWrapper.Data.Age = DateHelpers.GetAge(result.DateOfBirth);
                 }
 
                 return new ObjectResult(responseWrapper)
@@ -208,7 +206,6 @@ namespace People.Presentation.Server.Controllers
             catch (Exception e)
             {
                 return ControllerErrorHelper.HandleError(e);
-
             }
         }
     }
