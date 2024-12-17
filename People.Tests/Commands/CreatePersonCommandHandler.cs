@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using Moq;
 using People.Application.Commands;
 using People.Application.DTOs;
@@ -11,8 +12,10 @@ public class CreatePersonCommandHandlerTests
 
     public CreatePersonCommandHandlerTests()
     {
+        var logger = new Mock<ILogger<CreatePersonCommand>>(MockBehavior.Default);
+        var _logger = logger.Object;
         _mockPersonRepository = new Mock<IPersonRepository>();
-        _handler = new CreatePersonCommandHandler(_mockPersonRepository.Object);
+        _handler = new CreatePersonCommandHandler(_mockPersonRepository.Object, _logger);
     }
 
     /// <summary>
