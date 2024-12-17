@@ -1,5 +1,3 @@
-using People.Domain.Common;
-
 namespace People.Domain.Entities;
 
 /// <summary>

@@ -28,7 +28,6 @@ PeopleApp/
 │   └── DTOs/
 ├── People.Domain/
 │   ├── Entities/
-│   ├── Common/
 │   └── Interfaces/
 ├── People.Infrastructure/
 │   ├── Persistence/
@@ -123,3 +122,33 @@ public class GetPersonByIdQueryHandler(IPersonRepository personRepository)
     }
 }
 ```
+
+## Project Descriptions
+
+### People.Application
+* Commands: Contains classes for creating, updating, deleting, or performing other actions on domain entities.
+* Queries: Contains classes for querying data, typically read-only operations.
+* DTOs: Data Transfer Objects used for transferring data between layers.
+
+### People.Domain
+* Entities: Core business objects representing data in the system (e.g., Person).
+* Common: Core business objects representing data in the system (e.g., Person)
+
+### People.Infrastructure
+* Persistence: Responsible for data access, including implementations of repositories using databases or other storage systems.
+* Repositories: Interface and implementation of repositories for accessing entities from the database.
+* Services: External services or utilities used by the application.
+
+### People.Tests
+* Contains unit tests, integration tests, and mocks for testing the application’s various layers:
+* Application: Tests for CQRS commands and queries.
+* Domain: Tests for domain logic, entities, and value objects.
+* Infrastructure: Tests for repositories, persistence layer, and services.
+* People.Presentation: This layer contains the user interface components:
+
+### people.presentation.client
+* The client-side project, which could be a web frontend, mobile app, or another type of client application. 
+* It interacts with the backend API to send commands and queries.
+
+### People.Presentation.Server
+* The server-side project, which hosts the web API or backend for handling HTTP requests, performing actions via commands, and returning data via queries.

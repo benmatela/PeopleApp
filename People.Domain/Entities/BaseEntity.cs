@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace People.Domain.Common;
+namespace People.Domain.Entities;
 
 /// <summary>
 /// Base Entity
