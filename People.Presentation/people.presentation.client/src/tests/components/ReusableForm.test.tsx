@@ -58,7 +58,7 @@ describe("ReusableForm", () => {
     render(
       <ReusableForm
         isCreateMode={true} // this would be false for the update person page
-        submitBtnText={"Submit"}
+        submitBtnText={"Add New Person"}
         formLabel="Create User Form"
         isLoading={false}
         fields={createPersonformFields}
@@ -67,12 +67,12 @@ describe("ReusableForm", () => {
       />
     );
 
-    expect(screen.getByLabelText(/firstName/i)).toBeTruthy();
-    expect(screen.getByLabelText(/lastName/i)).toBeTruthy();
-    expect(screen.getByLabelText(/dateOfBirth/i)).toBeTruthy();
-    expect(screen.getByLabelText(/age/i)).toBeTruthy();
-    expect(screen.getByRole("button", { name: /submit/i })).toBeTruthy();
-    expect(screen.getByRole("button", { name: /clear/i })).toBeTruthy();
+    expect(screen.getByLabelText(/First Name/i)).toBeTruthy();
+    expect(screen.getByLabelText(/Last Name/i)).toBeTruthy();
+    expect(screen.getByLabelText(/Date Of Birth/i)).toBeTruthy();
+    expect(screen.getByLabelText(/Age/i)).toBeTruthy();
+    expect(screen.getByRole("button", { name: /Add New Person/i })).toBeTruthy();
+    expect(screen.getByRole("button", { name: /Clear/i })).toBeTruthy();
   });
 
   test("submits create person form with firstName, lastName, dateOfBirth, age values", async () => {
@@ -80,7 +80,7 @@ describe("ReusableForm", () => {
     render(
       <ReusableForm
         isCreateMode={true} // this would be false for the update person page
-        submitBtnText={"Submit"}
+        submitBtnText={"Add New Person"}
         formLabel="Create User Form"
         isLoading={false}
         fields={createPersonformFields}
@@ -90,13 +90,13 @@ describe("ReusableForm", () => {
     );
 
     // Simulate user typing into inputs
-    await userEvent.type(screen.getByLabelText(/firstName/i), "FirstName");
-    await userEvent.type(screen.getByLabelText(/lastName/i), "LastName");
-    await userEvent.type(screen.getByLabelText(/dateOfBirth/i), "2002/03/04");
-    await userEvent.type(screen.getByLabelText(/age/i), "0");
+    await userEvent.type(screen.getByLabelText(/First Name/i), "FirstName");
+    await userEvent.type(screen.getByLabelText(/Last Name/i), "LastName");
+    await userEvent.type(screen.getByLabelText(/Date Of Birth/i), "2002/03/04");
+    await userEvent.type(screen.getByLabelText(/Age/i), "0");
 
     // Submit form
-    await userEvent.click(screen.getByRole("button", { name: /login/i }));
+    await userEvent.click(screen.getByRole("button", { name: /Add New Person/i }));
 
     // Assert the mockSubmit is called with correct values
     expect(mockSubmit).toHaveBeenCalledWith({
@@ -112,7 +112,7 @@ describe("ReusableForm", () => {
     render(
       <ReusableForm
         isCreateMode={true} // this would be false for the update person page
-        submitBtnText={"Submit"}
+        submitBtnText={"Add New Person"}
         formLabel="Create User Form"
         isLoading={false}
         fields={createPersonformFields}
@@ -122,7 +122,7 @@ describe("ReusableForm", () => {
     );
 
     // Simulate submit with empty fields
-    await userEvent.click(screen.getByRole("button", { name: /login/i }));
+    await userEvent.click(screen.getByRole("button", { name: /Add New Person/i }));
 
     // Ensure mockSubmit was not called
     expect(mockSubmit).not.toHaveBeenCalled();
