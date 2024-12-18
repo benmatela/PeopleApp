@@ -1,11 +1,11 @@
-import { Dispatch, useState } from "react";
+import { Dispatch, useRef, useState } from "react";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import * as peopleService from "../../services/people.service";
 import { IResponseWrapper } from "../../models/response.model";
 import { IPerson, IPersonResponse } from "../../models/person.model";
-import { ReusableForm } from "../../components/forms/reusable-form/ReusableForm";
 import { IFormField } from "../../models/form.model";
 import { Grid2 } from "@mui/material";
+import ReusableForm from "../../components/forms/reusable-form/ReusableForm";
 
 interface CreatePersonProps {
   isCreateMode: boolean;
@@ -35,6 +35,12 @@ export const CreatePerson = ({
    * Is there any saving action going on?
    */
   const [isSaving, setIsSaving] = useState<boolean>(false);
+  /**
+   *  Create a reference to the child component
+   *
+   *  Will be used to perform actions such as reseting form after submitting
+   */
+  const reusableFomrRef: React.MutableRefObject<any> = useRef();
   /**
    * Form fields to build the create a person form
    *
@@ -140,11 +146,10 @@ export const CreatePerson = ({
       setIsSaving(false);
       setOpenSnackbar(true);
 
-      // Temp solution: Best way to do this is to just update the existing list of people instead of
-      // having a new search with every create operation.
-      setTimeout(() => {
-        window.location.reload();
-      }, 2000);
+      // Call the method in the child component to clear the form
+      if (reusableFomrRef && reusableFomrRef.current) {
+        reusableFomrRef.current.resetForm();
+      }
     } catch (error: any) {
       setIsSaving(false);
 
@@ -163,6 +168,7 @@ export const CreatePerson = ({
         isCreateMode={isCreateMode}
         setIsCreateMode={setIsCreateMode}
         onSubmit={onSubmit}
+        ref={reusableFomrRef}
       />
     </Grid2>
   );

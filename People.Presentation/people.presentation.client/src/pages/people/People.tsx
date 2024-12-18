@@ -78,7 +78,7 @@ export const People = () => {
     reason?: SnackbarCloseReason
   ) => {
     if (reason === "clickaway") {
-      console.log(event);
+      console.log(event.type);
       return;
     }
     setOpenSnackbar(false);

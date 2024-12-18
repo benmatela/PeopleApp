@@ -11,7 +11,7 @@ import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { IFormField } from "../../../models/form.model";
 import { ReusableSpinner } from "../../loaders/ReusableSpinner";
 import { getAge } from "../../../utils/date.util";
-import { Dispatch, useEffect } from "react";
+import { Dispatch, forwardRef, useEffect, useImperativeHandle } from "react";
 
 interface ReusableFormProps {
   /**
@@ -67,14 +67,17 @@ const useStyles: any = () => ({
  *
  * @returns {React.FC<ReusableFormProps>} component
  */
-export const ReusableForm: React.FC<ReusableFormProps> = ({
-  isCreateMode,
-  submitBtnText,
-  isLoading,
-  fields,
-  onSubmit,
-  setIsCreateMode,
-}) => {
+const ReusableForm = (
+  {
+    isCreateMode,
+    submitBtnText,
+    isLoading,
+    fields,
+    onSubmit,
+    setIsCreateMode,
+  }: ReusableFormProps,
+  componentRef: any
+) => {
   const {
     register,
     handleSubmit,
@@ -98,6 +101,15 @@ export const ReusableForm: React.FC<ReusableFormProps> = ({
       setValue("age", fields[3].defaultValue);
     }
   });
+
+  /**
+   * Expose methods to the parent using useImperativeHandle
+   */
+  useImperativeHandle(componentRef, () => ({
+    resetForm: () => {
+      reset();
+    },
+  }));
 
   /**
    * When the cancel button is clicked
@@ -223,3 +235,5 @@ export const ReusableForm: React.FC<ReusableFormProps> = ({
     </Card>
   );
 };
+
+export default forwardRef(ReusableForm);

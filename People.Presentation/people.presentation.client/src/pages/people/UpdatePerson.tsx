@@ -1,12 +1,12 @@
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { IFormField } from "../../models/form.model";
-import { Dispatch, useEffect, useState } from "react";
+import { Dispatch, useEffect, useRef, useState } from "react";
 import * as peopleService from "../../services/people.service";
 import { IResponseWrapper } from "../../models/response.model";
 import { IPerson, IPersonResponse } from "../../models/person.model";
-import { ReusableForm } from "../../components/forms/reusable-form/ReusableForm";
 import { convertDateToYYYMMDD } from "../../utils/date.util";
 import { Grid2 } from "@mui/material";
+import ReusableForm from "../../components/forms/reusable-form/ReusableForm";
 
 interface UpdatePersonProps {
   currentPerson: IPerson | undefined;
@@ -38,6 +38,12 @@ export const UpdatePerson = ({
    * Is there any loading action going on?
    */
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  /**
+   *  Create a reference to the child component
+   *
+   *  Will be used to perform actions such as reseting form after submitting
+   */
+  const reusableFomrRef: React.MutableRefObject<any> = useRef();
   /**
    * Is there any update in action?
    */
@@ -178,11 +184,10 @@ export const UpdatePerson = ({
       setOpenSnackbar(true);
       setIsCreateMode(true);
 
-      // Temp solution: Best way to do this is to just update the existing list of people instead of
-      // having a new search with every update operation.
-      setTimeout(() => {
-        window.location.reload();
-      }, 2000);
+      // Call the method in the child component to clear the form
+      if (reusableFomrRef && reusableFomrRef.current) {
+        reusableFomrRef.current.resetForm();
+      }
     } catch (error: any) {
       setIsUpdating(false);
 
@@ -204,6 +209,7 @@ export const UpdatePerson = ({
           onSubmit={onSubmit}
           isCreateMode={isCreateMode}
           setIsCreateMode={setIsCreateMode}
+          ref={reusableFomrRef}
         />
       ) : null}
     </Grid2>
