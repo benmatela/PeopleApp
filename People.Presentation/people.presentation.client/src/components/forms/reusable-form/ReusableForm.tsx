@@ -94,6 +94,7 @@ export const ReusableForm: React.FC<ReusableFormProps> = ({
     if (dateOfBirth.length > 0) {
       setValue("age", getAge(new Date(dateOfBirth)));
     } else {
+      // Default value comes from the custom fields we set in the parent component
       setValue("age", fields[3].defaultValue);
     }
   });
