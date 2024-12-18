@@ -8,7 +8,6 @@ import ReusableForm from "../../components/forms/reusable-form/ReusableForm";
 
 interface CreatePersonProps {
   isCreateMode: boolean;
-  setCurrentPerson: Dispatch<React.SetStateAction<IPerson | undefined>>;
   setIsCreateMode: Dispatch<React.SetStateAction<boolean>>;
   setOpenSnackbar: Dispatch<React.SetStateAction<boolean>>;
   setErrorMessage: Dispatch<React.SetStateAction<string>>;
@@ -25,12 +24,11 @@ interface CreatePersonProps {
  */
 export const CreatePerson = ({
   isCreateMode,
-  setCurrentPerson,
   setOpenSnackbar,
   setErrorMessage,
   setSuccessMessage,
   setIsCreateMode,
-  setPersonCreated
+  setPersonCreated,
 }: CreatePersonProps) => {
   /**
    * Is there any saving action going on?
@@ -136,8 +134,8 @@ export const CreatePerson = ({
         throw new Error(apiResponse.message);
       }
 
-      // Create global current person with the newly added person
-      setCurrentPerson(apiResponse.data);
+      // Update parent component with newly created person
+      setPersonCreated(apiResponse.data);
 
       // Update states when API call is successful
       setSuccessMessage(
@@ -146,8 +144,6 @@ export const CreatePerson = ({
       setErrorMessage("");
       setIsSaving(false);
       setOpenSnackbar(true);
-      // Sends the person created to the parent 
-      setPersonCreated(apiResponse.data);
 
       // Call the method in the child component to clear the form
       if (reusableFomrRef && reusableFomrRef.current) {

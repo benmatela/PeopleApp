@@ -40,6 +40,10 @@ export const People = () => {
    */
   const [personCreated, setPersonCreated] = useState<IPerson>();
   /**
+   * The newly updadted person
+   */
+  const [personUpdated, setPersonUpdated] = useState<IPerson>();
+  /**
    * Shows/Hides the Confirmation Dialog
    */
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] =
@@ -53,7 +57,7 @@ export const People = () => {
    *
    * Currently selected person on the list(for deleting, updating or any other action)
    */
-  const [currentPerson, setCurrentPerson] = useState<IPerson>();
+  const [currentSelectedPerson, setCurrentSelectedPerson] = useState<IPerson>();
   /**
    * All people from the API
    */
@@ -63,14 +67,23 @@ export const People = () => {
    */
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
-  // Watch for the created person
+  // Watch for the created/updated persons
   useEffect(() => {
     // Update the view with the newly created person
     if (personCreated) {
       setAllPeople((prevItems: IPerson[]) => [...prevItems, personCreated]);
       setPersonCreated(undefined);
     }
-  }, [personCreated, allPeople]);
+    // Update the view with the newly updated person
+    if (personUpdated) {
+      // Remove the person from old array and add the updated version
+      setAllPeople((prevItems: IPerson[]) => [
+        ...prevItems.filter((p) => p.id !== personUpdated.id),
+        personUpdated,
+      ]);
+      setPersonUpdated(undefined);
+    }
+  }, [personCreated, allPeople, personUpdated]);
 
   /**
    * Handles the snackbar
@@ -139,7 +152,6 @@ export const People = () => {
         // Create new Person
         <CreatePerson
           isCreateMode={isCreateMode}
-          setCurrentPerson={setCurrentPerson}
           setOpenSnackbar={setOpenSnackbar}
           setErrorMessage={setErrorMessage}
           setSuccessMessage={setSuccessMessage}
@@ -149,13 +161,14 @@ export const People = () => {
       ) : (
         // Update a person
         <UpdatePerson
-          currentPerson={currentPerson}
+          currentPerson={currentSelectedPerson}
           isCreateMode={isCreateMode}
-          setCurrentPerson={setCurrentPerson}
+          setCurrentSelectedPerson={setCurrentSelectedPerson}
           setIsCreateMode={setIsCreateMode}
           setOpenSnackbar={setOpenSnackbar}
           setErrorMessage={setErrorMessage}
           setSuccessMessage={setSuccessMessage}
+          setPersonUpdated={setPersonUpdated}
         />
       )}
       {/* List of people */}
@@ -165,13 +178,13 @@ export const People = () => {
         isDeleting={isDeleting}
         errorMessage={errorMessage}
         allPeople={allPeople}
-        currentPerson={currentPerson}
+        currentPerson={currentSelectedPerson}
         setIsDeleting={setIsDeleting}
         setAllPeople={setAllPeople}
         setIsCreateMode={setIsCreateMode}
         setIsConfirmDialogOpen={setIsConfirmDialogOpen}
         setErrorMessage={setErrorMessage}
-        setCurrentPerson={setCurrentPerson}
+        setCurrentPerson={setCurrentSelectedPerson}
       />
       {/* Notifications */}
       <Snackbar

@@ -11,11 +11,12 @@ import ReusableForm from "../../components/forms/reusable-form/ReusableForm";
 interface UpdatePersonProps {
   currentPerson: IPerson | undefined;
   isCreateMode: boolean;
-  setCurrentPerson: Dispatch<React.SetStateAction<IPerson | undefined>>;
+  setCurrentSelectedPerson: Dispatch<React.SetStateAction<IPerson | undefined>>;
   setIsCreateMode: Dispatch<React.SetStateAction<boolean>>;
   setOpenSnackbar: Dispatch<React.SetStateAction<boolean>>;
   setErrorMessage: Dispatch<React.SetStateAction<string>>;
   setSuccessMessage: Dispatch<React.SetStateAction<string>>;
+  setPersonUpdated: Dispatch<React.SetStateAction<IPerson | undefined>>;
 }
 
 /**
@@ -28,11 +29,12 @@ interface UpdatePersonProps {
 export const UpdatePerson = ({
   isCreateMode,
   currentPerson,
-  setCurrentPerson,
+  setCurrentSelectedPerson,
   setIsCreateMode,
   setOpenSnackbar,
   setErrorMessage,
   setSuccessMessage,
+  setPersonUpdated,
 }: UpdatePersonProps) => {
   /**
    * Is there any loading action going on?
@@ -172,8 +174,11 @@ export const UpdatePerson = ({
         throw new Error(apiResponse.message);
       }
 
-      // Update global current person with the newly added person
-      setCurrentPerson(apiResponse.data);
+      // Reset selected person because form will reset(no person selected anymore)
+      setCurrentSelectedPerson(undefined);
+
+      // Update parent component with newly updated person
+      setPersonUpdated(apiResponse.data);
 
       // Update states when API call is successful
       setSuccessMessage(
@@ -183,6 +188,8 @@ export const UpdatePerson = ({
       setIsUpdating(false);
       setOpenSnackbar(true);
       setIsCreateMode(true);
+      // Sends the person updated to the parent
+      setPersonUpdated(apiResponse.data);
 
       // Call the method in the child component to clear the form
       if (reusableFomrRef && reusableFomrRef.current) {
