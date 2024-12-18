@@ -4,7 +4,7 @@ import ReusableForm from "../../components/forms/reusable-form/ReusableForm";
 import { IFormField } from "../../models/form.model";
 import { convertDateToYYYMMDD, getAge } from "../../utils/date.util";
 
-describe("ReusableForm", () => {
+describe("ReusableFormTests", () => {
   const createPersonformFields: IFormField[] = [
     {
       name: "firstName",
@@ -221,11 +221,11 @@ describe("ReusableForm", () => {
     expect(mockSubmit).toHaveBeenCalled();
   });
 
-  test("prevents create person form submission when inputs are empty", async () => {
+  test("prevents update person form submission when inputs are empty", async () => {
     const mockSubmit = jest.fn();
     render(
       <ReusableForm
-        isCreateMode={true} // this would be false for the update person page
+        isCreateMode={false} // this would be true for the createß person page
         submitBtnText={"Update Person"}
         formLabel="Update Person"
         isLoading={false}
