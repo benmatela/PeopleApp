@@ -42,7 +42,7 @@ This structure encourages separation of concerns and maintains modularity within
 ## Example Workflow:
 Creating a New Feature:
 
-* You start by adding a new page in the pages folder (e.g., SettingsPage).
+* You start by adding a new page in the pages folder (e.g. SettingsPage).
 * You create a new SettingsForm component in the components folder.
 * You add a settingsService.js file in the services folder to interact with an API that saves the settings.
 * You write any helper functions needed for the feature in utils.
