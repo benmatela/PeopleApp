@@ -213,7 +213,7 @@ export const SearchPerson = ({
           backgroundColor: "",
         }}
       >
-        <Typography variant="h5">Search Results ({results.length})</Typography>
+        <Typography variant="h6">Search Results ({results.length})</Typography>
         <List>
           {results.length > 0
             ? results.map((person: IPersonResponse) => (
