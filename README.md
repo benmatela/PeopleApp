@@ -269,12 +269,11 @@ Backend: http://0.0.0.0:5000
 Client: http://0.0.0.0:3000
 
 ## Future Improvements: 
-* Add unit tests for the rest of the Commands, Qeuries and also other application layers.
-* Implement asynchronous messaging (e.g., RabbitMQ, etc.) for decoupling commands and queries.
+* Add unit tests for the rest of the Commands and Qeuries and also other application layers.
 * Add caching mechanisms for query optimization.
 * Implement authentication and authorization.
 * Expand domain logic to handle more complex use cases.
 * Make local dev environment for Docker
 * More tests for the React client side
-* Make client side mobile friendlhy
+* Make client side mobile friendly
 * Update the client side `SearchPerson` component to be reusable.
