@@ -101,7 +101,10 @@ describe("ReusableForm", () => {
       screen.getByLabelText(/Date Of Birth/i),
       convertDateToYYYMMDD(new Date(dateOfBirth).toString()) // year will always be 0 because user's DOB is the current year
     );
-    await userEvent.type(screen.getByLabelText(/Age/i), getAge(new Date(dateOfBirth)).toString());
+    await userEvent.type(
+      screen.getByLabelText(/Age/i),
+      getAge(new Date(dateOfBirth)).toString()
+    );
 
     // Submit form
     await userEvent.click(
@@ -133,5 +136,25 @@ describe("ReusableForm", () => {
 
     // Ensure mockSubmit was not called
     expect(mockSubmit).not.toHaveBeenCalled();
+  });
+
+  test("prevents clear person form when the page is loading", async () => {
+    render(
+      <ReusableForm
+        isCreateMode={true} // this would be false for the update person page
+        submitBtnText={"Add New Person"}
+        formLabel="Create User Form"
+        isLoading={true}
+        fields={createPersonformFields}
+        onSubmit={() => {}}
+        setIsCreateMode={() => {}}
+      />
+    );
+
+    // Get the clear button element
+    const buttonElement = screen.getByRole("button", { name: /Clear/i });
+
+    // Assert that the button is disabled
+    expect(buttonElement).toHaveProperty("disabled", true);
   });
 });
