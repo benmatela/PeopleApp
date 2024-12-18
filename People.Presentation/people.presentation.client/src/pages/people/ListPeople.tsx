@@ -1,4 +1,4 @@
-import { Dispatch } from "react";
+import { Dispatch, useEffect } from "react";
 import * as peopleService from "../../services/people.service";
 import { IResponseWrapper } from "../../models/response.model";
 import { IPerson } from "../../models/person.model";
@@ -111,6 +111,13 @@ export const ListPeople = ({
       ),
     },
   ];
+
+  /**
+   * Update UI when the list changes for instance when a new user is added
+   */
+  useEffect(() => {
+    console.log("update detected: ", allPeople)
+  }, [allPeople]);
 
   /**
    * When the edit button for a row is clicked

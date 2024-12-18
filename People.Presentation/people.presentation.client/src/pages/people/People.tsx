@@ -6,11 +6,7 @@ import { UpdatePerson } from "./UpdatePerson";
 import { IPerson, IPersonResponse } from "../../models/person.model";
 import "./People.css";
 import { IResponseWrapper } from "../../models/response.model";
-import {
-  Box,
-  Snackbar,
-  SnackbarCloseReason,
-} from "@mui/material";
+import { Box, Snackbar, SnackbarCloseReason } from "@mui/material";
 import { SearchPerson } from "./SearchPerson";
 import { Navbar } from "../../components/layout/Navbar";
 
@@ -40,6 +36,10 @@ export const People = () => {
    */
   const [successMessage, setSuccessMessage] = useState<string>("");
   /**
+   * The newly created person
+   */
+  const [personCreated, setPersonCreated] = useState<IPerson>();
+  /**
    * Shows/Hides the Confirmation Dialog
    */
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] =
@@ -62,6 +62,15 @@ export const People = () => {
    * Show/hide snackbar
    */
   const [openSnackbar, setOpenSnackbar] = useState(false);
+
+  // Watch for the created person
+  useEffect(() => {
+    // Update the view with the newly created person
+    if (personCreated) {
+      setAllPeople((prevItems: IPerson[]) => [...prevItems, personCreated]);
+      setPersonCreated(undefined);
+    }
+  }, [personCreated, allPeople]);
 
   /**
    * Handles the snackbar
@@ -135,6 +144,7 @@ export const People = () => {
           setErrorMessage={setErrorMessage}
           setSuccessMessage={setSuccessMessage}
           setIsCreateMode={setIsCreateMode}
+          setPersonCreated={setPersonCreated}
         />
       ) : (
         // Update a person

@@ -13,6 +13,7 @@ interface CreatePersonProps {
   setOpenSnackbar: Dispatch<React.SetStateAction<boolean>>;
   setErrorMessage: Dispatch<React.SetStateAction<string>>;
   setSuccessMessage: Dispatch<React.SetStateAction<string>>;
+  setPersonCreated: Dispatch<React.SetStateAction<IPerson | undefined>>;
 }
 
 /**
@@ -29,6 +30,7 @@ export const CreatePerson = ({
   setErrorMessage,
   setSuccessMessage,
   setIsCreateMode,
+  setPersonCreated
 }: CreatePersonProps) => {
   /**
    * Is there any saving action going on?
@@ -144,6 +146,8 @@ export const CreatePerson = ({
       setErrorMessage("");
       setIsSaving(false);
       setOpenSnackbar(true);
+      // Sends the person created to the parent 
+      setPersonCreated(apiResponse.data);
 
       // Call the method in the child component to clear the form
       if (reusableFomrRef && reusableFomrRef.current) {
