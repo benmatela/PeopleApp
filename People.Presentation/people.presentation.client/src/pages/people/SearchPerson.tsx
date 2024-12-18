@@ -128,16 +128,23 @@ export const SearchPerson = ({
       <Container
         maxWidth="md"
         sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-
-          borderRadius: 2,
-          padding: 3,
-          marginBottom: 3,
+          md: {
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            borderRadius: 2,
+            padding: 3,
+            marginBottom: 3,
+          },
+          sm: {
+            display: "grid",
+            borderRadius: 2,
+            padding: 3,
+            marginBottom: 3,
+          }
         }}
       >
-        <Grid2 container spacing={2} alignItems="center">
+        <Grid2 container sx={{md: {display: "flex",}, sm: {display: "grid",}, mt: 2}} spacing={2} alignItems="center">
           <Grid2>
             <TextField
               variant="outlined"

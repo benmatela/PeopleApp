@@ -4,7 +4,6 @@ import * as peopleService from "../../services/people.service";
 import { IResponseWrapper } from "../../models/response.model";
 import { IPerson, IPersonResponse } from "../../models/person.model";
 import { IFormField } from "../../models/form.model";
-import { Grid2 } from "@mui/material";
 import ReusableForm from "../../components/forms/reusable-form/ReusableForm";
 
 interface CreatePersonProps {
@@ -159,17 +158,15 @@ export const CreatePerson = ({
   };
 
   return (
-    <Grid2 sx={{ mt: 2 }}>
-      <ReusableForm
-        submitBtnText={"Add New Person"}
-        formLabel="Add New Person"
-        fields={formFields}
-        isLoading={isSaving}
-        isCreateMode={isCreateMode}
-        setIsCreateMode={setIsCreateMode}
-        onSubmit={onSubmit}
-        ref={reusableFomrRef}
-      />
-    </Grid2>
+    <ReusableForm
+      submitBtnText={"Add New Person"}
+      formLabel="Add New Person"
+      fields={formFields}
+      isLoading={isSaving}
+      isCreateMode={isCreateMode}
+      setIsCreateMode={setIsCreateMode}
+      onSubmit={onSubmit}
+      ref={reusableFomrRef}
+    />
   );
 };

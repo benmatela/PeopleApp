@@ -7,7 +7,7 @@ import { IPerson, IPersonResponse } from "../../models/person.model";
 import "./People.css";
 import { IResponseWrapper } from "../../models/response.model";
 import {
-  Grid2,
+  Box,
   Snackbar,
   SnackbarCloseReason,
 } from "@mui/material";
@@ -118,7 +118,7 @@ export const People = () => {
   };
 
   return (
-    <Grid2 sx={{ minHeight: "100vh", backgroundColor: "#f9fafb", padding: 1 }}>
+    <Box sx={{ minHeight: "100vh", backgroundColor: "#f9fafb", padding: 1 }}>
       <Navbar />
       {/* Search Bar */}
       <SearchPerson
@@ -171,6 +171,6 @@ export const People = () => {
         message={successMessage || errorMessage}
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       />
-    </Grid2>
+    </Box>
   );
 };

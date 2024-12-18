@@ -132,6 +132,8 @@ const ReusableForm = (
     <Card
       sx={{
         backgroundColor: "#fffbeb",
+        mt: 1,
+        mn: 1
       }}
     >
       <Grid2
