@@ -1,50 +1,28 @@
-# React + TypeScript + Vite
+# Frontend using React + Vite + Typescript
+### Author: Ben Matela
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+If you're working on modern web applications with TypeScript, Vite is an excellent tool to consider for faster builds, simpler setup, and a better developer experience.
 
-Currently, two official plugins are available:
+### Why Use Vite with TypeScript?
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+* Speed: Vite's use of esbuild for development makes TypeScript compilation extremely fast.
+* Zero Configuration: Vite comes with built-in TypeScript support, requiring minimal configuration.
+* Optimized Production Builds: Vite uses Rollup for production builds, providing optimized output.
+* Modern Tooling: Vite is designed to leverage the latest web standards, offering better support for ES modules and TypeScript.
+* Developer Experience: Vite provides fast feedback through HMR, error overlays, and modern debugging support.
+* Plugin Ecosystem: Vite's ecosystem is rich, with support for TypeScript-related tools and frameworks.
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```md
+people.presentation.client/
+├── nginx/
+│   └── default.conf # default Nginx config file used by Docker to deploy
+├── public/ # public files
+├── src/
+│   ├── assets/ # assets used in the app
+│   ├── components/ # shared components
+│   ├── models/ # all app models
+│   ├── pages/  # domain specific pages (componets) but different from the shared modules
+│   ├── services/ #  services used to make for example API calls
+│   ├── tests/  # our app test files 
+│   └── utils/ # common helper functions
 ```
