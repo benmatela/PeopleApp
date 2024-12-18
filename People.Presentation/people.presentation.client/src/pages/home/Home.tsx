@@ -22,7 +22,7 @@ export const Home = () => {
         alignItems="center"
         justifyContent="center"
       >
-        <Typography variant="h2" sx={{ m: 3 }}>
+        <Typography variant="h3" sx={{ m: 3 }}>
           People Management
         </Typography>
         <Typography variant="h6" sx={{ m: 3 }}>
