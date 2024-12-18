@@ -6,7 +6,7 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import { People } from "./pages/people/People";
-import { Home } from "@mui/icons-material";
+import { Home } from "./pages/home/Home";
 
 /**
  * @returns {JSX.Element} component
@@ -22,7 +22,7 @@ export const App = () => {
       element: <Home />,
     },
     {
-      path: "/",
+      path: "/home",
       element: <Home />,
     },
     {

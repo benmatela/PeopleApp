@@ -27,7 +27,7 @@ export const Navbar = () => {
     },
     {
       id: 1,
-      text: "Dashboard",
+      text: "People",
       isSelected: isCurrentPath("/people"),
       icon: People,
       linkTo: "/people",
@@ -53,12 +53,13 @@ export const Navbar = () => {
         </Typography>
 
         {/* Menu items */}
-        <List>
+        <List sx={{ display: "flex", fontWeight: "bold" }}>
           {menuItems.map((menu: IMenuListItem) => (
             <ListItem
               key={menu.id}
               data-testid={"menuListItem"}
-              onClick={() => navigate("/")}
+              onClick={() => navigate(menu.linkTo)}
+              sx={{cursor: "pointer"}}
             >
               <ListItemText primary={menu.text} />
             </ListItem>
