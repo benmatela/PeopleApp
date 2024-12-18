@@ -186,7 +186,14 @@ export const ReusableForm: React.FC<ReusableFormProps> = ({
                   type="button"
                   onClick={onCancel}
                   disabled={isLoading}
-                  sx={{ width: "190px", height: 55, mt: 3, mr: 2 }}
+                  sx={{
+                    width: "190px",
+                    height: 55,
+                    mt: 3,
+                    mr: 2,
+                    backgroundColor: "#be123c",
+                    color: "white",
+                  }}
                 >
                   {isCreateMode ? "Clear" : "Cancel"}
                 </Button>

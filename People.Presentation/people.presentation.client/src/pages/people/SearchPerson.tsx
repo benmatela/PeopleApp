@@ -176,6 +176,7 @@ export const SearchPerson = ({
               fullWidth
               onClick={onClearSearch}
               disabled={isLoading}
+              sx={{ backgroundColor: "#be123c", color: "white" }}
             >
               Clear
             </Button>
@@ -212,9 +213,7 @@ export const SearchPerson = ({
           backgroundColor: "",
         }}
       >
-        <Typography variant="h5">
-          Search Results ({results?.length})
-        </Typography>
+        <Typography variant="h5">Search Results ({results?.length})</Typography>
         <List>
           {results?.length > 0
             ? results.map((person: IPersonResponse) => (
