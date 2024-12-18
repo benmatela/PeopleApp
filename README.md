@@ -228,7 +228,7 @@ This app is already containerized so a few things need to be updated:
 
 > Connection String
 
-In the `docker-compose.yml`, we don't need the connection string for the API to connect to `In Memory Database` so we do cater for it.
+In the `docker-compose.yml`, we don't use `SQL Server` but instead we use `In Memory Database` meaning we don't need the connection string.
 
 Example connection string when using SQL Server:
 
