@@ -45,7 +45,7 @@ export const UpdatePerson = ({
    *
    *  Will be used to perform actions such as reseting form after submitting
    */
-  const reusableFomrRef: React.MutableRefObject<any> = useRef();
+  const reusableFormRef: React.MutableRefObject<any> = useRef();
   /**
    * Is there any update in action?
    */
@@ -190,8 +190,8 @@ export const UpdatePerson = ({
       setIsCreateMode(true);
 
       // Call the method in the child component to clear the form
-      if (reusableFomrRef && reusableFomrRef.current) {
-        reusableFomrRef.current.resetForm();
+      if (reusableFormRef && reusableFormRef.current) {
+        reusableFormRef.current.resetForm();
       }
     } catch (error: any) {
       setIsUpdating(false);
@@ -214,7 +214,7 @@ export const UpdatePerson = ({
           onSubmit={onSubmit}
           isCreateMode={isCreateMode}
           setIsCreateMode={setIsCreateMode}
-          ref={reusableFomrRef}
+          ref={reusableFormRef}
         />
       ) : null}
     </Grid2>
