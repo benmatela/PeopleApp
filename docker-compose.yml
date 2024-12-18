@@ -22,7 +22,7 @@ services:
     networks:
       - webapp-network
     environment:
-      - VITE_PEOPLE_API_ENDPOINT=http://peopleapp-backend-1:5000  # Set API URL for React to interact with the backend
+      - VITE_PEOPLE_API_URL=http://peopleapp-backend-1:5000  # Set API URL for React to interact with the backend
 
 networks:
   webapp-network:
