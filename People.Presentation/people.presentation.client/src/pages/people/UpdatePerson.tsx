@@ -174,11 +174,11 @@ export const UpdatePerson = ({
         throw new Error(apiResponse.message);
       }
 
+      // Update parent component with newly updated person
+      setPersonUpdated(person);
+
       // Reset selected person because form will reset(no person selected anymore)
       setCurrentSelectedPerson(undefined);
-
-      // Update parent component with newly updated person
-      setPersonUpdated(apiResponse.data);
 
       // Update states when API call is successful
       setSuccessMessage(
@@ -188,8 +188,6 @@ export const UpdatePerson = ({
       setIsUpdating(false);
       setOpenSnackbar(true);
       setIsCreateMode(true);
-      // Sends the person updated to the parent
-      setPersonUpdated(apiResponse.data);
 
       // Call the method in the child component to clear the form
       if (reusableFomrRef && reusableFomrRef.current) {
