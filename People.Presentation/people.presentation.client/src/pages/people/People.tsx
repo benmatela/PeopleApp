@@ -121,7 +121,7 @@ export const People = () => {
   };
 
   return (
-    <Grid2 sx={{ minHeight: "100vh" }}>
+    <Grid2 sx={{ minHeight: "100vh", backgroundColor: "#f9fafb", padding: 1 }}>
       <AppBar
         position="sticky"
         sx={{ backgroundColor: "#1976d2", borderRadius: 2 }}
