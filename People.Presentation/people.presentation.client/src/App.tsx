@@ -6,6 +6,7 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import { People } from "./pages/people/People";
+import { Home } from "@mui/icons-material";
 
 /**
  * @returns {JSX.Element} component
@@ -18,7 +19,11 @@ export const App = () => {
     },
     {
       path: "/",
-      element: <People />,
+      element: <Home />,
+    },
+    {
+      path: "/",
+      element: <Home />,
     },
     {
       path: "/people",

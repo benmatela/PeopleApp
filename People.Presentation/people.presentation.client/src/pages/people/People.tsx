@@ -7,15 +7,12 @@ import { IPerson, IPersonResponse } from "../../models/person.model";
 import "./People.css";
 import { IResponseWrapper } from "../../models/response.model";
 import {
-  AppBar,
   Grid2,
   Snackbar,
   SnackbarCloseReason,
-  Toolbar,
-  Typography,
 } from "@mui/material";
-import { PeopleOutlined } from "@mui/icons-material";
 import { SearchPerson } from "./SearchPerson";
+import { Navbar } from "../../components/layout/Navbar";
 
 /**
  * People base component
@@ -122,22 +119,7 @@ export const People = () => {
 
   return (
     <Grid2 sx={{ minHeight: "100vh", backgroundColor: "#f9fafb", padding: 1 }}>
-      <AppBar
-        position="sticky"
-        sx={{ backgroundColor: "#1976d2", borderRadius: 2 }}
-      >
-        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-          {/* Logo or Title */}
-          <PeopleOutlined sx={{ fontSize: 60, pt: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            sx={{ flexGrow: 1, mt: 1, ml: 2, fontWeight: "bold" }}
-          >
-            People Management
-          </Typography>
-        </Toolbar>
-      </AppBar>
+      <Navbar />
       {/* Search Bar */}
       <SearchPerson
         setErrorMessage={setErrorMessage}
