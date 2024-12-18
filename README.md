@@ -217,9 +217,20 @@ Swagger: http://localhost:5000/swagger/index.html
 
 Client: http://localhost:3000/
 
-5. Run tests
+5. Run API tests
+
+In the root folder:
+
 ```bash
 dotnet test
+```
+
+6. Run Client tests
+
+In the root folder:
+
+```bash
+npm test
 ```
 
 ## Deployments
