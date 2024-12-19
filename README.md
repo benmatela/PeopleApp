@@ -16,7 +16,7 @@ The architecture is organized into multiple layers to achieve separation of conc
 ## How its broken down:
 
 * People.Application – The application layer, containing business logic, event handling and CQRS commands/queries.
-* People.Domain – The domain layer, domain events, containing domain entities, value objects, aggregates, and domain logic.
+* People.Domain – The domain layer containing domain entities, domain events, value objects, aggregates, and domain logic.
 * People.Infrastructure – The infrastructure layer, providing implementations for data access, external services, and other technical concerns.
 * People.Tests – Unit and integration tests for the application.
 * People.Presentation – The presentation layer, containing client-side and server-side components.

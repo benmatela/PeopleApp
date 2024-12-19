@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using Moq;
 using People.Application.Commands;
@@ -20,9 +21,10 @@ public class CreatePersonCommandHandlerTests
     public CreatePersonCommandHandlerTests()
     {
         var logger = new Mock<ILogger<CreatePersonCommand>>(MockBehavior.Default);
+        var _mediator = new Mock<IMediator>();
         var _logger = logger.Object;
         _mockPersonRepository = new Mock<IPersonRepository>();
-        _handler = new CreatePersonCommandHandler(_mockPersonRepository.Object, _logger);
+        _handler = new CreatePersonCommandHandler(_mockPersonRepository.Object, _logger, _mediator.Object);
     }
 
     /// <summary>
