@@ -15,7 +15,7 @@ The architecture is organized into multiple layers to achieve separation of conc
 
 ## How its broken down:
 
-* People.Application – The application layer, containing business logic and CQRS commands/queries.
+* People.Application – The application layer, containing business logic, event handling and CQRS commands/queries.
 * People.Domain – The domain layer, domain events, containing domain entities, value objects, aggregates, and domain logic.
 * People.Infrastructure – The infrastructure layer, providing implementations for data access, external services, and other technical concerns.
 * People.Tests – Unit and integration tests for the application.
@@ -30,6 +30,7 @@ PeopleApp/
 ├── People.Application/
 │   ├── Commands/
 │   ├── Queries/
+│   ├── EventHandlers/
 │   ├── Helpers/
 │   ├── Mapper/
 │   ├── Interfaces/
@@ -56,7 +57,7 @@ Clean Architecture emphasizes separation of concerns by organizing the code into
 
 1. Presentation Layer – This layer consists of the user interface (UI) and is responsible for displaying data to the user and receiving user inputs. It interacts with the application layer to process requests and display results.
 
-2. Application Layer – This layer handles business use cases by managing commands, queries, and their corresponding handlers. It’s responsible for orchestrating the interaction between the domain layer and infrastructure layer.
+2. Application Layer – This layer handles business use cases by managing commands, queries, event handling and their corresponding handlers. It’s responsible for orchestrating the interaction between the domain layer and infrastructure layer.
 
 3. Domain Layer – Contains the core business logic, including domain entities, aggregates, value objects, and domain events. This layer is isolated from external dependencies and should be stable over time.
 
@@ -138,6 +139,7 @@ public class GetPersonByIdQueryHandler(IPersonRepository personRepository)
 ### People.Application
 * Commands: Contains classes for creating, updating, deleting, or performing other actions on domain entities.
 * Queries: Contains classes for querying data, typically read-only operations.
+* EventHandlers: Event handlers often involve infrastructure concerns (e.g. interacting with databases or message queues) and putting them in this Layer ensures that they can be implemented in a flexible way.
 * DTOs: Data Transfer Objects used for transferring data between layers.
 * Helpers: Common method that can be used across the app eg DateHelper which gets date by date of birth.
 * Mappers: Convert one object type to the other eg CreatePersonRequest DTO to Person entity.

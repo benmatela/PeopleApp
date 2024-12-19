@@ -8,14 +8,14 @@ namespace People.Domain.Events;
 /// meaning of the event.<para> 
 /// <para>This keeps the core business logic independent of external infrastructure concerns.</para>
 /// </summary>
-public class PersonCreatedEvent : INotification
+public class PersonCreateEvent : INotification
 {
-    public Guid UsersId { get; }
+    public Guid UserId { get; }
     public DateTime DateCreated { get; }
 
-    public PersonCreatedEvent(Guid userId, DateTime dateCreated)
+    public PersonCreateEvent(Guid userId, DateTime dateCreated)
     {
-        UsersId = userId;
+        UserId = userId;
         DateCreated = dateCreated;
     }
 }

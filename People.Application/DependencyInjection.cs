@@ -2,6 +2,7 @@ using System.Reflection;
 using MediatR;
 using MediatR.NotificationPublishers;
 using Microsoft.Extensions.DependencyInjection;
+using People.Domain.Events;
 
 namespace People.Application.Extensions;
 
@@ -21,5 +22,7 @@ public static class DependencyInjection
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         // Register Logging Behavior for all requests
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+        //Event handling
+        services.AddScoped<INotificationHandler<PersonCreateEvent>, PersonCreateEventHandler>();
     }
 }
