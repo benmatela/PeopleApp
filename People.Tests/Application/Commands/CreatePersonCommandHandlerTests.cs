@@ -7,6 +7,10 @@ using Xunit;
 
 /// <summary>
 /// Tests CreatePersonCommandHandler
+/// 
+/// <para>Test the business logic that orchestrates the application’s behavior. 
+/// Commands might rely on repositories but the command itself should be tested for correctness and 
+/// interaction with the repository (using mocks)</para>
 /// </summary>
 public class CreatePersonCommandHandlerTests
 {

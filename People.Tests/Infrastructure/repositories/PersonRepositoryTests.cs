@@ -5,6 +5,9 @@ using Xunit;
 
 /// <summary>
 /// Tests PersonRepository
+/// 
+/// <para>Tests how Commands and Queries handle database operations, ensuring 
+/// data is stored and retrieved as expected.</para>
 /// </summary>
 public class PersonRepositoryTests
 {
@@ -42,6 +45,8 @@ public class PersonRepositoryTests
         Assert.Equal(expectedPerson.FirstName, result.FirstName);
         Assert.Equal(expectedPerson.LastName, result.LastName);
         Assert.Equal(expectedPerson.DateOfBirth, result.DateOfBirth);
+
+        // Verify it runs once
         _mockPersonRepository.Verify(repo => repo.Create(It.IsAny<CreatePersonRequest>()), Times.Once);
     }
 }

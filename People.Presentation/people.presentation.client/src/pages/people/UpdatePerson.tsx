@@ -143,12 +143,13 @@ export const UpdatePerson = ({
     setErrorMessage("");
     setSuccessMessage("");
     try {
-      const personToCreate: IPerson = data as any;
+      const personToUpdate: IPerson = data as any;
       // Make sure we don't update and unknown person
       if (currentPerson) {
-        personToCreate.id = currentPerson.id;
+        personToUpdate.id = currentPerson.id;
+        personToUpdate.dateCreated = currentPerson.dateCreated;
 
-        updatePerson(personToCreate);
+        updatePerson(personToUpdate);
       }
     } catch (error: any) {
       // Update the state with the bubbled up error if any

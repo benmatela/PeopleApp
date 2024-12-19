@@ -6,6 +6,9 @@ using Xunit;
 
 /// <summary>
 /// Tests GetPersonByIdQueryHandler
+/// 
+/// <para>Test data retrieval logic, ensuring that the correct data is returned and 
+/// that any filtering, sorting, or pagination is handled correctly.</para>
 /// </summary>
 public class GetPersonByIdQueryHandlerTests
 {
