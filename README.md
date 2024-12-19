@@ -16,7 +16,7 @@ The architecture is organized into multiple layers to achieve separation of conc
 ## How its broken down:
 
 * People.Application – The application layer, containing business logic and CQRS commands/queries.
-* People.Domain – The domain layer, containing domain entities, value objects, aggregates, and domain logic.
+* People.Domain – The domain layer, domain events, containing domain entities, value objects, aggregates, and domain logic.
 * People.Infrastructure – The infrastructure layer, providing implementations for data access, external services, and other technical concerns.
 * People.Tests – Unit and integration tests for the application.
 * People.Presentation – The presentation layer, containing client-side and server-side components.
@@ -36,6 +36,7 @@ PeopleApp/
 │   └── DTOs/
 ├── People.Domain/
 │   ├── Entities/
+│   ├── Events/
 │   └── Interfaces/
 ├── People.Infrastructure/
 │   ├── Persistence/
@@ -143,7 +144,8 @@ public class GetPersonByIdQueryHandler(IPersonRepository personRepository)
 * Interfaces: Our interfaces eg IBaseRepository which has all the common fields across repositories.
 
 ### People.Domain
-* Entities: Core business objects representing data in the system (e.g., Person).
+* Entities: Core business objects representing data in the system (e.g. Person).
+* Events: Domain event for example when a new person is created (e.g. PersonCreatedEvent).
 
 This app currently uses `In Memory Database` but an example SQL Table design for our `Person` entity would look like:
 
@@ -165,7 +167,7 @@ CREATE TABLE [People] (
 ### People.Tests
 * Contains unit tests, integration tests, and mocks for testing the application’s various layers:
 * Application: Tests for CQRS commands and queries.
-* Domain: Tests for domain logic, entities, and value objects.
+* Domain: Tests for domain logic, domain events, entities, and value objects.
 * Infrastructure: Tests for repositories, persistence layer, and services.
 * People.Presentation: This layer contains the user interface components:
 

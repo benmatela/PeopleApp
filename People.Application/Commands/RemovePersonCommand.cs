@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.Extensions.Logging;
 using People.Application.Interfaces;
+using People.Domain.Events;
 
 namespace People.Application.Commands;
 
@@ -12,7 +13,7 @@ public record RemovePersonCommand(Guid PersonId) : IRequest<bool>;
 /// </summary>
 /// <param name="personRepository"></param>
 /// <param name="_logger"></param>
-public class RemovePersonCommandHandler(IPersonRepository personRepository, ILogger<CreatePersonCommand> _logger)
+public class RemovePersonCommandHandler(IPersonRepository personRepository, ILogger<CreatePersonCommand> _logger, IMediator _mediator)
     : IRequestHandler<RemovePersonCommand, bool>
 {
     public async Task<bool> Handle(RemovePersonCommand request, CancellationToken cancellationToken)
@@ -29,6 +30,9 @@ public class RemovePersonCommandHandler(IPersonRepository personRepository, ILog
             }
 ;
             _logger.LogInformation($"Person deleted successfully: {request.PersonId}");
+
+            // Handle domain event when a person is removed
+            await _mediator.Publish(new PersonRemoveEvent(request.PersonId, new DateTime()));
 
             return success;
         }

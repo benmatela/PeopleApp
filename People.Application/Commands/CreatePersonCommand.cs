@@ -2,11 +2,11 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using People.Application.DTOs;
 using People.Application.Interfaces;
+using People.Domain.Events;
 
 namespace People.Application.Commands;
 
 public record CreatePersonCommand(CreatePersonRequest Person) : IRequest<PersonResponse>;
-
 
 /// <summary>
 /// Handles the command to create a new person.
@@ -14,7 +14,7 @@ public record CreatePersonCommand(CreatePersonRequest Person) : IRequest<PersonR
 /// </summary>
 /// <param name="personRepository"></param>
 /// <param name="_logger"></param>
-public class CreatePersonCommandHandler(IPersonRepository personRepository, ILogger<CreatePersonCommand> _logger)
+public class CreatePersonCommandHandler(IPersonRepository personRepository, ILogger<CreatePersonCommand> _logger, IMediator _mediator)
     : IRequestHandler<CreatePersonCommand, PersonResponse>
 {
     public async Task<PersonResponse> Handle(CreatePersonCommand request, CancellationToken cancellationToken)
@@ -26,6 +26,9 @@ public class CreatePersonCommandHandler(IPersonRepository personRepository, ILog
             var newPerson = await personRepository.Create(request.Person);
 
             _logger.LogInformation($"Person created successfully: {newPerson.Id}");
+
+            // Handle domain event when a new person is created
+            await _mediator.Publish(new PersonCreatedEvent(newPerson.Id, newPerson.DateCreated));
 
             return newPerson;
         }

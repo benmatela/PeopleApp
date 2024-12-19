@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using People.Application.DTOs;
 using People.Application.Interfaces;
+using People.Domain.Events;
 
 namespace People.Application.Commands;
 
@@ -13,7 +14,7 @@ public record UpdatePersonCommand(Guid PersonId, UpdatePersonRequest Person) : I
 /// </summary>
 /// <param name="personRepository"></param>
 /// <param name="_logger"></param>
-public class UpdatePersonCommandHandler(IPersonRepository personRepository, ILogger<CreatePersonCommand> _logger)
+public class UpdatePersonCommandHandler(IPersonRepository personRepository, ILogger<CreatePersonCommand> _logger, IMediator _mediator)
     : IRequestHandler<UpdatePersonCommand, bool>
 {
     public async Task<bool> Handle(UpdatePersonCommand request, CancellationToken cancellationToken)
@@ -30,6 +31,9 @@ public class UpdatePersonCommandHandler(IPersonRepository personRepository, ILog
             }
 ;
             _logger.LogInformation($"Person updated successfully: {request.PersonId}");
+
+            // Handle domain event when a person is updated
+            await _mediator.Publish(new PersonUpdateEvent(request.PersonId, new DateTime()));
 
             return isSuccess;
         }
