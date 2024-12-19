@@ -2,9 +2,9 @@ using MediatR;
 using People.Domain.Events;
 
 /// <summary>
-/// Handles PersonUpdateEvent
+/// Handles PersonURemoveEvent
 /// </summary>
-public class PersonCreateEventHandler : INotificationHandler<PersonCreateEvent>
+public class PersonRemoveEventHandler : INotificationHandler<PersonRemoveEvent>
 {
     /// <summary>
     /// MediatR is async in nature so we must use async in our code
@@ -12,7 +12,7 @@ public class PersonCreateEventHandler : INotificationHandler<PersonCreateEvent>
     /// <param name="notification"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    async Task INotificationHandler<PersonCreateEvent>.Handle(PersonCreateEvent notification, CancellationToken cancellationToken)
+    async Task INotificationHandler<PersonRemoveEvent>.Handle(PersonRemoveEvent notification, CancellationToken cancellationToken)
     {
         try
         {
@@ -21,7 +21,7 @@ public class PersonCreateEventHandler : INotificationHandler<PersonCreateEvent>
             // This can be a dedicated storage mechanism, typically separate from your main relational database.
             // Simulating async email sending
             await Task.Delay(1000); // Simulate an async operation like an API call
-            Console.WriteLine("Yay! Person Create Event went off on: {0} for: {1}", notification.DateCreated, notification.PersonId);
+            Console.WriteLine("Yay! Person Remove Event went off on: {0} for: {1}", notification.DateDeleted, notification.PersonId);
         }
         catch (Exception)
         {

@@ -24,5 +24,7 @@ public static class DependencyInjection
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
         //Event handling
         services.AddScoped<INotificationHandler<PersonCreateEvent>, PersonCreateEventHandler>();
+        services.AddScoped<INotificationHandler<PersonUpdateEvent>, PersonUpdateEventHandler>();
+        services.AddScoped<INotificationHandler<PersonRemoveEvent>, PersonRemoveEventHandler>();
     }
 }

@@ -10,12 +10,12 @@ namespace People.Domain.Events;
 /// </summary>
 public class PersonRemoveEvent : INotification
 {
-    public Guid UsersId { get; }
+    public Guid PersonId { get; }
     public DateTime DateDeleted { get; }
 
-    public PersonRemoveEvent(Guid userId, DateTime dateDeleted)
+    public PersonRemoveEvent(Guid personId, DateTime dateDeleted)
     {
-        UsersId = userId;
+        PersonId = personId;
         DateDeleted = dateDeleted;
     }
 }
