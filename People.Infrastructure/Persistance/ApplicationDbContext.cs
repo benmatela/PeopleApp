@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using People.Domain.Entities;
 
 namespace People.Infrastructure.Persistance;
 
@@ -7,10 +8,12 @@ namespace People.Infrastructure.Persistance;
 /// </summary>
 public class ApplicationDbContext : DbContext
 {
-    public required DbSet<Domain.Entities.Person> People { get; set; }
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseInMemoryDatabase("People");
     }
+
+    public DbSet<Person> People { get; set; }
 }

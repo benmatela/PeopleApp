@@ -54,7 +54,7 @@ public class CreatePersonCommandHandlerTests
         // 3. Assert
         Assert.Equal(expectedPerson.FirstName, result.FirstName);
         Assert.Equal(expectedPerson.LastName, result.LastName);
-        Assert.Equal(expectedPerson.DateOfBirth, result.DateCreated);
+        Assert.Equal(expectedPerson.DateOfBirth, result.DateOfBirth);
         _mockPersonRepository.Verify(repo => repo.Create(It.IsAny<CreatePersonRequest>()), Times.Once);
     }
 

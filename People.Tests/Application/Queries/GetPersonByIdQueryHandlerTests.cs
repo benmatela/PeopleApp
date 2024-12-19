@@ -19,7 +19,7 @@ public class GetPersonByIdQueryHandlerTests
     }
 
     /// <summary>
-    /// This test verifies that null is returned if the person does not exist
+    /// This test verifies that person is returned if the person does exist
     /// </summary>
     /// <returns></returns>
     [Fact]

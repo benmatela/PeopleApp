@@ -19,7 +19,7 @@ public class RemovePersonCommandHandler(IPersonRepository personRepository, ILog
     {
         try
         {
-            _logger.LogWarning($"Attempt to delete a person: {request}");
+            _logger.LogWarning($"Attempt to delete a person: {request.PersonId}");
 
             var success = await personRepository.Remove(request.PersonId);
             if (!success)
