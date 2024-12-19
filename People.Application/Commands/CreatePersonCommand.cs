@@ -28,7 +28,7 @@ public class CreatePersonCommandHandler(IPersonRepository personRepository, ILog
             _logger.LogInformation($"Person created successfully: {newPerson.Id}");
 
             // Handle domain event when a new person is created
-            await _mediator.Publish(new PersonCreatedEvent(newPerson.Id, newPerson.DateCreated));
+            await _mediator.Publish(new PersonCreateEvent(newPerson.Id, newPerson.DateCreated));
 
             return newPerson;
         }
