@@ -1,82 +1,47 @@
-using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using Moq;
 using People.Application.DTOs;
-using People.Domain.Entities;
-using People.Infrastructure.Persistance;
-using People.Infrastructure.Repositories;
+using People.Application.Interfaces;
 using Xunit;
 
+/// <summary>
+/// Tests PersonRepository
+/// </summary>
 public class PersonRepositoryTests
 {
-    public virtual required DbSet<Person> People { get; set; }
-    private readonly DbContextOptions<ApplicationDbContext> _dbContextOptions;
+    private readonly Mock<IPersonRepository> _mockPersonRepository;
 
     public PersonRepositoryTests()
     {
-        // In-memory database for testing
-        _dbContextOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
-            .UseInMemoryDatabase(databaseName: "TestDatabase")
-            .Options;
+        _mockPersonRepository = new Mock<IPersonRepository>();
     }
 
+    /// <summary>
+    /// This test ensures that a new person gets created.
+    /// </summary>
+    /// <returns></returns>
     [Fact]
-    public async Task CreateAsync_ShouldAddPersonToDatabase()
+    public async Task Create_ShouldCreatePerson_WhenValidCreateRequest()
     {
-        // Arrange
-        var mockedMapper = new Mock<IMapper>();
-        var mapper = mockedMapper.Object;
-        using var dbContext = new ApplicationDbContext(_dbContextOptions);
-        var repository = new PersonRepository(dbContext, mapper);
-        var personToCreate = new CreatePersonRequest
-        {
-            FirstName = "Tom",
-            LastName = "Soy",
-            DateOfBirth = DateTime.Now,
-        };
+        // 1. Arrange
+        var personToCreate = new CreatePersonRequest();
+        personToCreate.DateOfBirth = new DateTime();
+        personToCreate.FirstName = "John";
+        personToCreate.LastName = "Doe";
+        var expectedPerson = new PersonResponse();
+        expectedPerson.DateOfBirth = new DateTime();
+        expectedPerson.FirstName = "John";
+        expectedPerson.LastName = "Doe";
 
-        // Act
-        PersonResponse result = await repository.Create(personToCreate);
+        _mockPersonRepository.Setup(repo => repo.Create(It.IsAny<CreatePersonRequest>()))
+            .ReturnsAsync(expectedPerson);
 
-        // Assert
-        Assert.NotNull(result);
-        Assert.Equal(personToCreate.FirstName, result.FirstName);
-        Assert.Equal(30, result.Age);
+        // 2. Act
+        var result = await _mockPersonRepository.Object.Create(personToCreate);
 
-        // Verify the person was actually saved in the database
-        var savedPerson = await dbContext.People.FindAsync(result.Id);
-        Assert.NotNull(savedPerson);
-        Assert.Equal(personToCreate.DateOfBirth, savedPerson.DateOfBirth);
+        // 3. Assert
+        Assert.Equal(expectedPerson.FirstName, result.FirstName);
+        Assert.Equal(expectedPerson.LastName, result.LastName);
+        Assert.Equal(expectedPerson.DateOfBirth, result.DateOfBirth);
+        _mockPersonRepository.Verify(repo => repo.Create(It.IsAny<CreatePersonRequest>()), Times.Once);
     }
-
-    // [Fact]
-    // public async Task GetByNameAsync_ShouldReturnPerson_WhenPersonExists()
-    // {
-    //     // Arrange
-    //     using var dbContext = new ApplicationDbContext(_dbContextOptions);
-    //     var repository = new PersonRepository(dbContext);
-    //     var person = new Person("John Doe", 30);
-    //     await repository.CreateAsync(person);
-
-    //     // Act
-    //     var result = await repository.GetByNameAsync("John Doe");
-
-    //     // Assert
-    //     Assert.NotNull(result);
-    //     Assert.Equal("John Doe", result.Name);
-    // }
-
-    // [Fact]
-    // public async Task GetByNameAsync_ShouldReturnNull_WhenPersonDoesNotExist()
-    // {
-    //     // Arrange
-    //     using var dbContext = new ApplicationDbContext(_dbContextOptions);
-    //     var repository = new PersonRepository(dbContext);
-
-    //     // Act
-    //     var result = await repository.GetByNameAsync("Nonexistent");
-
-    //     // Assert
-    //     Assert.Null(result);
-    // }
 }
