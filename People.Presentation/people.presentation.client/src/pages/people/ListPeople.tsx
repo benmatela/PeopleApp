@@ -146,7 +146,6 @@ export const ListPeople = ({
 
       // Throw an error which will bubble up if request not successful
       if (!apiResponse.success) {
-        setErrorMessage(apiResponse.message);
         throw new Error(apiResponse.message);
       }
 

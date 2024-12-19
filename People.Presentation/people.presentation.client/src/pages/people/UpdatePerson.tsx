@@ -144,7 +144,7 @@ export const UpdatePerson = ({
     setSuccessMessage("");
     try {
       const personToUpdate: IPerson = data as any;
-      // Make sure we don't update and unknown person
+      // Make sure we don't update an unknown person
       if (currentPerson) {
         personToUpdate.id = currentPerson.id;
         personToUpdate.dateCreated = currentPerson.dateCreated;
