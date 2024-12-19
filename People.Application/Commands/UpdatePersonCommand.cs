@@ -28,8 +28,8 @@ public class UpdatePersonCommandHandler(IPersonRepository personRepository, ILog
             {
                 string errorMessage = $"There was an error while updating a person: {request.PersonId}";
                 _logger.LogInformation(errorMessage);
-            }
-;
+            };
+            
             _logger.LogInformation($"Person updated successfully: {request.PersonId}");
 
             // Handle domain event when a person is updated
