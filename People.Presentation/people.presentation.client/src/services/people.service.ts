@@ -82,13 +82,13 @@ export const getAll = async (): Promise<
  *
  * @param {IPerson} person
  *
- * @returns {IResponseWrapper<IPersonResponse>} response
+ * @returns {IResponseWrapper<null>} response
  *
  * @throws {Error} error
  */
 export const update = async (
   person: IPerson
-): Promise<IResponseWrapper<IPersonResponse>> => {
+): Promise<IResponseWrapper<null>> => {
   try {
     const headersConfig = {
       headers: {},
@@ -101,7 +101,7 @@ export const update = async (
     );
 
     // Build our response
-    const responseWrapper = {} as IResponseWrapper<IPersonResponse>;
+    const responseWrapper = {} as IResponseWrapper<null>;
     responseWrapper.data = apiResponse.data.data;
     responseWrapper.statusCode = HttpStatusCode.Ok;
     responseWrapper.message = "";
@@ -118,7 +118,7 @@ export const update = async (
  *
  * @param {string} personId
  *
- * @returns {IResponseWrapper<IPersonResponse>} response
+ * @returns {IResponseWrapper<null>} response
  *
  * @throws {Error} error
  */

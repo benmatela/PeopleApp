@@ -3,7 +3,7 @@ import { IFormField } from "../../models/form.model";
 import { Dispatch, useEffect, useRef, useState } from "react";
 import * as peopleService from "../../services/people.service";
 import { IResponseWrapper } from "../../models/response.model";
-import { IPerson, IPersonResponse } from "../../models/person.model";
+import { IPerson } from "../../models/person.model";
 import { convertDateToYYYMMDD } from "../../utils/date.util";
 import { Grid2 } from "@mui/material";
 import ReusableForm from "../../components/forms/reusable-form/ReusableForm";
@@ -167,7 +167,7 @@ export const UpdatePerson = ({
    */
   const updatePerson = async (person: IPerson): Promise<void> => {
     try {
-      const apiResponse: IResponseWrapper<IPersonResponse> =
+      const apiResponse: IResponseWrapper<null> =
         await peopleService.update(person);
 
       // Throw an error which will bubble up if request not successful
