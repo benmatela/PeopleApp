@@ -1,0 +1,57 @@
+services:
+  # .NET Core Backend API
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.server.dev
+    container_name: People-backend
+    ports:
+      - "5000:5000"  # Expose backend API on port 5000
+    volumes:
+      - ./People.Presentation/People.Presentation.Server:/app  # Sync backend code for live reloading
+      - /app/bin  # Prevent overwriting the output directory
+      - /app/obj  # Prevent overwriting the obj directory
+    environment:
+      - ASPNETCORE_ENVIRONMENT=development
+      - DB_CONNECTION_STRING=Host=db;Port=5432;Username=myuser;Password=mypassword;Database=mydb  # DB connection string
+    depends_on:
+      - db  # Backend depends on the database
+
+  # React Frontend using Vite (TypeScript)
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.client.dev
+    container_name: people-frontend
+    ports:
+      - "3000:3000"  # Expose frontend React app on port 3000
+    volumes:
+      - ./People.Presentation/people.presentation.client:/app  # Sync frontend code for live reloading
+    environment:
+      - VITE_PEOPLE_API_URL=http://backend:5000  # API URL for React client to connect to backend
+    depends_on:
+      - backend  # Frontend depends on the backend API
+
+  # SQL Server Database (MSSQL)
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest  # Use the official MSSQL image
+    container_name: people-mssql
+    ports:
+      - "1433:1433"  # Expose SQL Server on port 1433
+    environment:
+      - ACCEPT_EULA=Y  # Accept the SQL Server license
+      - SA_PASSWORD=mypassword  # SQL Server system administrator password
+      - MSSQL_PID=Express  # You can use Express, Developer, or another edition
+    volumes:
+      - sql-data:/var/opt/mssql  # Persistent volume for SQL Server data
+
+  # Redis (optional)
+  redis:
+    image: redis:latest
+    container_name: people-redis
+    ports:
+      - "6379:6379"  # Expose Redis server on port 6379
+
+volumes:
+  db-data:
+    driver: local

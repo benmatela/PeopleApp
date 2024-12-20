@@ -11,6 +11,7 @@ services:
     depends_on:
       - client
     environment:
+      - ASPNETCORE_ENVIRONMENT=production
       - ASPNETCORE_URLS=http://0.0.0.0:80 
 
   client:

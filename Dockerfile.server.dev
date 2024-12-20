@@ -1,0 +1,33 @@
+# Use the official .NET SDK image to build the application
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the .csproj files and restore dependencies
+COPY ./People.Presentation/People.Presentation.Server/*.csproj ./
+RUN dotnet restore
+
+# Copy the rest of the application code
+COPY . ./
+
+# Remove client assets we don't need
+RUN rm -Rf /app/People.Presentation/people.presentation.client
+
+# Publish the app to the /out directory (optimized for production)
+RUN dotnet publish -c Release -o /out
+
+# Use the official .NET runtime image to run the application
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the published files from the build container
+COPY --from=build /out .
+
+# Expose the port that the backend app will run on
+EXPOSE 5000
+
+# Run the application
+ENTRYPOINT ["dotnet", "People.Presentation.Server.dll"]
