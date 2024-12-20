@@ -190,7 +190,7 @@ CREATE TABLE [People] (
 
 For the rest of the packages used in the app, in the client side you can look at `package.json` and for the API application(layers) look at the `csproj` in each layer eg `People.Infrastructure/People.Infrastructure.csproj`.
 
-## Setting Up:
+## Dev Setup(without Docker):
 
 1. Clone the repository:
 ```bash
@@ -221,7 +221,27 @@ Swagger: http://localhost:5000/swagger/index.html
 
 Client: http://localhost:3000/
 
-5. Run API tests
+## Dev Setup(with Docker):
+
+1. Clone the repository:
+```bash
+git clone https://github.com/benmatela/PeopleApp.git
+cd PeopleApp
+```
+
+2. Run the Docker command:
+
+```bash
+docker-compose -f docker-compose.dev.yml up -d --build
+```
+
+Backend: http://localhost:5000/swagger/index.html
+
+Client: http://localhost:3000
+
+Your changes will now reflect when you change the code.
+
+### Run API tests
 
 In the root folder:
 
@@ -229,7 +249,7 @@ In the root folder:
 dotnet test
 ```
 
-6. Run Client tests
+### Run Client side tests
 
 In the root folder:
 
