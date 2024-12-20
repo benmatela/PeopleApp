@@ -34,7 +34,7 @@ services:
     depends_on:
       - backend  # If you have a backend service, this can be defined here (optional)
 
-  # SQL Server Database (MSSQL)
+  # SQL Server Database (Postgress)
   db:
     image: postgres:13
     container_name: people-db
