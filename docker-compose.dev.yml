@@ -6,13 +6,13 @@ services:
       dockerfile: Dockerfile.server.dev
     container_name: people-backend
     ports:
-      - "5000:5000"  # Expose backend API on port 5000
+      - "5000:8080"  # Expose backend API on port 5000
     volumes:
       - ./People.Presentation/People.Presentation.Server:/app  # Sync backend code for live reloading
       - /app/bin  # Prevent overwriting the output directory
       - /app/obj  # Prevent overwriting the obj directory
     environment:
-      - ASPNETCORE_ENVIRONMENT=development
+      - ASPNETCORE_ENVIRONMENT=Development
       - DB_CONNECTION_STRING=Host=db;Port=5432;Username=myuser;Password=mypassword;Database=mydb  # DB connection string
     # depends_on:
       # - db  # Backend depends on the database
@@ -23,7 +23,7 @@ services:
   #   container_name: people-frontend
   #   entrypoint: ["/bin/sh", "-c"]
   #   ports:
-  #     - 3000:3000 # Expose frontend React app on port 3000
+  #     - 3000:80 # Expose frontend React app on port 3000
   #   working_dir: /srv/app
   #   environment:
   #     - VITE_PEOPLE_API_URL=http://backend:5000  # API URL for React client to connect to backend

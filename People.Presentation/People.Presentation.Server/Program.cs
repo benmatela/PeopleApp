@@ -25,7 +25,7 @@ builder.Services.AddCors(options =>
 
 Host.CreateDefaultBuilder(args)
     .ConfigureWebHost(web => {
-        web.UseUrls("http://0.0.0.0:80");
+        web.UseUrls("http://0.0.0.0:80"); // Get from environments file
     }, options => {
         options.SuppressEnvironmentConfiguration = true;
     });
