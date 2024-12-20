@@ -1,3 +1,6 @@
 bin
 obj
 .DS_Store
+
+# Ignore local PostgreSQL data directories (example path)
+sql-data

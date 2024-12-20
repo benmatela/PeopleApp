@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.server.dev
-    container_name: People-backend
+    container_name: people-backend
     ports:
       - "5000:5000"  # Expose backend API on port 5000
     volumes:
@@ -19,31 +19,34 @@ services:
 
   # React Frontend using Vite (TypeScript)
   frontend:
-    build:
-      context: .
-      dockerfile: Dockerfile.client.dev
+    image: node:alpine
     container_name: people-frontend
+    entrypoint: ["/bin/sh", "-c"]
     ports:
-      - "3000:3000"  # Expose frontend React app on port 3000
-    volumes:
-      - ./People.Presentation/people.presentation.client:/app  # Sync frontend code for live reloading
+      - 3000:3000 # Expose frontend React app on port 3000
+    working_dir: /srv/app
     environment:
       - VITE_PEOPLE_API_URL=http://backend:5000  # API URL for React client to connect to backend
-    depends_on:
-      - backend  # Frontend depends on the backend API
+    volumes:
+      - type: bind
+        source: ./People.Presentation/people.presentation.client # Sync frontend code for live reloading
+        target: /srv/app
+    command:
+      - |
+        npm i
+        npm run dev
+    tty: true
 
   # SQL Server Database (MSSQL)
   db:
-    image: mcr.microsoft.com/mssql/server:2022-latest  # Use the official MSSQL image
-    container_name: people-mssql
-    ports:
-      - "1433:1433"  # Expose SQL Server on port 1433
+    image: postgres:13
+    container_name: people-db
     environment:
-      - ACCEPT_EULA=Y  # Accept the SQL Server license
-      - SA_PASSWORD=mypassword  # SQL Server system administrator password
-      - MSSQL_PID=Express  # You can use Express, Developer, or another edition
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: mydb
     volumes:
-      - sql-data:/var/opt/mssql  # Persistent volume for SQL Server data
+      - ./People.Infrastructure/sql-data:/var/lib/postgresql/data # Persistent volume for SQL Server data
 
   # Redis (optional)
   redis:

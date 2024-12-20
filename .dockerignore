@@ -10,6 +10,7 @@ node_modules
 # Ignore build folder
 dist
 build
+sql-data/*                          
 
 # Ignore ESLint, Prettier, and other configuration files that aren't needed in the final image
 .eslint*
@@ -47,3 +48,15 @@ README.md
 !.git/config
 !.git/packed-refs
 !.git/refs/heads/**
+
+# Ignore Docker-related files
+.docker/
+docker-compose.override.yml
+
+# Ignore local PostgreSQL data directories (example path)
+sql-data/
+# Or if you are mounting the data into a specific folder:
+./data/postgresql/
+./var/lib/postgresql
+# Or the default location for PostgreSQL Docker volumes
+**/pgdata/

@@ -4,11 +4,13 @@ FROM node:20 AS build
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy package.json and package-lock.json (or yarn.lock)
+# Copy package.json, package-lock.json (or yarn.lock) and tsconfig
 COPY ./People.Presentation/people.presentation.client/package*.json ./
+COPY ./People.Presentation/people.presentation.client/tsconfig.json ./
+COPY ./People.Presentation/people.presentation.client/tsconfig.*.json ./
 
-# Install dependencies
-RUN npm install
+# Install packages
+RUN npm i 
 
 # Copy the rest of the app files
 COPY . ./
