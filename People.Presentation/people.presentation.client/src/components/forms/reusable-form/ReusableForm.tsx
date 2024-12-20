@@ -217,7 +217,7 @@ const ReusableForm = (
                     spinnerSize={15}
                     spinnerColor="#2563eb"
                     minContainerHeight="5vh"
-                    loadingMessage={isLoading ? "Loading..." : "Deleting..."}
+                    loadingMessage={isLoading ? "Loading..." : ""}
                   />
                 ) : (
                   <Button

@@ -39,7 +39,7 @@ export const CreatePerson = ({
    *
    *  Will be used to perform actions such as reseting form after submitting
    */
-  const reusableFomrRef: React.MutableRefObject<any> = useRef();
+  const reusableFormRef: React.MutableRefObject<any> = useRef();
   /**
    * Form fields to build the create a person form
    *
@@ -146,8 +146,8 @@ export const CreatePerson = ({
       setOpenSnackbar(true);
 
       // Call the method in the child component to clear the form
-      if (reusableFomrRef && reusableFomrRef.current) {
-        reusableFomrRef.current.resetForm();
+      if (reusableFormRef && reusableFormRef.current) {
+        reusableFormRef.current.resetForm();
       }
     } catch (error: any) {
       setIsSaving(false);
@@ -166,7 +166,7 @@ export const CreatePerson = ({
       isCreateMode={isCreateMode}
       setIsCreateMode={setIsCreateMode}
       onSubmit={onSubmit}
-      ref={reusableFomrRef}
+      ref={reusableFormRef}
     />
   );
 };

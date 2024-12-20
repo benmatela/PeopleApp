@@ -221,7 +221,7 @@ describe("ReusableForm", () => {
     expect(mockSubmit).toHaveBeenCalled();
   });
 
-  test("prevents create person form submission when inputs are empty", async () => {
+  test("prevents update person form submission when inputs are empty", async () => {
     const mockSubmit = jest.fn();
     render(
       <ReusableForm
