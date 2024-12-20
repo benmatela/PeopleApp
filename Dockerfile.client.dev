@@ -10,22 +10,13 @@ COPY ./People.Presentation/people.presentation.client/tsconfig.json ./
 COPY ./People.Presentation/people.presentation.client/tsconfig.*.json ./
 
 # Install packages
-RUN npm i 
+RUN npm i
 
 # Copy the rest of the app files
-COPY . ./
-
-# Build the React app (this will create a production build by default)
-RUN npm run build
-
-# Use a lightweight server to serve the React build
-FROM nginx:alpine
-
-# Copy the build output from the build stage to NGINX's public directory
-COPY --from=build /app/dist /usr/share/nginx/html
+COPY ./People.Presentation/people.presentation.client/ ./
 
 # Expose the port for the React app
 EXPOSE 3000
 
-# Run the NGINX server to serve the app
-CMD ["nginx", "-g", "daemon off;"]
+# Set the default command to run the Vite dev server
+CMD ["npm", "run", "dev"]
