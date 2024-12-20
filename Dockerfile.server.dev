@@ -1,16 +1,19 @@
-# Use the official .NET SDK image to build the application
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+## Dockerfile
+################################
+## BUILD ENVIRONMENT ###########
+################################
 
-# Set the working directory inside the container
+# Use the official image with .NET SDK (with IIS Express support)
+FROM mcr.microsoft.com/dotnet/sdk:latest AS build
+
 WORKDIR /app
 
-# Copy the csproj files
+# Copy the csproj files and restore dependencies
 COPY ["./People.Presentation/People.Presentation.Server/People.Presentation.Server.csproj", "./People.Presentation/People.Presentation.Server/"]
 COPY ["./People.Domain/People.Domain.csproj", "./People.Domain/"]
 COPY ["./People.Application/People.Application.csproj", "./People.Application/"]
 COPY ["./People.Infrastructure/People.Infrastructure.csproj", "./People.Infrastructure/"]
 
-# Restore dependencies
 RUN dotnet restore "People.Presentation/People.Presentation.Server/People.Presentation.Server.csproj"
 
 # Copy the rest of the code
@@ -19,23 +22,27 @@ COPY . .
 # Remove client assets we don't need
 RUN rm -Rf /app/People.Presentation/people.presentation.client
 
-# Go API project
+# Build the solution
 WORKDIR /app/People.Presentation/People.Presentation.Server
+RUN dotnet build "People.Presentation.Server.csproj" -c Release
 
-# Publish the app to the /out directory (optimized for production)
+# Publish the app (using the output directory)
 RUN dotnet publish "People.Presentation.Server.csproj" -c Release -o /out
 
 # Use the official .NET runtime image to run the application
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 
 # Set the working directory inside the container
-WORKDIR /app
+WORKDIR /inetpub/wwwroot
 
 # Copy the published files from the build container
 COPY --from=build /out .
 
 # Expose the port that the backend app will run on
 EXPOSE 5000
+
+# Useful for debugging 
+RUN ls -al
 
 # Run the application
 ENTRYPOINT ["dotnet", "People.Presentation.Server.dll"]

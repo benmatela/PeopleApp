@@ -52,11 +52,3 @@ README.md
 # Ignore Docker-related files
 .docker/
 docker-compose.override.yml
-
-# Ignore local PostgreSQL data directories (example path)
-sql-data/
-# Or if you are mounting the data into a specific folder:
-./data/postgresql/
-./var/lib/postgresql
-# Or the default location for PostgreSQL Docker volumes
-**/pgdata/

@@ -14,46 +14,46 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=development
       - DB_CONNECTION_STRING=Host=db;Port=5432;Username=myuser;Password=mypassword;Database=mydb  # DB connection string
-    depends_on:
-      - db  # Backend depends on the database
+    # depends_on:
+      # - db  # Backend depends on the database
 
   # React Frontend using Vite (TypeScript)
-  frontend:
-    image: node:alpine
-    container_name: people-frontend
-    entrypoint: ["/bin/sh", "-c"]
-    ports:
-      - 3000:3000 # Expose frontend React app on port 3000
-    working_dir: /srv/app
-    environment:
-      - VITE_PEOPLE_API_URL=http://backend:5000  # API URL for React client to connect to backend
-    volumes:
-      - type: bind
-        source: ./People.Presentation/people.presentation.client # Sync frontend code for live reloading
-        target: /srv/app
-    command:
-      - |
-        npm i
-        npm run dev
-    tty: true
+  # frontend:
+  #   image: node:alpine
+  #   container_name: people-frontend
+  #   entrypoint: ["/bin/sh", "-c"]
+  #   ports:
+  #     - 3000:3000 # Expose frontend React app on port 3000
+  #   working_dir: /srv/app
+  #   environment:
+  #     - VITE_PEOPLE_API_URL=http://backend:5000  # API URL for React client to connect to backend
+  #   volumes:
+  #     - type: bind
+  #       source: ./People.Presentation/people.presentation.client # Sync frontend code for live reloading
+  #       target: /srv/app
+  #   command:
+  #     - |
+  #       npm i
+  #       npm run dev
+  #   tty: true
 
   # SQL Server Database (MSSQL)
-  db:
-    image: postgres:13
-    container_name: people-db
-    environment:
-      POSTGRES_USER: myuser
-      POSTGRES_PASSWORD: mypassword
-      POSTGRES_DB: mydb
-    volumes:
-      - ./People.Infrastructure/sql-data:/var/lib/postgresql/data # Persistent volume for SQL Server data
+  # db:
+  #   image: postgres:13
+  #   container_name: people-db
+  #   environment:
+  #     POSTGRES_USER: myuser
+  #     POSTGRES_PASSWORD: mypassword
+  #     POSTGRES_DB: mydb
+  #   volumes:
+  #     - ./People.Infrastructure/sql-data:/var/lib/postgresql/data # Persistent volume for SQL Server data
 
   # Redis (optional)
-  redis:
-    image: redis:latest
-    container_name: people-redis
-    ports:
-      - "6379:6379"  # Expose Redis server on port 6379
+  # redis:
+  #   image: redis:latest
+  #   container_name: people-redis
+  #   ports:
+  #     - "6379:6379"  # Expose Redis server on port 6379
 
 volumes:
   db-data:
