@@ -2,5 +2,6 @@ bin
 obj
 .DS_Store
 
-# Ignore local PostgreSQL data directories (example path)
-sql-data
+# Ignore local PostgreSQL and Redis data directories
+sql_data
+redis_data
