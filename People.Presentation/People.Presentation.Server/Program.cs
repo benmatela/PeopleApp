@@ -1,8 +1,13 @@
 using People.Application.Extensions;
 using People.Infrastructure.Extensions;
-using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Initialize configurations
+IConfiguration configuration = new ConfigurationBuilder()
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json")
+    .Build();
 
 // Add services to the container.
 
@@ -10,7 +15,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddInfrastructureDI();
+builder.Services.AddInfrastructureDI(configuration);
 builder.Services.AddApplicationDI();
 builder.Services.AddCors(options =>
 {

@@ -213,6 +213,18 @@ dotnet restore
 dotnet build
 ```
 
+Add migrations(in the root folder):
+
+```bash
+dotnet ef migrations add InitialCreate --project People.Infrastructure --startup-project People.Presentation/People.Presentation.Server
+```
+
+Update database(in the root folder):
+
+```bash
+dotnet ef database update --project People.Infrastructure --startup-project People.Presentation/People.Presentation.Server
+```
+
 4. Run App
 ```bash
 dotnet run --project dotnet run --project People.Presentation/People.Presentation.Server
@@ -238,6 +250,18 @@ cd PeopleApp
 
 ```bash
 docker-compose -f docker-compose.dev.yml up -d --build
+```
+
+Add migrations(in the root folder):
+
+```bash
+dotnet ef migrations add InitialCreate --project People.Infrastructure --startup-project People.Presentation/People.Presentation.Server
+```
+
+Update database(in the root folder):
+
+```bash
+dotnet ef database update --project People.Infrastructure --startup-project People.Presentation/People.Presentation.Server
 ```
 
 Backend: http://localhost:5000/swagger/index.html

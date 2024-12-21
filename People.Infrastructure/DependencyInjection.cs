@@ -4,6 +4,8 @@ using People.Infrastructure.Repositories;
 using People.Application.Interfaces;
 using People.Infrastructure.Services.PubSub;
 using StackExchange.Redis;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace People.Infrastructure.Extensions;
 
@@ -13,7 +15,7 @@ namespace People.Infrastructure.Extensions;
 /// </summary>
 public static class DependencyInjection
 {
-    public static void AddInfrastructureDI(this IServiceCollection services)
+    public static void AddInfrastructureDI(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<ApplicationDbContext>();
 
@@ -26,5 +28,9 @@ public static class DependencyInjection
         services.AddSingleton<IEventPublisher, RedisEventPublisher>();
         // Register the Use Case
         services.AddScoped<PersonRepository>();
+
+        // Postgres DB
+        services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
     }
 }
