@@ -45,6 +45,8 @@ services:
       POSTGRES_DB: mydb
     volumes:
       - ./People.Infrastructure/sql-data:/var/lib/postgresql/data # Persistent volume for SQL Server data
+    ports:
+      - "5432:5432"
 
   # Redis (optional)
   redis:

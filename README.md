@@ -41,7 +41,8 @@ PeopleApp/
 │   └── Interfaces/
 ├── People.Infrastructure/
 │   ├── Persistence/
-│   └── Repositories/
+│   ├── Repositories/
+│   └── Services/
 ├── People.Tests/
 │   ├── Application/
 │   ├── Domain/
@@ -164,7 +165,7 @@ CREATE TABLE [People] (
 ### People.Infrastructure
 * Persistence: Responsible for data access, including implementations of repositories using databases or other storage systems.
 * Repositories: Interface and implementation of repositories for accessing entities from the database.
-* Services: External services or utilities used by the application.
+* Services: External services or utilities used by the application. For example the Redis pub/sub in  `Services/PubSub` folder.
 
 ### People.Tests
 * Contains unit tests, integration tests, and mocks for testing the application’s various layers:
