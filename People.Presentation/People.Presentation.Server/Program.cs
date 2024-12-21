@@ -1,5 +1,6 @@
 using People.Application.Extensions;
 using People.Infrastructure.Extensions;
+using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,9 +25,11 @@ builder.Services.AddCors(options =>
 });
 
 Host.CreateDefaultBuilder(args)
-    .ConfigureWebHost(web => {
+    .ConfigureWebHost(web =>
+    {
         web.UseUrls("http://0.0.0.0:80"); // Get from environments file
-    }, options => {
+    }, options =>
+    {
         options.SuppressEnvironmentConfiguration = true;
     });
 

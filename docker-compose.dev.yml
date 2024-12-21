@@ -16,6 +16,7 @@ services:
       - DB_CONNECTION_STRING=Host=db;Port=5432;Username=myuser;Password=mypassword;Database=mydb  # DB connection string
     depends_on:
       - db  # Backend depends on the database
+      - redis  # Backend depends on redis running
 
   # React Frontend using Vite (TypeScript)
   frontend:

@@ -4,6 +4,7 @@ using People.Application.DTOs;
 using People.Application.Interfaces;
 using People.Application.Mapper;
 using People.Domain.Entities;
+using People.Domain.Events;
 using People.Infrastructure.Persistance;
 
 namespace People.Infrastructure.Repositories;
@@ -13,10 +14,11 @@ namespace People.Infrastructure.Repositories;
 /// </summary>
 /// <param name="DbContext"></param>
 /// <param name="Mapper"></param>
-public class PersonRepository(ApplicationDbContext DbContext, IMapper Mapper) : IPersonRepository
+public class PersonRepository(ApplicationDbContext DbContext, IMapper Mapper, IEventPublisher eventPublisher) : IPersonRepository
 {
     private readonly ApplicationDbContext _dbContext = DbContext;
     private readonly IMapper _mapper = Mapper;
+    private readonly IEventPublisher _eventPublisher = eventPublisher;
 
     public async Task<PersonResponse> Create(CreatePersonRequest request)
     {
@@ -25,6 +27,10 @@ public class PersonRepository(ApplicationDbContext DbContext, IMapper Mapper) : 
         _dbContext.People.Add(mappedPerson);
 
         await _dbContext.SaveChangesAsync();
+
+        // Publish the event (PersonCreatedEvent) using Redis Pub/Sub
+        var personCreatedEvent = new PersonCreateEvent(mappedPerson.Id, new DateTime());
+        await _eventPublisher.PublishAsync("person:created", personCreatedEvent);
 
         return DataTransformers.MapToDTO(mappedPerson);
     }
