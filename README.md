@@ -165,7 +165,11 @@ CREATE TABLE [People] (
 ### People.Infrastructure
 * Persistence: Responsible for data access, including implementations of repositories using databases or other storage systems.
 * Repositories: Interface and implementation of repositories for accessing entities from the database.
-* Services: External services or utilities used by the application. For example the Redis pub/sub in  `Services/PubSub` folder.
+* Services: External services or utilities used by the application. For example the `Redis` pub/sub in  `Services/PubSub` folder. 
+    - Publisher(Pub): Sends messages to a channel.
+    - Subscriber(Sub): Listens to messages from a specific channel (or channels).
+    - Channel: A message category where publishers send messages and subscribers listen to messages.
+
 
 ### People.Tests
 * Contains unit tests, integration tests, and mocks for testing the application’s various layers:
