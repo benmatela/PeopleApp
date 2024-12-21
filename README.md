@@ -170,6 +170,67 @@ CREATE TABLE [People] (
     - Subscriber(Sub): Listens to messages from a specific channel (or channels).
     - Channel: A message category where publishers send messages and subscribers listen to messages.
 
+> Using `In Memory Database`:
+
+This is how `ApplicationDbContext.cs` file looks like:
+
+```csharp
+using Microsoft.EntityFrameworkCore;
+using People.Domain.Entities;
+
+namespace People.Infrastructure.Persistance;
+
+/// <summary>
+/// A session with the database
+/// </summary>
+public class ApplicationDbContext : DbContext
+{
+    public required DbSet<Person> People { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseInMemoryDatabase("PeopleDB");
+    }
+}
+```
+
+> Using `SQL` database (Postgress in this case):
+
+This is how `ApplicationDbContext.cs` file looks like:
+
+```csharp
+using Microsoft.EntityFrameworkCore;
+using People.Domain.Entities;
+
+namespace People.Infrastructure.Persistance;
+
+/// <summary>
+/// A session with the database
+/// </summary>
+public class ApplicationDbContext : DbContext
+{
+    public required DbSet<Person> People { get; set; }
+
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options)
+    {
+    }
+}
+```
+
+Then update `DependencyInjection.cs` file with a new service:
+
+```csharp
+// Postgres DB
+services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+```
+
+Then `appsettings.json`:
+
+```json
+"DefaultConnection": "Host=localhost;Database=mydb;Username=myuser;Password=mypassword"
+```
 
 ### People.Tests
 * Contains unit tests, integration tests, and mocks for testing the application’s various layers:
