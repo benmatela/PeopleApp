@@ -30,8 +30,8 @@ public static class DependencyInjection
         services.AddScoped<PersonRepository>();
 
         // MSSQL DB
-        // Get the connection string
-        string connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__DBCon") ?? "";
+        // Get the connection string set in the environment variables in docker-compose.yml
+        string connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING") ?? "";
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(connectionString));
     }
