@@ -5,7 +5,6 @@ using People.Application.Interfaces;
 using People.Infrastructure.Services.PubSub;
 using StackExchange.Redis;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 namespace People.Infrastructure.Extensions;
 
@@ -15,7 +14,7 @@ namespace People.Infrastructure.Extensions;
 /// </summary>
 public static class DependencyInjection
 {
-    public static void AddInfrastructureDI(this IServiceCollection services, IConfiguration configuration)
+    public static void AddInfrastructureDI(this IServiceCollection services)
     {
         services.AddDbContext<ApplicationDbContext>();
 
@@ -23,7 +22,8 @@ public static class DependencyInjection
 
         // Register Redis connection (make sure Redis is running)
         // abortConnect: This is helpful if you want to continue retrying the connection when Redis is not available immediately (for example, during startup).
-        services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect("redis:6379,abortConnect=false")); // get from .env
+        string redisConnectionString = Environment.GetEnvironmentVariable("REDIS_CONNECTION_STRING") ?? "";
+        services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(redisConnectionString));
         // Register Event Publisher (Redis)
         services.AddSingleton<IEventPublisher, RedisEventPublisher>();
         // Register the Use Case
@@ -31,8 +31,8 @@ public static class DependencyInjection
 
         // MSSQL DB
         // Get the connection string set in the environment variables in docker-compose.yml
-        string connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING") ?? "";
+        string mssqlConnectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING") ?? "";
         services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(connectionString));
+            options.UseSqlServer(mssqlConnectionString));
     }
 }

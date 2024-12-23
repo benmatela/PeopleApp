@@ -12,7 +12,10 @@ services:
       - client
     environment:
       - ASPNETCORE_ENVIRONMENT=production
-      - ASPNETCORE_URLS=http://0.0.0.0:80 
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - DB_CONNECTION_STRING=Server=people-db,1433;Database=people-db;User Id=sa;Password=YourStrong!Passw0rd;Encrypt=False;TrustServerCertificate=True;  # DB connection string
+      - REDIS_CONNECTION_STRING=people-redis:6379,abortConnect=false  # Redis connection string
+      - USE_URLS=http://0.0.0.0:80 # Listen on port 80
 
   client:
     build:

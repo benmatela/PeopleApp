@@ -3,19 +3,13 @@ using People.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Initialize configurations
-IConfiguration configuration = new ConfigurationBuilder()
-    .SetBasePath(Directory.GetCurrentDirectory())
-    .AddJsonFile("appsettings.json")
-    .Build();
-
 // Add services to the container.
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddInfrastructureDI(configuration);
+builder.Services.AddInfrastructureDI();
 builder.Services.AddApplicationDI();
 builder.Services.AddCors(options =>
 {
@@ -29,10 +23,11 @@ builder.Services.AddCors(options =>
     });
 });
 
+string useUrls = Environment.GetEnvironmentVariable("USE_URLS") ?? "";
 Host.CreateDefaultBuilder(args)
     .ConfigureWebHost(web =>
     {
-        web.UseUrls("http://0.0.0.0:80"); // Get from environments file
+        web.UseUrls(useUrls);
     }, options =>
     {
         options.SuppressEnvironmentConfiguration = true;
