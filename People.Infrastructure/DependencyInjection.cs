@@ -31,10 +31,7 @@ public static class DependencyInjection
 
         // MSSQL DB
         // Get the connection string
-        // string connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new Exception("Connection string is not initialized.");
-        // Console.WriteLine("connectionString", connectionString);
-        string connectionString = "Server=people-db,1433;Database=people-db;User Id=sa;Password=YourStrong!Passw0rd;Encrypt=False;TrustServerCertificate=True;";
-       
+        string connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__DBCon") ?? "";
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(connectionString));
     }
