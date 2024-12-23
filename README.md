@@ -224,14 +224,17 @@ Then update `DependencyInjection.cs` file with a new service:
 
 ```csharp
 // MSSQL DB
+// Get the connection string set in the environment variables in docker-compose.yml
+string mssqlConnectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING") ?? "";
 services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+options.UseSqlServer(mssqlConnectionString));
 ```
 
-Then `appsettings.json`:
+In docker-compose.yml or .env file:
 
-```json
-"DefaultConnection": "Server=localhost,1433;Database=people-db;User Id=sa;Password=YourStrong!Passw0rd;Encrypt=False;TrustServerCertificate=True;"
+```yml
+environment:
+    - DB_CONNECTION_STRING=Server=people-db,1433;Database=people-db;User Id=sa;Password=YourStrong!Passw0rd;Encrypt=False;TrustServerCertificate=True;  # DB connection string
 ```
 
 ### People.Tests
@@ -315,6 +318,8 @@ cd PeopleApp
 docker-compose -f docker-compose.dev.yml up -d --build
 ```
 
+Use `docker-compose down` to shut `down` the container.
+
 Add migrations(in the root folder):
 
 ```bash
@@ -355,16 +360,22 @@ This app is already containerized so a few things need to be updated:
 
 > Connection String
 
-In the `docker-compose.yml`, we don't use `SQL Server` but instead we use `In Memory Database` meaning we don't need the connection string.
+In the `docker-compose.yml` we use `SQL Server` and `Redis`. To update the connection strings in `docker-compose.yml`, update to production environment:
 
-Example connection string when using SQL Server:
+* API:
 
-```json
-{
-  "ConnectionStrings": {
-    "DefaultConnection": "Server=db;Database=PeopleDb;User=sa;Password=your_password_here"
-  }
-}
+```yml
+environment:
+    - REDIS_CONNECTION_STRING=people-redis:6379,abortConnect=false  # Redis connection string
+    - DB_CONNECTION_STRING=Server=people-db,1433;Database=people-db;User Id=sa;Password=YourStrong!Passw0rd;Encrypt=False;TrustServerCertificate=True;  # DB connection string
+```
+
+* Client:
+
+```yml
+environment:
+    - NODE_ENV=production
+    - VITE_PEOPLE_API_URL=http://0.0.0.0:5000 
 ```
 
 > Docker Ignore Files
@@ -376,7 +387,7 @@ To avoid unnecessary files being included in the Docker image, create `.dockerig
 From the root folder:
 
 ```bash
-docker-compose up -d --build
+docker-compose -f docker-compose.yml up -d --build
 ```
 
 The command asks `Docker Compose` to run our `Dockerfile` within the project eg `Dockerfile.client`.
@@ -386,7 +397,7 @@ The command asks `Docker Compose` to run our `Dockerfile` within the project eg 
 `--build` only required if docker files changed. Meaning after the first command you can run:
 
 ```bash
-docker-compose up -d
+docker-compose -f docker-compose.yml up -d
 ```
 
 Use `docker-compose down` to shut `down` the container.
