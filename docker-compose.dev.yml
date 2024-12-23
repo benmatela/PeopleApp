@@ -13,7 +13,7 @@ services:
       - /app/obj  # Prevent overwriting the obj directory
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - DB_CONNECTION_STRING=Host=db;Port=5432;Username=myuser;Password=mypassword;Database=mydb  # DB connection string
+      - DB_CONNECTION_STRING=Server=people-db,1433;Database=people-db;User Id=sa;Password=YourStrong!Passw0rd;Encrypt=False;TrustServerCertificate=True;  # DB connection string
     depends_on:
       - mssql  # Backend depends on the database
       - redis  # Backend depends on redis running

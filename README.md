@@ -231,7 +231,7 @@ services.AddDbContext<ApplicationDbContext>(options =>
 Then `appsettings.json`:
 
 ```json
-"DefaultConnection": "Server=localhost,1433;Database=YourDatabase;User Id=sa;Password=YourStrong!Passw0rd;"
+"DefaultConnection": "Server=localhost,1433;Database=people-db;User Id=sa;Password=YourStrong!Passw0rd;Encrypt=False;TrustServerCertificate=True;"
 ```
 
 ### People.Tests
