@@ -29,8 +29,13 @@ public static class DependencyInjection
         // Register the Use Case
         services.AddScoped<PersonRepository>();
 
-        // Postgres DB
+        // MSSQL DB
+        // Get the connection string
+        // string connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new Exception("Connection string is not initialized.");
+        // Console.WriteLine("connectionString", connectionString);
+        string connectionString = "Server=localhost,1433;Database=people-db;User Id=sa;Password=YourStrong!Passw0rd;Encrypt=False;TrustServerCertificate=True;";
+       
         services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+            options.UseSqlServer(connectionString));
     }
 }

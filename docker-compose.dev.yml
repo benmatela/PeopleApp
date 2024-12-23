@@ -15,7 +15,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - DB_CONNECTION_STRING=Host=db;Port=5432;Username=myuser;Password=mypassword;Database=mydb  # DB connection string
     depends_on:
-      - db  # Backend depends on the database
+      - mssql  # Backend depends on the database
       - redis  # Backend depends on redis running
 
   # React Frontend using Vite (TypeScript)
@@ -35,18 +35,17 @@ services:
     depends_on:
       - backend  # If you have a backend service, this can be defined here (optional)
 
-  # SQL Server Database (Postgress)
-  db:
-    image: postgres:13
+  # SQL Server Database (MSSQL)
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2019-latest
     container_name: people-db
-    environment:
-      POSTGRES_USER: myuser
-      POSTGRES_PASSWORD: mypassword
-      POSTGRES_DB: mydb
-    volumes:
-      - ./People.Infrastructure/sql_data:/var/lib/postgresql/data # Persistent volume for SQL Server data
     ports:
-      - "5432:5432"
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: "YourStrong!Passw0rd"
+      ACCEPT_EULA: "Y"
+    volumes:
+      - ./People.Infrastructure/mssql-data:/var/opt/mssql
     restart: always
 
   # Redis
@@ -66,5 +65,5 @@ services:
       - "6379:6379"  # Expose Redis server on port 6379
 
 volumes:
-  db-data:
+  mssql-data:
     driver: local

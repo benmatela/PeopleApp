@@ -194,7 +194,9 @@ public class ApplicationDbContext : DbContext
 }
 ```
 
-> Using `SQL` database (Postgress in this case):
+No need to configure `ConnectionString`.
+
+> Using `SQL` database (MSSQL in this case):
 
 This is how `ApplicationDbContext.cs` file looks like:
 
@@ -221,7 +223,7 @@ public class ApplicationDbContext : DbContext
 Then update `DependencyInjection.cs` file with a new service:
 
 ```csharp
-// Postgres DB
+// MSSQL DB
 services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 ```
@@ -229,7 +231,7 @@ services.AddDbContext<ApplicationDbContext>(options =>
 Then `appsettings.json`:
 
 ```json
-"DefaultConnection": "Host=localhost;Database=mydb;Username=myuser;Password=mypassword"
+"DefaultConnection": "Server=localhost,1433;Database=YourDatabase;User Id=sa;Password=YourStrong!Passw0rd;"
 ```
 
 ### People.Tests
@@ -274,7 +276,7 @@ dotnet restore
 dotnet build
 ```
 
-Add migrations(in the root folder):
+4. Add migrations (in the root folder):
 
 ```bash
 dotnet ef migrations add InitialCreate --project People.Infrastructure --startup-project People.Presentation/People.Presentation.Server
