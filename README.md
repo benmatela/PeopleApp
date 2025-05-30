@@ -277,7 +277,7 @@ cd PeopleApp
 docker-compose -f docker-compose.dev.yml up -d --build
 ```
 
-Use `docker-compose down` to shut `down` the container.
+Use `docker-compose down` when you need to shut `down` the container.
 
 Add migrations(in the root folder):
 
