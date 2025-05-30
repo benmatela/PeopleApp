@@ -1,6 +1,8 @@
 # Clean Architecture with CQRS for People Management System
 ### Author: Ben Matela
 
+#### NB: You need `Docker Desktop` installed on your machine or you can just install `Docker` and `Docker Compose`. You can also run the project without Docker.
+
 This repository demonstrates how to implement Clean Architecture with CQRS (Command Query Responsibility Segregation) in a People Management system.
 
 This app is using C# for the backend and TypeScript with React for the frontend which is a common and powerful combination in modern web development.
