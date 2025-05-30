@@ -261,7 +261,41 @@ environment:
 * NodeJs for the React frontend
 * Docker and Docker Compose for containerization
 
-For the rest of the packages used in the app, in the client side you can look at `package.json` and for the API application(layers) look at the `csproj` in each layer eg `People.Infrastructure/People.Infrastructure.csproj`.
+For the rest of the packages used in the app, in the client side you can look at `package.json` and for the different API layers look at the `csproj` in each layer eg `People.Infrastructure/People.Infrastructure.csproj`.
+
+## Dev Setup(with Docker):
+
+1. Clone the repository:
+```bash
+git clone https://github.com/benmatela/PeopleApp.git
+cd PeopleApp
+```
+
+2. Run the Docker command:
+
+```bash
+docker-compose -f docker-compose.dev.yml up -d --build
+```
+
+Use `docker-compose down` to shut `down` the container.
+
+Add migrations(in the root folder):
+
+```bash
+dotnet ef migrations add InitialCreate --project People.Infrastructure --startup-project People.Presentation/People.Presentation.Server
+```
+
+Update database(in the root folder):
+
+```bash
+dotnet ef database update --project People.Infrastructure --startup-project People.Presentation/People.Presentation.Server
+```
+
+Backend: http://localhost:5000/swagger/index.html
+
+Client: http://localhost:3000
+
+Your changes will now reflect when you change the code.
 
 ## Dev Setup(without Docker):
 
@@ -305,40 +339,6 @@ dotnet run
 Swagger: http://localhost:5000/swagger/index.html
 
 Client: http://localhost:3000/
-
-## Dev Setup(with Docker):
-
-1. Clone the repository:
-```bash
-git clone https://github.com/benmatela/PeopleApp.git
-cd PeopleApp
-```
-
-2. Run the Docker command:
-
-```bash
-docker-compose -f docker-compose.dev.yml up -d --build
-```
-
-Use `docker-compose down` to shut `down` the container.
-
-Add migrations(in the root folder):
-
-```bash
-dotnet ef migrations add InitialCreate --project People.Infrastructure --startup-project People.Presentation/People.Presentation.Server
-```
-
-Update database(in the root folder):
-
-```bash
-dotnet ef database update --project People.Infrastructure --startup-project People.Presentation/People.Presentation.Server
-```
-
-Backend: http://localhost:5000/swagger/index.html
-
-Client: http://localhost:3000
-
-Your changes will now reflect when you change the code.
 
 ### Run API tests
 
