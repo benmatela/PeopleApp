@@ -70,10 +70,6 @@ Clean Architecture emphasizes separation of concerns by organizing the code into
 
 CQRS is applied in this project to separate the command side (modifying data) from the query side (reading data). This allows for optimized performance and scalability, especially for systems with complex data access patterns.
 
-> Command Side
-
-Commands are used to perform actions (create, update, delete). Each command has a corresponding handler that contains the business logic to perform the operation.
-
 Here’s a simple diagram to help visualize `CQRS` with `MediatR` in a `Clean Architecture` setup:
 
 ```text
@@ -100,6 +96,10 @@ In CQRS, you use MediatR to:
 2. Handle them via registered handlers
    
 This reduces tight coupling between layers and keeps business logic cleanly isolated.
+
+> Commands
+
+Commands are used to perform actions (create, update, delete). Each command has a corresponding handler that contains the business logic to perform the operation.
 
 Example Command:
 
@@ -138,7 +138,7 @@ public class CreatePersonCommandHandler(IPersonRepository personRepository, ILog
 }
 ```
 
-> Query Side
+> Queries
 
 Queries are used to retrieve data. Each query is handled separately from commands, allowing independent optimizations (e.g., caching or read models).
 
@@ -165,17 +165,17 @@ public class GetPersonByIdQueryHandler(IPersonRepository personRepository)
 ## Project Descriptions
 
 ### People.Application
-* Commands: Contains classes for creating, updating, deleting, or performing other actions on domain entities.
-* Queries: Contains classes for querying data, typically read-only operations.
-* EventHandlers: Event handlers often involve infrastructure concerns (e.g. interacting with databases or message queues) and putting them in this Layer ensures that they can be implemented in a flexible way.
-* DTOs: Data Transfer Objects used for transferring data between layers.
-* Helpers: Common method that can be used across the app eg DateHelper which gets date by date of birth.
-* Mappers: Convert one object type to the other eg CreatePersonRequest DTO to Person entity.
-* Interfaces: Our interfaces eg IBaseRepository which has all the common fields across repositories.
+* `Commands`: Contains classes for creating, updating, deleting, or performing other actions on domain entities.
+* `Queries`: Contains classes for querying data, typically read-only operations.
+* `EventHandlers`: Event handlers often involve infrastructure concerns (e.g. interacting with databases or message queues) and putting them in this Layer ensures that they can be implemented in a flexible way.
+* `DTOs`: Data Transfer Objects used for transferring data between layers.
+* `Helpers`: Common method that can be used across the app eg DateHelper which gets date by date of birth.
+* `Mappers`: Convert one object type to the other eg CreatePersonRequest DTO to Person entity.
+* `Interfaces`: Our interfaces eg IBaseRepository which has all the common fields across repositories.
 
 ### People.Domain
-* Entities: Core business objects representing data in the system (e.g. Person).
-* Events: Domain event for example when a new person is created (e.g. PersonCreatedEvent).
+* `Entities`: Core business objects representing data in the system (e.g. Person).
+* `Events`: Domain event for example when a new person is created (e.g. PersonCreatedEvent).
 
 This app currently uses `In Memory Database` but an example SQL Table design for our `Person` entity would look like:
 
@@ -190,9 +190,9 @@ CREATE TABLE [People] (
 ```
 
 ### People.Infrastructure
-* Persistence: Responsible for data access, including implementations of repositories using databases or other storage systems.
-* Repositories: Interface and implementation of repositories for accessing entities from the database.
-* Services: External services or utilities used by the application. For example the `Redis` pub/sub in  `Services/PubSub` folder. 
+* `Persistence`: Responsible for data access, including implementations of repositories using databases or other storage systems.
+* `Repositories`: Interface and implementation of repositories for accessing entities from the database.
+* `Services`: External services or utilities used by the application. For example the `Redis` pub/sub in  `Services/PubSub` folder. 
     - Publisher(Pub): Sends messages to a channel.
     - Subscriber(Sub): Listens to messages from a specific channel (or channels).
     - Channel: A message category where publishers send messages and subscribers listen to messages.
@@ -266,10 +266,10 @@ environment:
 
 ### People.Tests
 * Contains unit tests, integration tests, and mocks for testing the application’s various layers:
-* Application: Tests for CQRS commands and queries.
-* Domain: Tests for domain logic, domain events, entities, and value objects.
-* Infrastructure: Tests for repositories, persistence layer, and services.
-* People.Presentation: This layer contains the user interface components:
+* `Application`: Tests for CQRS commands and queries.
+* `Domain`: Tests for domain logic, domain events, entities, and value objects.
+* `Infrastructure`: Tests for repositories, persistence layer, and services.
+* `People.Presentation`: This layer contains the user interface components:
 
 ### people.presentation.client
 * The client-side project, which could be a web frontend, mobile app, or another type of client application. 
