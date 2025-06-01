@@ -212,7 +212,7 @@ namespace People.Infrastructure.Persistance;
 /// </summary>
 public class ApplicationDbContext : DbContext
 {
-    public required DbSet<Person> People { get; set; }
+    public DbSet<Person> People { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

@@ -129,9 +129,13 @@ export const People = () => {
         throw new Error(apiResponse.message);
       }
 
-      setAllPeople(apiResponse.data);
-      setSuccessMessage("Done fetching people..");
+      console.log("apiResponse: ", apiResponse)
 
+      if (apiResponse.data) {
+        setAllPeople(apiResponse.data);
+      }
+
+      setSuccessMessage("Done fetching people..");
       setIsLoading(false);
     } catch (error: any) {
       setIsLoading(false);
