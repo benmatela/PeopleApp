@@ -189,7 +189,7 @@ export const People = () => {
       {/* Notifications */}
       <Snackbar
         open={openSnackbar}
-        autoHideDuration={5000}
+        autoHideDuration={5050}
         onClose={handleCloseSnackbar}
         message={successMessage || errorMessage}
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}

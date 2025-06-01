@@ -39,7 +39,7 @@ WORKDIR /inetpub/wwwroot
 COPY --from=build /out .
 
 # Expose the port that the backend app will run on
-EXPOSE 5000
+EXPOSE 5050
 
 # Useful for debugging 
 RUN ls -al

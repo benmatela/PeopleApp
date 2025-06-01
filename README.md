@@ -322,7 +322,7 @@ Update database(in the root folder):
 dotnet ef database update --project People.Infrastructure --startup-project People.Presentation/People.Presentation.Server
 ```
 
-Backend: http://localhost:5000/swagger/index.html
+Backend: http://localhost:5050/swagger/index.html
 
 Client: http://localhost:3000
 
@@ -367,7 +367,7 @@ Then:
 ```bash
 dotnet run
 ```
-Swagger: http://localhost:5000/swagger/index.html
+Swagger: http://localhost:5050/swagger/index.html
 
 Client: http://localhost:3000/
 
@@ -408,7 +408,7 @@ environment:
 ```yml
 environment:
     - NODE_ENV=production
-    - VITE_PEOPLE_API_URL=http://0.0.0.0:5000 
+    - VITE_PEOPLE_API_URL=http://0.0.0.0:5050 
 ```
 
 > Docker Ignore Files
@@ -435,7 +435,7 @@ docker-compose -f docker-compose.yml up -d
 
 Use `docker-compose down` to shut `down` the container.
 
-Backend: http://0.0.0.0:5000
+Backend: http://0.0.0.0:5050
 
 Client: http://0.0.0.0:3000
 

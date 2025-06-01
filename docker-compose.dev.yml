@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile.server.dev
     container_name: people-backend
     ports:
-      - "5000:8080"  # Expose backend API on port 5000
+      - "5050:8080"  # Expose backend API on port 5050
     volumes:
       - ./People.Presentation/People.Presentation.Server:/app  # Sync backend code for live reloading
       - /app/bin  # Prevent overwriting the output directory
@@ -33,7 +33,7 @@ services:
       - /app/node_modules  # Persist node_modules to avoid issues with volume overwrites
     environment:
       - NODE_ENV=development
-      - VITE_PEOPLE_API_URL=http://0.0.0.0:5000 
+      - VITE_PEOPLE_API_URL=http://0.0.0.0:5050 
     command: npm run dev  # Start the Vite dev server
     depends_on:
       - backend  # If you have a backend service, this can be defined here (optional)
