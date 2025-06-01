@@ -310,7 +310,7 @@ docker-compose -f docker-compose.dev.yml up -d --build
 
 Use `docker-compose down` when you need to shut `down` the container.
 
-Add migrations(in the root folder):
+### Add migrations(in the root folder):
 
 First install `Entity Framework`:
 
@@ -328,6 +328,7 @@ Update database using existing migrations:
 
 ```bash
 dotnet ef database update --project People.Infrastructure --startup-project People.Presentation/People.Presentation.Server
+```
 
 Backend: http://localhost:5050/swagger/index.html
 
@@ -343,17 +344,7 @@ git clone https://github.com/benmatela/PeopleApp.git
 cd PeopleApp
 ```
 
-2. Restore dependencies:
-```bash
-dotnet restore
-```
-
-3. Build project
-```bash
-dotnet build
-```
-
-4. Add migrations (in the root folder):
+### Add migrations(in the root folder):
 
 First install `Entity Framework`:
 
@@ -371,6 +362,16 @@ Update database using existing migrations:
 
 ```bash
 dotnet ef database update --project People.Infrastructure --startup-project People.Presentation/People.Presentation.Server
+```
+
+2. Restore dependencies:
+```bash
+dotnet restore
+```
+
+3. Build project
+```bash
+dotnet build
 ```
 
 4. Run App
