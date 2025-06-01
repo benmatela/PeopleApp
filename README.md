@@ -221,7 +221,7 @@ public class ApplicationDbContext : DbContext
 }
 ```
 
-No need to configure `ConnectionString`.
+No need to configure `ConnectionString` unless we use a SQL database.
 
 > Using `SQL` database (MSSQL in this case):
 
@@ -257,11 +257,17 @@ services.AddDbContext<ApplicationDbContext>(options =>
 options.UseSqlServer(mssqlConnectionString));
 ```
 
-In docker-compose.yml or .env file:
+In our `docker-compose.yml`:
 
 ```yml
 environment:
     - DB_CONNECTION_STRING=Server=people-db,1433;Database=people-db;User Id=sa;Password=YourStrong!Passw0rd;Encrypt=False;TrustServerCertificate=True;  # DB connection string
+```
+
+Or .env `file`:
+
+```text
+DB_CONNECTION_STRING=Server=people-db,1433;Database=people-db;User Id=sa;Password=YourStrong!Passw0rd;Encrypt=False;TrustServerCertificate=True; 
 ```
 
 ### People.Tests
