@@ -74,6 +74,33 @@ CQRS is applied in this project to separate the command side (modifying data) fr
 
 Commands are used to perform actions (create, update, delete). Each command has a corresponding handler that contains the business logic to perform the operation.
 
+Here’s a simple diagram to help visualize `CQRS` with `MediatR` in a `Clean Architecture` setup:
+
+```text
+     [Controller or API Endpoint]
+               |
+         MediatR.Send()
+         /            \
+[Command Handler]   [Query Handler]
+        |                  |
+[Application Layer Logic]  |
+        |                  |
+[Domain Layer Entities]    |
+        |                  |
+[Repository / DB Access] <-
+```
+
+`Send()` is from MediatR, which routes your request to the correct handler.
+
+`MediatR` is a .NET library that implements the Mediator pattern, used for decoupling communication between components. 
+
+In CQRS, you use MediatR to:
+
+1. Dispatch commands and queries
+2. Handle them via registered handlers
+   
+This reduces tight coupling between layers and keeps business logic cleanly isolated.
+
 Example Command:
 
 ```csharp
