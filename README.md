@@ -318,7 +318,7 @@ First install `Entity Framework`:
 dotnet tool install --global dotnet-ef
 ```
 
-Then whenever your entities change for example one value changing from a `byte` to `string`, you can add new migrations or else skip to the next command.
+Then whenever your entities change for example one key changing from a `byte` to `string`, you can add new migrations or else skip to the next command.
 
 ```bash
 dotnet ef migrations add YourMigrationName --project People.Infrastructure --startup-project People.Presentation/People.Presentation.Server
@@ -352,7 +352,7 @@ First install `Entity Framework`:
 dotnet tool install --global dotnet-ef
 ```
 
-Then whenever your entities change for example one value changing from a `byte` to `string`, you can add new migrations or else skip to the next command.
+Then whenever your entities change for example one key changing from a `byte` to `string`, you can add new migrations or else skip to the next command.
 
 ```bash
 dotnet ef migrations add YourMigrationName --project People.Infrastructure --startup-project People.Presentation/People.Presentation.Server
