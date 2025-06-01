@@ -288,7 +288,7 @@ DB_CONNECTION_STRING=Server=people-db,1433;Database=people-db;User Id=sa;Passwor
 
 > Prerequisites
 
-* .NET 8 for the backend
+* .NET 9 for the backend
 * NodeJs for the React frontend
 * Docker and Docker Compose for containerization
 
