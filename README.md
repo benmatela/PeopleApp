@@ -312,15 +312,22 @@ Use `docker-compose down` when you need to shut `down` the container.
 
 Add migrations(in the root folder):
 
+First install `Entity Framework`:
+
+```bash
+dotnet tool install --global dotnet-ef
+```
+
+Then whenever your entities change for example one value changing from a `byte` to `string`, you can add new migrations or else skip to the next command.
+
 ```bash
 dotnet ef migrations add InitialCreate --project People.Infrastructure --startup-project People.Presentation/People.Presentation.Server
 ```
 
-Update database(in the root folder):
+Update database using existing migrations:
 
 ```bash
 dotnet ef database update --project People.Infrastructure --startup-project People.Presentation/People.Presentation.Server
-```
 
 Backend: http://localhost:5050/swagger/index.html
 
@@ -360,7 +367,7 @@ Then whenever your entities change for example one value changing from a `byte` 
 dotnet ef migrations add InitialCreate --project People.Infrastructure --startup-project People.Presentation/People.Presentation.Server
 ```
 
-Update database(in the root folder):
+Update database using existing migrations:
 
 ```bash
 dotnet ef database update --project People.Infrastructure --startup-project People.Presentation/People.Presentation.Server
