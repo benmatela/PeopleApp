@@ -238,7 +238,7 @@ namespace People.Infrastructure.Persistance;
 /// </summary>
 public class ApplicationDbContext : DbContext
 {
-    public required DbSet<Person> People { get; set; }
+    public DbSet<Person> People { get; set; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -321,7 +321,7 @@ dotnet tool install --global dotnet-ef
 Then whenever your entities change for example one value changing from a `byte` to `string`, you can add new migrations or else skip to the next command.
 
 ```bash
-dotnet ef migrations add InitialCreate --project People.Infrastructure --startup-project People.Presentation/People.Presentation.Server
+dotnet ef migrations add YourMigrationName --project People.Infrastructure --startup-project People.Presentation/People.Presentation.Server
 ```
 
 Update database using existing migrations:
@@ -355,7 +355,7 @@ dotnet tool install --global dotnet-ef
 Then whenever your entities change for example one value changing from a `byte` to `string`, you can add new migrations or else skip to the next command.
 
 ```bash
-dotnet ef migrations add InitialCreate --project People.Infrastructure --startup-project People.Presentation/People.Presentation.Server
+dotnet ef migrations add YourMigrationName --project People.Infrastructure --startup-project People.Presentation/People.Presentation.Server
 ```
 
 Update database using existing migrations:
