@@ -238,7 +238,7 @@ namespace People.Infrastructure.Persistance;
 /// </summary>
 public class ApplicationDbContext : DbContext
 {
-    public required DbSet<Person> People { get; set; }
+    public DbSet<Person> People { get; set; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -310,13 +310,21 @@ docker-compose -f docker-compose.dev.yml up -d --build
 
 Use `docker-compose down` when you need to shut `down` the container.
 
-Add migrations(in the root folder):
+### Add migrations(in the root folder):
+
+First install `Entity Framework`:
 
 ```bash
-dotnet ef migrations add InitialCreate --project People.Infrastructure --startup-project People.Presentation/People.Presentation.Server
+dotnet tool install --global dotnet-ef
 ```
 
-Update database(in the root folder):
+Then whenever your entities change for example one key changing from a `byte` to `string`, you can add new migrations or else skip to the next command.
+
+```bash
+dotnet ef migrations add YourMigrationName --project People.Infrastructure --startup-project People.Presentation/People.Presentation.Server
+```
+
+Update database using existing migrations:
 
 ```bash
 dotnet ef database update --project People.Infrastructure --startup-project People.Presentation/People.Presentation.Server
@@ -336,6 +344,26 @@ git clone https://github.com/benmatela/PeopleApp.git
 cd PeopleApp
 ```
 
+### Add migrations(in the root folder):
+
+First install `Entity Framework`:
+
+```bash
+dotnet tool install --global dotnet-ef
+```
+
+Then whenever your entities change for example one key changing from a `byte` to `string`, you can add new migrations or else skip to the next command.
+
+```bash
+dotnet ef migrations add YourMigrationName --project People.Infrastructure --startup-project People.Presentation/People.Presentation.Server
+```
+
+Update database using existing migrations:
+
+```bash
+dotnet ef database update --project People.Infrastructure --startup-project People.Presentation/People.Presentation.Server
+```
+
 2. Restore dependencies:
 ```bash
 dotnet restore
@@ -344,18 +372,6 @@ dotnet restore
 3. Build project
 ```bash
 dotnet build
-```
-
-4. Add migrations (in the root folder):
-
-```bash
-dotnet ef migrations add InitialCreate --project People.Infrastructure --startup-project People.Presentation/People.Presentation.Server
-```
-
-Update database(in the root folder):
-
-```bash
-dotnet ef database update --project People.Infrastructure --startup-project People.Presentation/People.Presentation.Server
 ```
 
 4. Run App
