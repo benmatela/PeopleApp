@@ -15,11 +15,11 @@ The architecture is organized into multiple layers to achieve separation of conc
 
 ## How its broken down:
 
-* People.Application – The application layer, containing business logic, event handling and CQRS commands/queries.
-* People.Domain – The domain layer containing domain entities, domain events, value objects, aggregates, and domain logic.
-* People.Infrastructure – The infrastructure layer, providing implementations for data access, external services, and other technical concerns.
-* People.Tests – Unit and integration tests for the application.
-* People.Presentation – The presentation layer, containing client-side and server-side components.
+* `People.Application` – The application layer, containing business logic, event handling and CQRS commands/queries.
+* `People.Domain` – The domain layer containing domain entities, domain events, value objects, aggregates, and domain logic.
+* `People.Infrastructure` – The infrastructure layer, providing implementations for data access, external services, and other technical concerns.
+* `People.Tests` – Unit and integration tests for the application.
+* `People.Presentation` – The presentation layer, containing client-side and server-side components.
   - people.presentation.client – The client-side user interface (React).
   - People.Presentation.Server – The server-side web API or backend for handling requests(.Net Core API).
 
@@ -56,19 +56,19 @@ PeopleApp/
 
 Clean Architecture emphasizes separation of concerns by organizing the code into distinct layers:
 
-1. Presentation Layer – This layer consists of the user interface (UI) and is responsible for displaying data to the user and receiving user inputs. It interacts with the application layer to process requests and display results.
+1. `Presentation Layer` – This layer consists of the user interface (UI) and is responsible for displaying data to the user and receiving user inputs. It interacts with the application layer to process requests and display results.
 
-2. Application Layer – This layer handles business use cases by managing commands, queries, event handling and their corresponding handlers. It’s responsible for orchestrating the interaction between the domain layer and infrastructure layer.
+2. `Application Layer` – This layer handles business use cases by managing commands, queries, event handling and their corresponding handlers. It’s responsible for orchestrating the interaction between the domain layer and infrastructure layer.
 
-3. Domain Layer – Contains the core business logic, including domain entities, aggregates, value objects, and domain events. This layer is isolated from external dependencies and should be stable over time.
+3. `Domain Layer` – Contains the core business logic, including domain entities, aggregates, value objects, and domain events. This layer is isolated from external dependencies and should be stable over time.
 
-4. Infrastructure Layer – Implements the necessary infrastructure to interact with external systems, such as databases, message queues, third-party services, etc. It also implements repositories and data access mechanisms.
+4. `Infrastructure Layer` – Implements the necessary infrastructure to interact with external systems, such as databases, message queues, third-party services, etc. It also implements repositories and data access mechanisms.
 
-5. Tests Layer – This layer contains tests for the application, domain, and infrastructure layers, ensuring correctness and reliability.
+5. `Tests Layer` – This layer contains tests for the application, domain, and infrastructure layers, ensuring correctness and reliability.
 
 # CQRS Architecture
 
-CQRS is applied in this project to separate the command side (modifying data) from the query side (reading data). This allows for optimized performance and scalability, especially for systems with complex data access patterns.
+`CQRS(Command Query Responsibility Segregation)` is applied in this project to separate the command side (modifying data) from the query side (reading data). This allows for optimized performance and scalability, especially for systems with complex data access patterns.
 
 Here’s a simple diagram to help visualize `CQRS` with `MediatR` in a `Clean Architecture` setup:
 
@@ -99,7 +99,7 @@ This reduces tight coupling between layers and keeps business logic cleanly isol
 
 > Commands
 
-Commands are used to perform actions (create, update, delete). Each command has a corresponding handler that contains the business logic to perform the operation.
+`Commands` are used to perform actions (create, update, delete). Each command has a corresponding handler that contains the business logic to perform the operation.
 
 Example Command:
 
@@ -140,7 +140,7 @@ public class CreatePersonCommandHandler(IPersonRepository personRepository, ILog
 
 > Queries
 
-Queries are used to retrieve data. Each query is handled separately from commands, allowing independent optimizations (e.g., caching or read models).
+`Queries` are used to retrieve data. Each query is handled separately from commands, allowing independent optimizations (e.g., caching or read models).
 
 ```csharp
 
@@ -197,7 +197,7 @@ CREATE TABLE [People] (
     - Subscriber(Sub): Listens to messages from a specific channel (or channels).
     - Channel: A message category where publishers send messages and subscribers listen to messages.
 
-> Using `In Memory Database`:
+### Using `In Memory Database`:
 
 This is how `ApplicationDbContext.cs` file looks like:
 
@@ -223,7 +223,7 @@ public class ApplicationDbContext : DbContext
 
 No need to configure `ConnectionString` unless we use a SQL database.
 
-> Using `SQL` database (MSSQL in this case):
+### Using `SQL` database (MSSQL in our case):
 
 This is how `ApplicationDbContext.cs` file looks like:
 
