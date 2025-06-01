@@ -162,7 +162,7 @@ public class GetPersonByIdQueryHandler(IPersonRepository personRepository)
 }
 ```
 
-## Project Descriptions
+## Project Description:
 
 ### People.Application
 * `Commands`: Contains classes for creating, updating, deleting, or performing other actions on domain entities.
