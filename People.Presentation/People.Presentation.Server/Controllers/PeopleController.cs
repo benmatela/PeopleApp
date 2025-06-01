@@ -74,6 +74,8 @@ namespace People.Presentation.Server.Controllers
             {
                 var result = await sender.Send(new GetAllPeopleQuery());
 
+                Console.WriteLine("result: ", result);
+
                 // Build our response
                 responseWrapper.Message = result.Count() > 0 ? "" : "Records not found.";
                 responseWrapper.StatusCode = result.Count() > 0 ?

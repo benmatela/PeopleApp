@@ -64,6 +64,8 @@ export const getAll = async (): Promise<
       headersConfig
     );
 
+    console.log("apiResponse: ", apiResponse);
+
     // Build our response
     const responseWrapper = {} as IResponseWrapper<IPersonResponse[]>;
     responseWrapper.data = apiResponse.data.data;
