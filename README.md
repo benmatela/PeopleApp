@@ -197,7 +197,7 @@ CREATE TABLE [People] (
     - Subscriber(Sub): Listens to messages from a specific channel (or channels).
     - Channel: A message category where publishers send messages and subscribers listen to messages.
 
-### Using `In Memory Database`:
+#### Using `In Memory Database`:
 
 This is how `ApplicationDbContext.cs` file looks like:
 
@@ -223,7 +223,7 @@ public class ApplicationDbContext : DbContext
 
 No need to configure `ConnectionString` unless we use a SQL database.
 
-### Using `SQL` database (MSSQL in our case):
+#### Using `SQL` database (MSSQL in our case):
 
 This is how `ApplicationDbContext.cs` file looks like:
 
